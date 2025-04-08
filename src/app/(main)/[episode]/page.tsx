@@ -19,6 +19,14 @@ const getEpisode = cache(async (id: string) => {
   return episode
 })
 
+export async function generateStaticParams() {
+  const episodes = await getAllEpisodes()
+  
+  return episodes.map((episode) => ({
+    episode: episode.id.toString(),
+  }))
+}
+
 export async function generateMetadata({
   params,
 }: {
