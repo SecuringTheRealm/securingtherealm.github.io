@@ -2,10 +2,8 @@
 const nextConfig = {
     output: "export",
     reactStrictMode: true,
-    // In Next.js 13+, the images config needs to be placed correctly
-    experimental: {
-      images: { unoptimized: true }
-    }
+    // Images config at the top level, not in experimental
+    images: { unoptimized: true }
   };
 
 module.exports = nextConfig
