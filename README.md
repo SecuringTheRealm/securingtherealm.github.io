@@ -5,6 +5,7 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![TypeScript](https://img.shields.io/badge/--3178C6?logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org/)
 [![NextJS](https://img.shields.io/badge/--3178C6?logo=next.js&logoColor=ffffff)](https://nextjs.org/)
+[![publish-to-github-pages](https://github.com/SecuringTheRealm/securingtherealm.github.io/actions/workflows/publish.yml/badge.svg)](https://github.com/SecuringTheRealm/securingtherealm.github.io/actions/workflows/publish.yml)
 
 
 ### Installation
