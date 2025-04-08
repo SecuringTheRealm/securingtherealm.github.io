@@ -49,34 +49,14 @@ function EpisodeEntry({ episode }: { episode: Episode }) {
             {episode.description}
           </p>
           <div className="mt-4 flex items-center gap-4">
-            <EpisodePlayButton
-              episode={episode}
-              className="flex items-center gap-x-3 text-sm/6 font-bold text-pink-500 hover:text-pink-700 active:text-pink-900"
-              playing={
-                <>
-                  <PauseIcon className="h-2.5 w-2.5 fill-current" />
-                  <span aria-hidden="true">Watch</span>
-                </>
-              }
-              paused={
-                <>
-                  <PlayIcon className="h-2.5 w-2.5 fill-current" />
-                  <span aria-hidden="true">Watch</span>
-                </>
-              }
-            />
-            <span
-              aria-hidden="true"
-              className="text-sm font-bold text-slate-400"
-            >
-              /
-            </span>
+            
             <Link
-              href={`/${episode.id}`}
+              href={`${episode.url}`}
+              target='_blank'
               className="flex items-center text-sm/6 font-bold text-pink-500 hover:text-pink-700 active:text-pink-900"
-              aria-label={`Show notes for episode ${episode.title}`}
-            >
-              Show notes
+              aria-label={`Watch episode ${episode.title} on YouTube`}
+            > 
+              <PlayIcon className="h-2.5 w-2.5 fill-current"  aria-hidden="true" />&nbsp;Open on YouTube
             </Link>
           </div>
         </div>

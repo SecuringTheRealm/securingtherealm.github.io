@@ -7,6 +7,7 @@ export interface Episode {
   published: Date
   description: string
   content: string
+  url: string
   audio: {
     src: string
     type: string
@@ -23,7 +24,7 @@ export async function getAllEpisodes() {
   const items = feed.items
 
   let episodes: Array<Episode> = items.map(
-    ({ id, title, description, published, link, enclosures }) => {
+    ({ id, title, content, description, published, link, enclosures }) => {
       // Extract videoId from the id field (format: "yt:video:VIDEO_ID")
       const videoId = id.split(':').pop() || ''
       
@@ -33,6 +34,7 @@ export async function getAllEpisodes() {
         published: new Date(published),
         description: description,
         content: description,
+        url: link,
         audio: {
           // Use the first enclosure or fallback to the YouTube link
           src: enclosures?.[0]?.url || link || '',

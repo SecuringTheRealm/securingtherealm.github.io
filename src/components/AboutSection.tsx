@@ -25,7 +25,7 @@ export function AboutSection(props: React.ComponentPropsWithoutRef<'section'>) {
       >
         Through epic storytelling and engaging demos, we transform complex topics like deploying Large-Language Models (LLMs), Small-Language Models (SLMs), and Agentic AI into adventurous quests.
 
-        Dive into technical architectures that showcase secure and scalable AI solutions, learn how to build robust systems for modern applications, and explore the practical challenges of security, performance, and collaboration—wrapped in the magic of role-playing games. Whether you're a seasoned tech adventurer or a curious newcomer, you'll gain insights into Azure&apos;s cutting-edge capabilities, responsible AI practices, and open-source projects—all while battling kobolds, training AI elves, and unlocking the secrets of the Crystal Keep.
+        Dive into technical architectures that showcase secure and scalable AI solutions, learn how to build robust systems for modern applications, and explore the practical challenges of security, performance, and collaboration—wrapped in the magic of role-playing games. Whether you&apos;re a seasoned tech adventurer or a curious newcomer, you&apos;ll gain insights into Azure&apos;s cutting-edge capabilities, responsible AI practices, and open-source projects—all while battling kobolds, training AI elves, and unlocking the secrets of the Crystal Keep.
 
         Embark on a journey where technology meets adventure, and together, we&apos;ll secure the realm! 
       </p>
