@@ -12,8 +12,8 @@ import posterImage from '@/images/poster.png'
 function YouTubeIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg aria-hidden="true" viewBox="0 0 576 512" {...props}>
-    <path d="M549.7 124.1c-6.3-23.8-25-42.5-48.9-48.9C458.6 64 288 64 288 64S117.4 64 75.2 75.2c-23.8 6.3-42.5 25.1-48.9 48.9C16 166.3 16 256 16 256s0 89.7 10.3 131.9c6.3 23.8 25 42.5 48.9 48.9C117.4 448 288 448 288 448s170.6 0 212.8-11.2c23.8-6.3 42.5-25 48.9-48.9C560 345.7 560 256 560 256s0-89.7-10.3-131.9zM232 336V176l142.8 80L232 336z" />
-  </svg>
+      <path d="M549.7 124.1c-6.3-23.8-25-42.5-48.9-48.9C458.6 64 288 64 288 64S117.4 64 75.2 75.2c-23.8 6.3-42.5 25.1-48.9 48.9C16 166.3 16 256 16 256s0 89.7 10.3 131.9c6.3 23.8 25 42.5 48.9 48.9C117.4 448 288 448 288 448s170.6 0 212.8-11.2c23.8-6.3 42.5-25 48.9-48.9C560 345.7 560 256 560 256s0-89.7-10.3-131.9zM232 336V176l142.8 80L232 336z" />
+    </svg>
   )
 }
 
@@ -46,7 +46,6 @@ export default function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-  let hosts = ['Chris Lloyd-Jones','Josh McDonald']
 
   return (
     <AudioProvider>
@@ -54,16 +53,11 @@ export default function MainLayout({
         <div className="hidden lg:sticky lg:top-0 lg:flex lg:w-16 lg:flex-none lg:items-center lg:px-12 lg:text-sm/7 lg:whitespace-nowrap lg:[writing-mode:vertical-rl]">
           <span className="font-mono text-slate-500">Hosted by</span>
           <span className="mt-6 flex gap-6 font-bold text-slate-900">
-            {hosts.map((host, hostIndex) => (
-              <Fragment key={host}>
-                {hostIndex !== 0 && (
-                  <span aria-hidden="true" className="text-slate-400">
-                    /
-                  </span>
-                )}
-                {host}
-              </Fragment>
-            ))}
+            <Link href="https://www.linkedin.com/in/chrislloydjones/" target="_blank">Chris Lloyd-Jones</Link>
+            <span aria-hidden="true" className="text-slate-400">
+              /
+            </span>
+            <Link href="https://www.linkedin.com/in/joshmcdonalduk/" target="_blank">Josh McDonald</Link>
           </span>
         </div>
         <div className="relative z-10 mx-auto px-4 pt-10 pb-4 sm:px-6 md:max-w-2xl md:px-4 lg:min-h-full lg:flex-auto lg:border-x lg:border-slate-200 lg:px-8 lg:py-12 xl:px-12">
@@ -86,7 +80,7 @@ export default function MainLayout({
               <Link href="/">Securing the Realm</Link>
             </p>
             <p className="mt-3 text-lg/8 font-medium text-slate-700">
-            Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.
+              Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.
             </p>
           </div>
           <AboutSection className="mt-12 hidden lg:block" />
@@ -103,39 +97,39 @@ export default function MainLayout({
               role="list"
               className="mt-4 flex justify-center gap-10 text-base/7 font-medium text-slate-700 sm:gap-8 lg:flex-col lg:gap-4"
             >
-                <li key="YouTubeIcon" className="flex">
-                  <Link
-                    href="https://www.youtube.com/@SecuringTheRealm"
-                    className="group flex items-center"
-                    aria-label="YouTube"
-                    target='_blank'
-                  >
-                    <YouTubeIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
-                    <span className="hidden sm:ml-3 sm:block">YouTube</span>
-                  </Link>
-                </li>
-                <li key="LinkedInIcon" className="flex">
-                  <Link
-                    href="https://www.linkedin.com/company/securingtherealm/"
-                    className="group flex items-center"
-                    aria-label="LinkedIn"
-                    target='_blank'
-                  >
-                    <LinkedInIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
-                    <span className="hidden sm:ml-3 sm:block">LinkedIn</span>
-                  </Link>
-                </li>
-                <li key="GitHubIcon" className="flex">
-                  <Link
-                    href="https://github.com/SecuringTheRealm"
-                    className="group flex items-center"
-                    aria-label="GitHub"
-                    target='_blank'
-                  >
-                    <GitHubIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
-                    <span className="hidden sm:ml-3 sm:block">GitHub</span>
-                  </Link>
-                </li>
+              <li key="YouTubeIcon" className="flex">
+                <Link
+                  href="https://www.youtube.com/@SecuringTheRealm"
+                  className="group flex items-center"
+                  aria-label="YouTube"
+                  target='_blank'
+                >
+                  <YouTubeIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
+                  <span className="hidden sm:ml-3 sm:block">YouTube</span>
+                </Link>
+              </li>
+              <li key="LinkedInIcon" className="flex">
+                <Link
+                  href="https://www.linkedin.com/company/securingtherealm/"
+                  className="group flex items-center"
+                  aria-label="LinkedIn"
+                  target='_blank'
+                >
+                  <LinkedInIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
+                  <span className="hidden sm:ml-3 sm:block">LinkedIn</span>
+                </Link>
+              </li>
+              <li key="GitHubIcon" className="flex">
+                <Link
+                  href="https://github.com/SecuringTheRealm"
+                  className="group flex items-center"
+                  aria-label="GitHub"
+                  target='_blank'
+                >
+                  <GitHubIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
+                  <span className="hidden sm:ml-3 sm:block">GitHub</span>
+                </Link>
+              </li>
             </ul>
           </section>
         </div>
@@ -152,16 +146,11 @@ export default function MainLayout({
             <span className="ml-2.5">Hosted by</span>
           </h2>
           <div className="mt-2 flex gap-6 text-sm/7 font-bold text-slate-900">
-            {hosts.map((host, hostIndex) => (
-              <Fragment key={host}>
-                {hostIndex !== 0 && (
-                  <span aria-hidden="true" className="text-slate-400">
-                    /
-                  </span>
-                )}
-                {host}
-              </Fragment>
-            ))}
+            <Link href="https://www.linkedin.com/in/chrislloydjones/" target="_blank">Chris Lloyd-Jones</Link>
+            <span aria-hidden="true" className="text-slate-400">
+              /
+            </span>
+            <Link href="https://www.linkedin.com/in/joshmcdonalduk/" target="_blank">Josh McDonald</Link>
           </div>
         </div>
       </footer>
