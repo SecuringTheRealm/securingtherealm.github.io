@@ -19,7 +19,7 @@ export async function getAllEpisodes() {
   const feed = await parseFeed(
     'https://www.youtube.com/feeds/videos.xml?channel_id=UCS4KTDaZTiyiMj2yZztwmlg',
   )
-  
+
   // Access the items directly without schema validation
   const items = feed.items
 
@@ -27,11 +27,27 @@ export async function getAllEpisodes() {
     ({ id, title, content, description, published, link, enclosures }) => {
       // Extract videoId from the id field (format: "yt:video:VIDEO_ID")
       const videoId = id.split(':').pop() || ''
-      
+
+      // Parse the published date with proper error handling
+      let publishedDate: Date;
+      try {
+        // The YouTube feed provides dates in ISO 8601 format
+        publishedDate = new Date(published);
+
+        // Validate the date is not Invalid Date
+        if (isNaN(publishedDate.getTime())) {
+          console.warn(`Invalid date format for episode: ${title}. Using current date instead.`);
+          publishedDate = new Date();
+        }
+      } catch (error) {
+        console.error(`Error parsing date for episode: ${title}`, error);
+        publishedDate = new Date();
+      }
+
       return {
         id: parseInt(videoId.replace(/\D/g, ''), 10) || 0, // Extract numbers or use 0
         title: title,
-        published: new Date(published),
+        published: publishedDate,
         description: description,
         content: description,
         url: link,
