@@ -1,4 +1,4 @@
-import { parse as parseFeed } from 'rss-to-json'
+import { XMLParser } from 'fast-xml-parser'
 import { array, number, object, parse, string } from 'valibot'
 
 export interface Episode {
@@ -15,50 +15,84 @@ export interface Episode {
 }
 
 export async function getAllEpisodes() {
-  // Get the feed from YouTube
-  const feed = await parseFeed(
+  // Fetch the YouTube feed XML
+  // Use the recommended Next.js data fetching pattern with proper caching
+  const response = await fetch(
     'https://www.youtube.com/feeds/videos.xml?channel_id=UCS4KTDaZTiyiMj2yZztwmlg',
-  )
+    {
+      next: { revalidate: 3600 } // Revalidate data every hour
+    }
+  );
 
-  // Access the items directly without schema validation
-  const items = feed.items
+  const xmlData = await response.text();
 
-  let episodes: Array<Episode> = items.map(
-    ({ id, title, content, description, published, link, enclosures }) => {
-      // Extract videoId from the id field (format: "yt:video:VIDEO_ID")
-      const videoId = id.split(':').pop() || ''
+  // Parse the XML with fast-xml-parser - configure to handle namespaces and preserve namespaces
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: "@_",
+    isArray: (name) => ['entry'].includes(name),
+    processEntities: true,
+    parseAttributeValue: true
+  });
 
-      // Parse the published date with proper error handling
-      let publishedDate: Date;
-      try {
-        // The YouTube feed provides dates in ISO 8601 format
-        publishedDate = new Date(published);
+  const parsedXml = parser.parse(xmlData);
 
-        // Validate the date is not Invalid Date
+  // Debug log the structure of the first entry to understand its format
+  if (parsedXml.feed.entry && parsedXml.feed.entry.length > 0) {
+    console.log('First entry structure:', JSON.stringify(parsedXml.feed.entry[0], null, 2));
+  }
+
+  // Map the entries to Episode objects
+  const episodes: Array<Episode> = parsedXml.feed.entry.map((entry: any) => {
+    // Extract the video ID from the entry ID
+    const videoId = entry.id.split(':').pop() || '';
+
+    // Get the published date directly from the entry
+    let publishedDate: Date;
+    try {
+      if (entry.published) {
+        publishedDate = new Date(entry.published);
+        console.debug(`Episode: "${entry.title}" - Original date: "${entry.published}" - Parsed date: ${publishedDate.toISOString()}`);
+
         if (isNaN(publishedDate.getTime())) {
-          console.warn(`Invalid date format for episode: ${title}. Using current date instead.`);
+          console.warn(`Invalid date format for episode: ${entry.title}. Using current date instead.`);
           publishedDate = new Date();
         }
-      } catch (error) {
-        console.error(`Error parsing date for episode: ${title}`, error);
+      } else {
+        console.warn(`No published date found for episode: ${entry.title}. Using current date.`);
         publishedDate = new Date();
       }
+    } catch (error) {
+      console.error(`Error parsing date for episode: ${entry.title}`, error);
+      publishedDate = new Date();
+    }
 
-      return {
-        id: parseInt(videoId.replace(/\D/g, ''), 10) || 0, // Extract numbers or use 0
-        title: title,
-        published: publishedDate,
-        description: description,
-        content: description,
-        url: link,
-        audio: {
-          // Use the first enclosure or fallback to the YouTube link
-          src: enclosures?.[0]?.url || link || '',
-          type: enclosures?.[0]?.type || 'video/mp4',
-        },
+    // Extract the description from media:group/media:description
+    let description = '';
+    try {
+      // Handle different possible locations for the description
+      if (entry['media:group'] && entry['media:group']['media:description']) {
+        description = entry['media:group']['media:description'];
+      } else if (entry['media:description']) {
+        description = entry['media:description'];
       }
-    },
-  )
+    } catch (error) {
+      console.error(`Error extracting description for episode: ${entry.title}`, error);
+    }
 
-  return episodes
+    return {
+      id: parseInt(videoId.replace(/\D/g, ''), 10) || 0,
+      title: entry.title,
+      published: publishedDate,
+      description: description,
+      content: description,
+      url: entry.link && entry.link["@_href"] ? entry.link["@_href"] : '',
+      audio: {
+        src: entry.link && entry.link["@_href"] ? entry.link["@_href"] : '',
+        type: 'video/mp4',
+      }
+    };
+  });
+
+  return episodes;
 }
