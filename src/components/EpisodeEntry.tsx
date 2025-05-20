@@ -1,7 +1,21 @@
 import type { FC } from "react";
 import type { Episode } from "../lib/episodes";
 import { Container } from "./Container";
+import { EpisodePlayButton } from "./EpisodePlayButton";
 import { FormattedDate } from "./FormattedDate";
+
+function getVideoId(url: string): string {
+	try {
+		const parsed = new URL(url);
+		if (parsed.hostname === "youtu.be") {
+			return parsed.pathname.slice(1);
+		}
+		return parsed.searchParams.get("v") ?? "";
+	} catch (error) {
+		console.error("Failed to parse video URL", url, error);
+		return "";
+	}
+}
 
 export const EpisodeEntry: FC<{ episode: Episode }> = ({ episode }) => {
 	const date = new Date(episode.published);
@@ -27,7 +41,8 @@ export const EpisodeEntry: FC<{ episode: Episode }> = ({ episode }) => {
 					<p className="mt-1 text-base/7 text-slate-700">
 						{episode.description}
 					</p>
-					<div className="mt-4 flex items-center gap-4">
+					<div className="mt-4 flex flex-col items-start gap-2">
+						<EpisodePlayButton videoId={getVideoId(episode.url)} />
 						<a
 							href={episode.url}
 							target="_blank"
