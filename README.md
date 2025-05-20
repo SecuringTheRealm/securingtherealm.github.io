@@ -4,7 +4,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![TypeScript](https://img.shields.io/badge/--3178C6?logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org/)
-[![NextJS](https://img.shields.io/badge/--3178C6?logo=next.js&logoColor=ffffff)](https://nextjs.org/)
+[![Astro](https://img.shields.io/badge/-FF5F00?logo=astro&logoColor=ffffff)](https://astro.build/)
 [![publish-to-github-pages](https://github.com/SecuringTheRealm/securingtherealm.github.io/actions/workflows/publish.yml/badge.svg)](https://github.com/SecuringTheRealm/securingtherealm.github.io/actions/workflows/publish.yml)
 
 This workflow runs daily and deploys only when the fetched XML feed has changed.
@@ -25,7 +25,7 @@ Next, run the development server:
 npm run dev
 ```
 
-Finally, open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+Finally, open [http://localhost:4321](http://localhost:4321) in your browser to view the website.
 
 ## License
 
@@ -37,4 +37,4 @@ Content is released under CC BY-SA 4.0 Attribution-ShareAlike 4.0 International 
 To learn more about the technologies used in this site template, see the following resources:
 
 - [Tailwind CSS](https://tailwindcss.com/docs) - the official Tailwind CSS documentation
-- [Next.js](https://nextjs.org/docs) - the official Next.js documentation
+- [Astro](https://docs.astro.build) - the official Astro documentation

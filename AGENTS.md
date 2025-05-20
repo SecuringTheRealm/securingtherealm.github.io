@@ -1,6 +1,6 @@
 # AGENTS Guidelines
 
-This repository uses **TypeScript** and **Next.js**. Use the practices below when contributing.
+This repository uses **TypeScript** and **Astro** with React islands. Use the practices below when contributing.
 
 ## General Best Practices
 
@@ -37,5 +37,5 @@ This repository uses **TypeScript** and **Next.js**. Use the practices below whe
 ## Linting and Formatting
 
 - Use **Biome** for linting and formatting. Run `biome check .` and `biome format .` before committing.
-- You can also run `npm run lint` to execute the Next.js lint configuration.
+- You can also run `npm run lint` if defined to execute any lint configuration.
 
