@@ -36,9 +36,9 @@ export const EpisodeEntry: FC<{ episode: Episode }> = ({ episode }) => {
 					</h2>
 					<FormattedDate
 						date={date}
-						className="order-first font-mono text-sm/7 text-slate-500"
+						className="order-first font-mono text-sm leading-7 text-slate-500"
 					/>
-					<p className="mt-1 text-base/7 text-slate-700">
+					<p className="mt-1 text-base leading-7 text-slate-700">
 						{episode.description}
 					</p>
 					<div className="mt-4 flex flex-col items-start gap-2">
@@ -47,7 +47,7 @@ export const EpisodeEntry: FC<{ episode: Episode }> = ({ episode }) => {
 							href={episode.url}
 							target="_blank"
 							rel="noreferrer"
-							className="flex items-center text-sm/6 font-bold text-pink-500 hover:text-pink-700 active:text-pink-900"
+							className="flex items-center text-sm leading-6 font-bold text-pink-500 hover:text-pink-700 active:text-pink-900"
 							aria-label={`Watch episode ${episode.title} on YouTube`}
 						>
 							Open on YouTube
