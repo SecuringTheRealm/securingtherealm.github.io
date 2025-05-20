@@ -65,17 +65,17 @@ jobs:
         if: steps.diff.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         uses: actions/configure-pages@v4
         with:
-          static_site_generator: next
+          static_site_generator: astro
 
-      - name: Build with Next.js 🏗️
+      - name: Build with Astro 🏗️
         if: steps.diff.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
-        run: npx next build
+        run: npm run build
 
       - name: Upload artifact 📡
         if: steps.diff.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./dist
 
   deploy:
     environment:

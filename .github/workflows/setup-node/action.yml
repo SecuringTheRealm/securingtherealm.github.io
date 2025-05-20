@@ -1,5 +1,5 @@
 # File: .github/workflows/setup-node/action.yml
-# Credit: https://www.freecodecamp.org/news/how-to-deploy-next-js-app-to-github-pages/
+# Credit: https://docs.astro.build/en/guides/deploy/github/
 name: setup-node
 description: "Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧"
 runs:
