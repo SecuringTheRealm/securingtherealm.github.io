@@ -1,30 +1,37 @@
-'use client'
+"use client";
 
-import { useAudioPlayer } from '@/components/AudioProvider'
-import { type Episode } from '@/lib/episodes'
+import { type FC, useState } from "react";
+import styles from "./EpisodePlayButton.module.css";
 
-export function EpisodePlayButton({
-  episode,
-  playing,
-  paused,
-  ...props
-}: React.ComponentPropsWithoutRef<'button'> & {
-  episode: Episode
-  playing: React.ReactNode
-  paused: React.ReactNode
-}) {
-  let player = useAudioPlayer(episode)
-
-  return (
-    <button
-      type="button"
-      onClick={() => player.toggle()}
-      aria-label={`${player.playing ? 'Pause' : 'Play'} episode ${
-        episode.title
-      }`}
-      {...props}
-    >
-      {player.playing ? playing : paused}
-    </button>
-  )
+export interface EpisodePlayButtonProps {
+	videoId: string;
 }
+
+export const EpisodePlayButton: FC<EpisodePlayButtonProps> = ({ videoId }) => {
+	const [open, setOpen] = useState(false);
+
+	return (
+		<div className={styles.container}>
+			<button
+				type="button"
+				className={styles.button}
+				onClick={() => setOpen((value) => !value)}
+				aria-label={open ? "Hide video" : "Play episode"}
+			>
+				{open ? "Hide Video" : "Play Episode"}
+			</button>
+			{open && (
+				<div className={styles.playerWrapper}>
+					<iframe
+						className={styles.iframe}
+						src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+						title="YouTube player"
+						loading="lazy"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						allowFullScreen
+					/>
+				</div>
+			)}
+		</div>
+	);
+};
