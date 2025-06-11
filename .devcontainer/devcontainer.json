@@ -19,8 +19,8 @@
 		"python.linting.enabled": true,
 		"python.linting.pylintEnabled": true,
 		"python.formatting.provider": "black",
-    	"editor.formatOnType": true,
-		"files.trimTrailingWhitespace": true,
+		"editor.formatOnType": true,
+		"files.trimTrailingWhitespace": true
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.

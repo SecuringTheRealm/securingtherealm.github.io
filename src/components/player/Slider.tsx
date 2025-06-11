@@ -1,27 +1,27 @@
+import clsx from "clsx";
 import { useRef } from "react";
 import {
+	VisuallyHidden,
 	mergeProps,
 	useFocusRing,
 	useSlider,
 	useSliderThumb,
-	VisuallyHidden,
 } from "react-aria";
 import {
 	type SliderState,
 	type SliderStateOptions,
 	useSliderState,
 } from "react-stately";
-import clsx from "clsx";
 
 function parseTime(seconds: number) {
-	let hours = Math.floor(seconds / 3600);
-	let minutes = Math.floor((seconds - hours * 3600) / 60);
-	seconds = seconds - hours * 3600 - minutes * 60;
-	return [hours, minutes, seconds];
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds - hours * 3600) / 60);
+	const remaining = seconds - hours * 3600 - minutes * 60;
+	return [hours, minutes, remaining];
 }
 
 function formatTime(seconds: Array<number>, totalSeconds = seconds) {
-	let totalWithoutLeadingZeroes = totalSeconds.slice(
+	const totalWithoutLeadingZeroes = totalSeconds.slice(
 		totalSeconds.findIndex((x) => x !== 0),
 	);
 	return seconds
@@ -38,9 +38,9 @@ function Thumb(props: {
 	focusProps: ReturnType<typeof useFocusRing>["focusProps"];
 	onChangeStart?: () => void;
 }) {
-	let { state, trackRef, focusProps, isFocusVisible, index } = props;
-	let inputRef = useRef<React.ElementRef<"input">>(null);
-	let { thumbProps, inputProps } = useSliderThumb(
+	const { state, trackRef, focusProps, isFocusVisible, index } = props;
+	const inputRef = useRef<React.ElementRef<"input">>(null);
+	const { thumbProps, inputProps } = useSliderThumb(
 		{ index, trackRef, inputRef },
 		state,
 	);
@@ -80,17 +80,17 @@ function Thumb(props: {
 export function Slider(
 	props: SliderStateOptions<Array<number>> & { onChangeStart?: () => void },
 ) {
-	let trackRef = useRef<React.ElementRef<"div">>(null);
-	let state = useSliderState(props);
-	let { groupProps, trackProps, labelProps, outputProps } = useSlider(
+	const trackRef = useRef<React.ElementRef<"div">>(null);
+	const state = useSliderState(props);
+	const { groupProps, trackProps, labelProps, outputProps } = useSlider(
 		props,
 		state,
 		trackRef,
 	);
-	let { focusProps, isFocusVisible } = useFocusRing();
+	const { focusProps, isFocusVisible } = useFocusRing();
 
-	let currentTime = parseTime(state.getThumbValue(0));
-	let totalTime = parseTime(state.getThumbMaxValue(0));
+	const currentTime = parseTime(state.getThumbValue(0));
+	const totalTime = parseTime(state.getThumbMaxValue(0));
 
 	return (
 		<div
@@ -98,9 +98,9 @@ export function Slider(
 			className="absolute inset-x-0 bottom-full flex flex-auto touch-none items-center gap-6 md:relative"
 		>
 			{props.label && (
-				<label className="sr-only" {...labelProps}>
+				<span className="sr-only" {...labelProps}>
 					{props.label}
-				</label>
+				</span>
 			)}
 			<div
 				{...trackProps}
