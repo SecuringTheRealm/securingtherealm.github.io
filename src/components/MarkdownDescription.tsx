@@ -6,6 +6,11 @@ interface MarkdownDescriptionProps {
 }
 
 export function MarkdownDescription({ description, className = '' }: MarkdownDescriptionProps) {
+  // Handle empty or undefined descriptions
+  if (!description || description.trim() === '') {
+    return null
+  }
+
   return (
     <div className={className}>
       <ReactMarkdown
