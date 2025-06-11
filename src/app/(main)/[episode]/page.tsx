@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { Container } from '@/components/Container'
 import { EpisodePlayButton } from '@/components/EpisodePlayButton'
 import { FormattedDate } from '@/components/FormattedDate'
+import { MarkdownDescription } from '@/components/MarkdownDescription'
 import { PauseIcon } from '@/components/PauseIcon'
 import { PlayIcon } from '@/components/PlayIcon'
 import { getAllEpisodes } from '@/lib/episodes'
@@ -72,9 +73,10 @@ export default async function Episode({
               />
             </div>
           </div>
-          <p className="mt-3 ml-24 text-lg/8 font-medium text-slate-700">
-            {episode.description}
-          </p>
+          <MarkdownDescription
+            description={episode.description}
+            className="mt-3 ml-24 text-lg/8 font-medium text-slate-700"
+          />
         </header>
         <hr className="my-12 border-gray-200" />
         <div
