@@ -19,6 +19,9 @@ To get started with this template, first install the npm dependencies:
 npm install
 ```
 
+This project uses `react-markdown` to render episode descriptions. Ensure the
+dependency is installed by running the command above.
+
 Next, run the development server:
 
 ```bash

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import ReactMarkdown from "react-markdown";
 import type { Episode } from "../lib/episodes";
 import { Container } from "./Container";
 import { EpisodePlayButton } from "./EpisodePlayButton";
@@ -38,9 +39,9 @@ export const EpisodeEntry: FC<{ episode: Episode }> = ({ episode }) => {
 						date={date}
 						className="order-first font-mono text-sm leading-7 text-slate-500"
 					/>
-					<p className="mt-1 text-base leading-7 text-slate-700">
+					<ReactMarkdown className="prose mt-1 text-slate-700">
 						{episode.description}
-					</p>
+					</ReactMarkdown>
 					<div className="mt-4 flex flex-col items-start gap-2">
 						<EpisodePlayButton videoId={getVideoId(episode.url)} />
 						<a
