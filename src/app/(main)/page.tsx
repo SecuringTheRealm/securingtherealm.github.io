@@ -1,9 +1,9 @@
 import Link from 'next/link'
 
 import { Container } from '@/components/Container'
-import { EpisodePlayButton } from '@/components/EpisodePlayButton'
 import { FormattedDate } from '@/components/FormattedDate'
 import { MarkdownDescription } from '@/components/MarkdownDescription'
+import { YouTubeEmbed } from '@/components/YouTubeEmbed'
 import { type Episode, getAllEpisodes } from '@/lib/episodes'
 
 function PauseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
@@ -50,8 +50,17 @@ function EpisodeEntry({ episode }: { episode: Episode }) {
             description={episode.description}
             className="mt-1 text-base/7 text-slate-700"
           />
+          
+          {/* YouTube Embed */}
+          <div className="mt-4 w-full max-w-2xl">
+            <YouTubeEmbed 
+              url={episode.url} 
+              title={episode.title}
+              className="aspect-video"
+            />
+          </div>
+          
           <div className="mt-4 flex items-center gap-4">
-            
             <Link
               href={`${episode.url}`}
               target='_blank'
