@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Container } from '@/components/Container'
 import { EpisodePlayButton } from '@/components/EpisodePlayButton'
 import { FormattedDate } from '@/components/FormattedDate'
+import { MarkdownDescription } from '@/components/MarkdownDescription'
 import { type Episode, getAllEpisodes } from '@/lib/episodes'
 
 function PauseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
@@ -45,9 +46,10 @@ function EpisodeEntry({ episode }: { episode: Episode }) {
             date={date}
             className="order-first font-mono text-sm/7 text-slate-500"
           />
-          <p className="mt-1 text-base/7 text-slate-700">
-            {episode.description}
-          </p>
+          <MarkdownDescription
+            description={episode.description}
+            className="mt-1 text-base/7 text-slate-700"
+          />
           <div className="mt-4 flex items-center gap-4">
             
             <Link
