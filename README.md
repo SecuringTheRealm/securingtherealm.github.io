@@ -27,6 +27,20 @@ npm run dev
 
 Finally, open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
 
+### Testing
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+Or run tests in watch mode during development:
+
+```bash
+npm run test:watch
+```
+
 ## License
 
 The underlying site template is produced based on the [Tailwind Plus license](https://tailwindcss.com/plus/license). All other code is MIT licenced.
