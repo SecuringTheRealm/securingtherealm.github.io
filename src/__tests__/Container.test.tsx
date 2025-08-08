@@ -6,9 +6,9 @@ describe('Container', () => {
     render(
       <Container>
         <div>Test content</div>
-      </Container>
+      </Container>,
     )
-    
+
     expect(screen.getByText('Test content')).toBeInTheDocument()
   })
 
@@ -16,9 +16,9 @@ describe('Container', () => {
     render(
       <Container className="custom-class">
         <div>Test content</div>
-      </Container>
+      </Container>,
     )
-    
+
     const container = screen.getByText('Test content').closest('.custom-class')
     expect(container).toBeInTheDocument()
   })
@@ -27,9 +27,9 @@ describe('Container', () => {
     render(
       <Container data-testid="container">
         <div>Test content</div>
-      </Container>
+      </Container>,
     )
-    
+
     const container = screen.getByTestId('container')
     expect(container).toHaveClass('lg:px-8')
   })

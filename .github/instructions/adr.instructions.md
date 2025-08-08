@@ -1,5 +1,5 @@
 ---
-applyTo: "**/docs/adr/*.md"
+applyTo: '**/docs/adr/*.md'
 ---
 
 # ADR Processing Guidelines for AI Agents

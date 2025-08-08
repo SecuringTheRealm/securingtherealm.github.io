@@ -38,4 +38,3 @@ This repository uses **TypeScript** and **Next.js**. Use the practices below whe
 
 - Use **Biome** for linting and formatting. Run `biome check .` and `biome format .` before committing.
 - You can also run `npm run lint` to execute the Next.js lint configuration.
-

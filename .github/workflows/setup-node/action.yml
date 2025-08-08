@@ -1,9 +1,9 @@
 # File: .github/workflows/setup-node/action.yml
 # Credit: https://www.freecodecamp.org/news/how-to-deploy-next-js-app-to-github-pages/
 name: setup-node
-description: "Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧"
+description: 'Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧'
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Setup Node.js ⚙️
       uses: actions/setup-node@v4

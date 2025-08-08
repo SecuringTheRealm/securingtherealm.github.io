@@ -40,7 +40,9 @@ function EpisodeEntry({ episode }: { episode: Episode }) {
             id={`episode-${episode.id}-title`}
             className="mt-2 text-lg font-bold text-slate-900"
           >
-            <Link href={`${episode.url}`} target='_blank'>{episode.title}</Link>
+            <Link href={`${episode.url}`} target="_blank">
+              {episode.title}
+            </Link>
           </h2>
           <FormattedDate
             date={date}
@@ -50,25 +52,14 @@ function EpisodeEntry({ episode }: { episode: Episode }) {
             description={episode.description}
             className="mt-1 text-base/7 text-slate-700"
           />
-          
+
           {/* YouTube Embed */}
           <div className="mt-4 w-full max-w-2xl">
-            <YouTubeEmbed 
-              url={episode.url} 
+            <YouTubeEmbed
+              url={episode.url}
               title={episode.title}
               className="aspect-video"
             />
-          </div>
-          
-          <div className="mt-4 flex items-center gap-4">
-            <Link
-              href={`${episode.url}`}
-              target='_blank'
-              className="flex items-center text-sm/6 font-bold text-pink-500 hover:text-pink-700 active:text-pink-900"
-              aria-label={`Watch episode ${episode.title} on YouTube`}
-            > 
-              <PlayIcon className="h-2.5 w-2.5 fill-current"  aria-hidden="true" />&nbsp;Open on YouTube
-            </Link>
           </div>
         </div>
       </Container>
