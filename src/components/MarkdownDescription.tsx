@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 import remarkBreaks from 'remark-breaks'
+import { ReactNode, AnchorHTMLAttributes, HTMLAttributes } from 'react'
 
 interface MarkdownDescriptionProps {
   description: string
@@ -14,7 +15,7 @@ export function MarkdownDescription({ description, className = '' }: MarkdownDes
 
   const markdownComponents = {
     // Style links to match the design
-    a: ({ children, href, ...props }) => (
+    a: ({ children, href, ...props }: AnchorHTMLAttributes<HTMLAnchorElement> & { children?: ReactNode }) => (
       <a
         href={href}
         className="text-pink-500 hover:text-pink-700 underline"
@@ -26,39 +27,39 @@ export function MarkdownDescription({ description, className = '' }: MarkdownDes
       </a>
     ),
     // Style lists with proper spacing and inherit text styles
-    ul: ({ children, ...props }) => (
+    ul: ({ children, ...props }: HTMLAttributes<HTMLUListElement> & { children?: ReactNode }) => (
       <ul className="list-disc list-inside space-y-1 mt-2" {...props}>
         {children}
       </ul>
     ),
-    ol: ({ children, ...props }) => (
+    ol: ({ children, ...props }: HTMLAttributes<HTMLOListElement> & { children?: ReactNode }) => (
       <ol className="list-decimal list-inside space-y-1 mt-2" {...props}>
         {children}
       </ol>
     ),
-    li: ({ children, ...props }) => (
+    li: ({ children, ...props }: HTMLAttributes<HTMLLIElement> & { children?: ReactNode }) => (
       <li className="text-inherit" {...props}>
         {children}
       </li>
     ),
     // Handle paragraphs inline for description context
-    p: ({ children, ...props }) => (
+    p: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement> & { children?: ReactNode }) => (
       <span {...props}>
         {children}
       </span>
     ),
     // Style emphasis and strong text
-    em: ({ children, ...props }) => (
+    em: ({ children, ...props }: HTMLAttributes<HTMLElement> & { children?: ReactNode }) => (
       <em className="italic" {...props}>
         {children}
       </em>
     ),
-    strong: ({ children, ...props }) => (
+    strong: ({ children, ...props }: HTMLAttributes<HTMLElement> & { children?: ReactNode }) => (
       <strong className="font-semibold" {...props}>
         {children}
       </strong>
     ),
-  } as const
+  }
 
   const chaptersMatch = description.match(/(^|\n)Chapters\n((?:\d{1,2}:\d{2}(?::\d{2})? .*\n?)+)/i)
 
