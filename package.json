@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-markdown": "^10.1.0",
     "react-stately": "^3.17.0",
+    "remark-breaks": "^4.0.0",
     "rss-to-json": "^2.1.0",
     "tailwindcss": "^4.0.15",
     "typescript": "^5.3.3",
