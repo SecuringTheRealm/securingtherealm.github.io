@@ -44,18 +44,27 @@ export default function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-
   return (
     <>
       <header className="bg-slate-50 lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-112 lg:items-start lg:overflow-y-auto xl:w-120">
         <div className="hidden lg:sticky lg:top-0 lg:flex lg:w-16 lg:flex-none lg:items-center lg:px-12 lg:text-sm/7 lg:whitespace-nowrap lg:[writing-mode:vertical-rl]">
           <span className="font-mono text-slate-500">Hosted by</span>
           <span className="mt-6 flex gap-6 font-bold text-slate-900">
-            <Link href="https://www.linkedin.com/in/chrislloydjones/" target="_blank">Chris Lloyd-Jones</Link>
+            <Link
+              href="https://www.linkedin.com/in/chrislloydjones/"
+              target="_blank"
+            >
+              Chris Lloyd-Jones
+            </Link>
             <span aria-hidden="true" className="text-slate-400">
               /
             </span>
-            <Link href="https://www.linkedin.com/in/joshmcdonalduk/" target="_blank">Josh McDonald</Link>
+            <Link
+              href="https://www.linkedin.com/in/joshmcdonalduk/"
+              target="_blank"
+            >
+              Josh McDonald
+            </Link>
           </span>
         </div>
         <div className="relative z-10 mx-auto px-4 pt-10 pb-4 sm:px-6 md:max-w-2xl md:px-4 lg:min-h-full lg:flex-auto lg:border-x lg:border-slate-200 lg:px-8 lg:py-12 xl:px-12">
@@ -78,7 +87,8 @@ export default function MainLayout({
               <Link href="/">Securing the Realm</Link>
             </p>
             <p className="mt-3 text-lg/8 font-medium text-slate-700">
-              Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.
+              Cybersecurity, Azure innovation, and Microsoft AI converge with
+              the enchanting world of tabletop games.
             </p>
           </div>
           <AboutSection className="mt-12 hidden lg:block" />
@@ -100,7 +110,7 @@ export default function MainLayout({
                   href="https://www.youtube.com/@SecuringTheRealm"
                   className="group flex items-center"
                   aria-label="YouTube"
-                  target='_blank'
+                  target="_blank"
                 >
                   <YouTubeIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
                   <span className="hidden sm:ml-3 sm:block">YouTube</span>
@@ -111,7 +121,7 @@ export default function MainLayout({
                   href="https://www.linkedin.com/company/securingtherealm/"
                   className="group flex items-center"
                   aria-label="LinkedIn"
-                  target='_blank'
+                  target="_blank"
                 >
                   <LinkedInIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
                   <span className="hidden sm:ml-3 sm:block">LinkedIn</span>
@@ -122,7 +132,7 @@ export default function MainLayout({
                   href="https://github.com/SecuringTheRealm"
                   className="group flex items-center"
                   aria-label="GitHub"
-                  target='_blank'
+                  target="_blank"
                 >
                   <GitHubIcon className="h-8 w-8 fill-slate-400 group-hover:fill-slate-600" />
                   <span className="hidden sm:ml-3 sm:block">GitHub</span>
@@ -144,11 +154,21 @@ export default function MainLayout({
             <span className="ml-2.5">Hosted by</span>
           </h2>
           <div className="mt-2 flex gap-6 text-sm/7 font-bold text-slate-900">
-            <Link href="https://www.linkedin.com/in/chrislloydjones/" target="_blank">Chris Lloyd-Jones</Link>
+            <Link
+              href="https://www.linkedin.com/in/chrislloydjones/"
+              target="_blank"
+            >
+              Chris Lloyd-Jones
+            </Link>
             <span aria-hidden="true" className="text-slate-400">
               /
             </span>
-            <Link href="https://www.linkedin.com/in/joshmcdonalduk/" target="_blank">Josh McDonald</Link>
+            <Link
+              href="https://www.linkedin.com/in/joshmcdonalduk/"
+              target="_blank"
+            >
+              Josh McDonald
+            </Link>
           </div>
         </div>
       </footer>

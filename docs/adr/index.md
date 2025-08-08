@@ -14,10 +14,9 @@ This directory contains Architecture Decision Records (ADRs) for the Agentic Adv
 
 ## Decision Log
 
-| Number | Title | Status | Date | Description |
-|--------|-------|--------|------|-------------|
-| 0000 | [Using ADRs](template.md) | Accepted | 2025-06-10 | Template for architecture decisions |
-
+| Number | Title                     | Status   | Date       | Description                         |
+| ------ | ------------------------- | -------- | ---------- | ----------------------------------- |
+| 0000   | [Using ADRs](template.md) | Accepted | 2025-06-10 | Template for architecture decisions |
 
 ## ADR Statuses
 

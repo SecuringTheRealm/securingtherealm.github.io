@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import { MarkdownDescription } from '../components/MarkdownDescription'
 
-const mockReactMarkdown = jest.fn(({ children }: { children: React.ReactNode }) => (
-  <div>{children}</div>
-))
+const mockReactMarkdown = jest.fn(
+  ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+)
 
 jest.mock('react-markdown', () => ({
   __esModule: true,
