@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown'
+import remarkBreaks from 'remark-breaks'
 
 interface MarkdownDescriptionProps {
   description: string
@@ -14,6 +15,7 @@ export function MarkdownDescription({ description, className = '' }: MarkdownDes
   return (
     <div className={className}>
       <ReactMarkdown
+        remarkPlugins={[remarkBreaks]}
         components={{
           // Style links to match the design
           a: ({ children, href, ...props }) => (
