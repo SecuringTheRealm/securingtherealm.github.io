@@ -1,13 +1,17 @@
 import { render, screen } from '@testing-library/react'
 import { MarkdownDescription } from '../components/MarkdownDescription'
 
+const mockReactMarkdown = jest.fn(({ children }: { children: React.ReactNode }) => (
+  <div>{children}</div>
+))
+
 jest.mock('react-markdown', () => ({
   __esModule: true,
-  default: ({ children }: { children: React.ReactNode }) => (
-    <div>{children}</div>
-  ),
+  default: (props: any) => mockReactMarkdown(props),
 }))
+
 jest.mock('remark-breaks', () => () => null)
+jest.mock('remark-gfm', () => () => null)
 
 describe('MarkdownDescription', () => {
   it('renders basic text', () => {
@@ -28,5 +32,16 @@ describe('MarkdownDescription', () => {
 
     expect(screen.getByText('00:00 Start')).toBeInTheDocument()
     expect(screen.getByText('01:00 Middle')).toBeInTheDocument()
+  })
+
+  it('uses GFM and break plugins with block paragraphs', () => {
+    render(<MarkdownDescription description="Line one\nhttps://example.com" />)
+
+    const props = mockReactMarkdown.mock.calls[0][0]
+    expect(props.remarkPlugins).toHaveLength(2)
+
+    const Paragraph = props.components.p
+    const { container } = render(<Paragraph>text</Paragraph>)
+    expect(container.querySelector('p')).not.toBeNull()
   })
 })
