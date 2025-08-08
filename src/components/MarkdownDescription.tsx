@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 import remarkBreaks from 'remark-breaks'
+import remarkGfm from 'remark-gfm'
 import { ReactNode, AnchorHTMLAttributes, HTMLAttributes } from 'react'
 
 interface MarkdownDescriptionProps {
@@ -42,11 +43,11 @@ export function MarkdownDescription({ description, className = '' }: MarkdownDes
         {children}
       </li>
     ),
-    // Handle paragraphs inline for description context
+    // Ensure paragraphs render on separate lines
     p: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement> & { children?: ReactNode }) => (
-      <span {...props}>
+      <p className="mt-2 first:mt-0" {...props}>
         {children}
-      </span>
+      </p>
     ),
     // Style emphasis and strong text
     em: ({ children, ...props }: HTMLAttributes<HTMLElement> & { children?: ReactNode }) => (
@@ -84,7 +85,7 @@ export function MarkdownDescription({ description, className = '' }: MarkdownDes
     <div className={className}>
       {preText && (
         <ReactMarkdown
-          remarkPlugins={[remarkBreaks]}
+          remarkPlugins={[remarkBreaks, remarkGfm]}
           components={markdownComponents}
         >
           {preText}
@@ -104,7 +105,7 @@ export function MarkdownDescription({ description, className = '' }: MarkdownDes
       )}
       {postText && (
         <ReactMarkdown
-          remarkPlugins={[remarkBreaks]}
+          remarkPlugins={[remarkBreaks, remarkGfm]}
           components={markdownComponents}
         >
           {postText}
