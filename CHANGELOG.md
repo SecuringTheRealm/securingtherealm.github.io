@@ -1,5 +1,9 @@
 # Changelog
 
+## 2025-08-08
+
+- Render video chapters as collapsible section
+
 ## 2025-03-22
 
 - Update template to Tailwind CSS v4.0.15
