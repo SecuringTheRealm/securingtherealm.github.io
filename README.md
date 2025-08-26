@@ -45,6 +45,7 @@ npm run test:watch
 ## License
 
 The underlying site template is produced based on the [Tailwind Plus license](https://tailwindcss.com/plus/license). All other code is MIT licenced.
+Apple Podcasts icon provided by [Simple Icons](https://simpleicons.org/) via [react-icons](https://react-icons.github.io/react-icons/) under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
 Content is released under CC BY-SA 4.0 Attribution-ShareAlike 4.0 International https://creativecommons.org/licenses/by-sa/4.0/.
 
 ## Learn more
