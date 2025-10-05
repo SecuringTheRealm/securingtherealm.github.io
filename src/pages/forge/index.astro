@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const allProjects = await getCollection('projects');
+const activeProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.data.status === 'active');
+const otherProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.data.status !== 'active');
+---
+
+<Base title="Forge - Projects & Code">
+  <div class="container" style="padding: var(--space-16) var(--space-4);">
+    <h1 style="text-align: center; margin-bottom: var(--space-8);">⚒️ The Forge</h1>
+    <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto var(--space-12) auto;">
+      Explore open-source projects, code repositories, and tools crafted in the forge.
+    </p>
+
+    {activeProjects.length > 0 && (
+      <section style="max-width: 900px; margin: 0 auto var(--space-12) auto;">
+        <h2 style="text-align: center; margin-bottom: var(--space-6);">Active Projects</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6);">
+          {activeProjects.map((project: CollectionEntry<'projects'>) => (
+            <article style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer);">
+              <h3 style="margin-bottom: var(--space-3);">{project.data.name}</h3>
+              <p style="margin-bottom: var(--space-4);">{project.data.description}</p>
+              
+              {project.data.tech.length > 0 && (
+                <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4);">
+                  {project.data.tech.map((tech: string) => (
+                    <span style="font-size: var(--font-size-xs); padding: var(--space-1) var(--space-2); background: var(--colour-teal-light); color: var(--colour-parchment); border-radius: var(--radius-sm);">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              <a href={project.data.repoUrl} target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: var(--space-2) var(--space-4); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-md); font-weight: var(--font-weight-bold);">
+                View on GitHub →
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {otherProjects.length > 0 && (
+      <section style="max-width: 900px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: var(--space-6);">Other Projects</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6);">
+          {otherProjects.map((project: CollectionEntry<'projects'>) => (
+            <article style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-stone); border-radius: var(--radius-outer); opacity: 0.8;">
+              <h3 style="margin-bottom: var(--space-3);">{project.data.name}</h3>
+              <p style="font-size: var(--font-size-sm); color: var(--colour-stone-light); margin-bottom: var(--space-2);">
+                Status: {project.data.status}
+              </p>
+              <p style="margin-bottom: var(--space-4);">{project.data.description}</p>
+              
+              <a href={project.data.repoUrl} target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: var(--space-2) var(--space-4); background: transparent; color: var(--colour-gold); border: 2px solid var(--colour-gold); border-radius: var(--radius-md); font-weight: var(--font-weight-bold);">
+                View on GitHub →
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</Base>

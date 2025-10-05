@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const allTalks = await getCollection('talks');
+const sortedTalks = allTalks.sort((a: CollectionEntry<'talks'>, b: CollectionEntry<'talks'>) => 
+  b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function getYouTubeEmbedUrl(url: string | undefined): string | null {
+  if (!url) return null;
+  const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)?.[1];
+  return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : null;
+}
+
+// Pre-process talks with embed URLs
+const talksWithEmbeds = sortedTalks.map((talk: CollectionEntry<'talks'>) => ({
+  ...talk,
+  embedUrl: getYouTubeEmbedUrl(talk.data.videoUrl)
+}));
+
+type TalkWithEmbed = CollectionEntry<'talks'> & { embedUrl: string | null };
+---
+
+<Base title="Tower - Talks & Presentations">
+  <div class="container" style="padding: var(--space-16) var(--space-4);">
+    <h1 style="text-align: center; margin-bottom: var(--space-8);">🏰 The Tower</h1>
+    <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto var(--space-12) auto;">
+      Watch talks, presentations, and video content from conferences and events.
+    </p>
+
+    <div style="max-width: 900px; margin: 0 auto;">
+      {talksWithEmbeds.map((talk: TalkWithEmbed) => (
+        <article style="margin-bottom: var(--space-12); padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer);">
+          <h2 style="margin-bottom: var(--space-3);">{talk.data.title}</h2>
+          <p style="font-size: var(--font-size-sm); color: var(--colour-stone-light); margin-bottom: var(--space-2);">
+            {talk.data.event} • {talk.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+          <p style="margin-bottom: var(--space-4);">{talk.data.summary}</p>
+          
+          {talk.embedUrl && (
+            <div style="margin-bottom: var(--space-4); aspect-ratio: 16/9; background: black; border-radius: var(--radius-md); overflow: hidden;">
+              <iframe
+                width="100%"
+                height="100%"
+                src={talk.embedUrl}
+                title={talk.data.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          )}
+          
+          <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+            {talk.data.videoUrl && !talk.embedUrl && (
+              <a href={talk.data.videoUrl} target="_blank" rel="noopener noreferrer" style="padding: var(--space-2) var(--space-4); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-md); font-weight: var(--font-weight-bold);">
+                🎥 Watch Video
+              </a>
+            )}
+            {talk.data.slidesUrl && (
+              <a href={talk.data.slidesUrl} target="_blank" rel="noopener noreferrer" style="padding: var(--space-2) var(--space-4); background: transparent; color: var(--colour-gold); border: 2px solid var(--colour-gold); border-radius: var(--radius-md); font-weight: var(--font-weight-bold);">
+                📊 View Slides
+              </a>
+            )}
+          </div>
+          
+          {talk.data.tags.length > 0 && (
+            <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4);">
+              {talk.data.tags.map((tag: string) => (
+                <span style="font-size: var(--font-size-sm); padding: var(--space-1) var(--space-3); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-full);">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>

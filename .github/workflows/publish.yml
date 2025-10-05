@@ -64,18 +64,16 @@ jobs:
       - name: Setup Pages ⚙️
         if: steps.diff.outputs.changed == 'true'
         uses: actions/configure-pages@v4
-        with:
-          static_site_generator: next
 
-      - name: Build with Next.js 🏗️
+      - name: Build with Astro 🏗️
         if: steps.diff.outputs.changed == 'true'
-        run: npx next build
+        run: npm run build
 
       - name: Upload artifact 📡
         if: steps.diff.outputs.changed == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./dist
 
   deploy:
     environment:
