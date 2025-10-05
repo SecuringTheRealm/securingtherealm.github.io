@@ -1,0 +1,8 @@
+{
+  "title": "Azure Security Best Practices: Defending Your Cloud Kingdom",
+  "date": "2024-09-20",
+  "event": "Azure Community Day",
+  "videoUrl": "https://www.youtube.com/watch?v=example1",
+  "summary": "Explore essential security practices for Azure deployments, including identity management, network security, and monitoring. Learn how to build a secure cloud infrastructure that protects your digital realm.",
+  "tags": ["Azure", "Security", "Cloud", "Best Practices"]
+}
