@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import CastleScene from '../components/CastleScene.astro';
 ---
 
 <Base title="Securing the Realm - Castle Gate">
@@ -13,6 +14,12 @@ import Base from '../layouts/Base.astro';
     </section>
 
     <section style="margin-bottom: var(--space-16);">
+      <!-- Interactive Castle Scene -->
+      <div style="max-width: 1200px; margin: 0 auto var(--space-12) auto;">
+        <CastleScene />
+      </div>
+      
+      <!-- Text-based Navigation Fallback -->
       <h2 style="text-align: center; margin-bottom: var(--space-8);">Explore the Realm</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-6);">
         

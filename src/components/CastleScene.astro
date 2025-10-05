@@ -1,0 +1,163 @@
+---
+// Interactive SVG castle scene for homepage
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 1200 600"
+  class={className}
+  role="img"
+  aria-label="Interactive castle map with clickable areas for navigation"
+  style="width: 100%; height: auto; max-height: 600px;"
+>
+  <title>Castle Navigation Map</title>
+  <desc>An interactive 8-bit style castle with four sections: Tower for talks, Library for blog, Forge for projects, and Arcane Scrolls for newsletter</desc>
+  
+  <!-- Sky/Background -->
+  <rect width="1200" height="600" fill="#0a2730" />
+  
+  <!-- Ground -->
+  <rect y="450" width="1200" height="150" fill="#1a3a3a" />
+  
+  <!-- Castle Wall (main structure) -->
+  <rect x="150" y="300" width="900" height="150" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" />
+  
+  <!-- Left Tower (Talks) -->
+  <a href="/talks/" aria-label="Visit the Tower to watch talks and presentations" class="castle-section" data-section="tower">
+    <g class="tower-group">
+      <!-- Tower body -->
+      <rect x="200" y="150" width="180" height="300" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" class="tower-main" />
+      <!-- Battlements -->
+      <rect x="200" y="150" width="40" height="30" fill="var(--colour-teal-dark)" />
+      <rect x="260" y="150" width="40" height="30" fill="var(--colour-teal-dark)" />
+      <rect x="320" y="150" width="40" height="30" fill="var(--colour-teal-dark)" />
+      <!-- Windows -->
+      <rect x="245" y="220" width="30" height="40" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <rect x="305" y="220" width="30" height="40" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <rect x="275" y="300" width="30" height="40" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <!-- Door -->
+      <rect x="260" y="380" width="60" height="70" fill="var(--colour-stone-dark)" rx="30" ry="0" />
+      <!-- Icon -->
+      <text x="290" y="200" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">🏰</text>
+      <text x="290" y="340" text-anchor="middle" fill="var(--colour-parchment)" font-size="14" font-family="'Press Start 2P', monospace">TOWER</text>
+    </g>
+  </a>
+  
+  <!-- Library (Blog) -->
+  <a href="/blog/" aria-label="Enter the Library to read blog posts and articles" class="castle-section" data-section="library">
+    <g class="library-group">
+      <!-- Library building -->
+      <rect x="450" y="230" width="200" height="220" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" class="library-main" />
+      <!-- Roof -->
+      <polygon points="450,230 550,180 650,230" fill="var(--colour-stone)" stroke="var(--colour-stone-dark)" stroke-width="3" />
+      <!-- Windows -->
+      <rect x="480" y="280" width="60" height="50" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <rect x="580" y="280" width="60" height="50" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <rect x="480" y="360" width="60" height="50" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <rect x="580" y="360" width="60" height="50" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <!-- Door -->
+      <rect x="525" y="390" width="50" height="60" fill="var(--colour-stone-dark)" rx="5" />
+      <!-- Icon -->
+      <text x="550" y="260" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">📚</text>
+    </g>
+  </a>
+  
+  <!-- Forge (Projects) -->
+  <a href="/forge/" aria-label="Visit the Forge to see code projects and repositories" class="castle-section" data-section="forge">
+    <g class="forge-group">
+      <!-- Forge building -->
+      <rect x="720" y="250" width="180" height="200" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" class="forge-main" />
+      <!-- Chimney with smoke -->
+      <rect x="850" y="200" width="30" height="50" fill="var(--colour-stone-dark)" />
+      <!-- Smoke -->
+      <circle cx="865" cy="180" r="15" fill="#888" opacity="0.3" class="smoke" />
+      <circle cx="870" cy="160" r="18" fill="#888" opacity="0.2" class="smoke" />
+      <!-- Anvil window -->
+      <rect x="740" y="300" width="60" height="60" fill="var(--colour-gold)" opacity="0.4" class="window" />
+      <rect x="820" y="300" width="60" height="60" fill="var(--colour-gold)" opacity="0.4" class="window" />
+      <!-- Door -->
+      <rect x="765" y="380" width="70" height="70" fill="var(--colour-stone-dark)" rx="8" />
+      <!-- Icon -->
+      <text x="810" y="340" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">⚒️</text>
+    </g>
+  </a>
+  
+  <!-- Arcane Scrolls (Newsletter) -->
+  <a href="/newsletter/" aria-label="Visit Arcane Scrolls to subscribe to the newsletter" class="castle-section" data-section="scrolls">
+    <g class="scrolls-group">
+      <!-- Scrolls tower -->
+      <rect x="970" y="200" width="160" height="250" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" class="scrolls-main" />
+      <!-- Battlements -->
+      <rect x="970" y="200" width="35" height="25" fill="var(--colour-teal-dark)" />
+      <rect x="1020" y="200" width="35" height="25" fill="var(--colour-teal-dark)" />
+      <rect x="1070" y="200" width="35" height="25" fill="var(--colour-teal-dark)" />
+      <!-- Windows -->
+      <rect x="1000" y="260" width="35" height="45" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <rect x="1075" y="260" width="35" height="45" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <rect x="1037" y="340" width="35" height="45" fill="var(--colour-gold)" opacity="0.3" class="window" />
+      <!-- Door -->
+      <rect x="1020" y="390" width="60" height="60" fill="var(--colour-stone-dark)" rx="5" />
+      <!-- Icon -->
+      <text x="1050" y="250" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">📜</text>
+    </g>
+  </a>
+</svg>
+
+<style>
+  .castle-section {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .castle-section:hover .tower-main,
+  .castle-section:hover .library-main,
+  .castle-section:hover .forge-main,
+  .castle-section:hover .scrolls-main {
+    fill: var(--colour-teal-light);
+    filter: drop-shadow(0 0 15px var(--colour-gold));
+  }
+  
+  .castle-section:hover .window {
+    opacity: 0.8;
+    fill: var(--colour-gold-light);
+  }
+  
+  .castle-section:focus {
+    outline: 3px solid var(--colour-gold);
+    outline-offset: 4px;
+  }
+  
+  .castle-section:focus .tower-main,
+  .castle-section:focus .library-main,
+  .castle-section:focus .forge-main,
+  .castle-section:focus .scrolls-main {
+    stroke: var(--colour-gold);
+    stroke-width: 6;
+  }
+  
+  @keyframes smokeRise {
+    0% { transform: translateY(0); opacity: 0.3; }
+    100% { transform: translateY(-20px); opacity: 0; }
+  }
+  
+  .smoke {
+    animation: smokeRise 3s ease-in-out infinite;
+  }
+  
+  .smoke:nth-child(2) {
+    animation-delay: 1.5s;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .castle-section {
+      transition: none;
+    }
+    .smoke {
+      animation: none;
+    }
+  }
+</style>
