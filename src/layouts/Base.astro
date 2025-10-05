@@ -1,17 +1,24 @@
 ---
 import '../styles/global.css';
+import Seo from '../components/Seo.astro';
 
 export interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  article?: boolean;
+  publishDate?: Date;
+  tags?: string[];
 }
 
 const { 
   title = 'Securing the Realm', 
-  description = 'Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.'
+  description = 'Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.',
+  image,
+  article,
+  publishDate,
+  tags
 } = Astro.props;
-
-const fullTitle = title === 'Securing the Realm' ? title : `${title} - Securing the Realm`;
 ---
 
 <!DOCTYPE html>
@@ -19,25 +26,20 @@ const fullTitle = title === 'Securing the Realm' ? title : `${title} - Securing 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={fullTitle} />
-    <meta property="twitter:description" content={description} />
-    
-    <title>{fullTitle}</title>
+    <!-- SEO and Meta Tags -->
+    <Seo 
+      title={title}
+      description={description}
+      image={image}
+      article={article}
+      publishDate={publishDate}
+      tags={tags}
+    />
   </head>
   <body>
     <a href="#content" class="skip-link">Skip to content</a>

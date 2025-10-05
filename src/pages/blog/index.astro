@@ -15,9 +15,14 @@ const sortedPosts = allBlogPosts.sort((a: CollectionEntry<'blog'>, b: Collection
 <Base title="Library - Blog Posts">
   <div class="container" style="padding: var(--space-16) var(--space-4);">
     <h1 style="text-align: center; margin-bottom: var(--space-8);">📚 The Library</h1>
-    <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto var(--space-12) auto;">
+    <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto var(--space-6) auto;">
       Welcome to the Library, where we document our adventures in technology, security, and AI.
     </p>
+    <div style="text-align: center; margin-bottom: var(--space-12);">
+      <a href="/blog/rss.xml" style="font-size: var(--font-size-sm); padding: var(--space-2) var(--space-4); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-full); font-weight: var(--font-weight-bold);">
+        📡 RSS Feed
+      </a>
+    </div>
 
     <div style="max-width: 900px; margin: 0 auto;">
       {sortedPosts.map((post: CollectionEntry<'blog'>) => (
