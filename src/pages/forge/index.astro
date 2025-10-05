@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import ForgeIcon from '../../components/ForgeIcon.astro';
 
 const allProjects = await getCollection('projects');
 const activeProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.data.status === 'active');
@@ -10,10 +11,13 @@ const otherProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.d
 
 <Base title="Forge - Projects & Code">
   <div class="container" style="padding: var(--space-16) var(--space-4);">
-    <h1 style="text-align: center; margin-bottom: var(--space-8);">⚒️ The Forge</h1>
-    <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto var(--space-12) auto;">
-      Explore open-source projects, code repositories, and tools crafted in the forge.
-    </p>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: var(--space-12);">
+      <ForgeIcon />
+      <h1 style="text-align: center; margin-top: var(--space-6); margin-bottom: var(--space-4);">⚒️ The Forge</h1>
+      <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto;">
+        Explore open-source projects, code repositories, and tools crafted in the forge.
+      </p>
+    </div>
 
     {activeProjects.length > 0 && (
       <section style="max-width: 900px; margin: 0 auto var(--space-12) auto;">

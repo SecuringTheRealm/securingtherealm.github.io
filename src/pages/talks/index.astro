@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import TowerIcon from '../../components/TowerIcon.astro';
 
 const allTalks = await getCollection('talks');
 const sortedTalks = allTalks.sort((a: CollectionEntry<'talks'>, b: CollectionEntry<'talks'>) => 
@@ -25,10 +26,13 @@ type TalkWithEmbed = CollectionEntry<'talks'> & { embedUrl: string | null };
 
 <Base title="Tower - Talks & Presentations">
   <div class="container" style="padding: var(--space-16) var(--space-4);">
-    <h1 style="text-align: center; margin-bottom: var(--space-8);">🏰 The Tower</h1>
-    <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto var(--space-12) auto;">
-      Watch talks, presentations, and video content from conferences and events.
-    </p>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: var(--space-12);">
+      <TowerIcon />
+      <h1 style="text-align: center; margin-top: var(--space-6); margin-bottom: var(--space-4);">🏰 The Tower</h1>
+      <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto;">
+        Watch talks, presentations, and video content from conferences and events.
+      </p>
+    </div>
 
     <div style="max-width: 900px; margin: 0 auto;">
       {talksWithEmbeds.map((talk: TalkWithEmbed) => (

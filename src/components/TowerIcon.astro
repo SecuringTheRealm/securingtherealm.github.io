@@ -1,0 +1,55 @@
+---
+// Tower castle section for talks page
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 200 250"
+  class={className}
+  role="img"
+  aria-label="Tower illustration"
+  style="width: 100%; max-width: 200px; height: auto;"
+>
+  <title>The Tower</title>
+  
+  <!-- Tower body -->
+  <rect x="10" y="0" width="180" height="250" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" />
+  
+  <!-- Battlements -->
+  <rect x="10" y="0" width="40" height="30" fill="var(--colour-teal-dark)" />
+  <rect x="70" y="0" width="40" height="30" fill="var(--colour-teal-dark)" />
+  <rect x="130" y="0" width="40" height="30" fill="var(--colour-teal-dark)" />
+  
+  <!-- Windows -->
+  <rect x="55" y="70" width="30" height="40" fill="var(--colour-gold)" opacity="0.5" class="window" />
+  <rect x="115" y="70" width="30" height="40" fill="var(--colour-gold)" opacity="0.5" class="window" />
+  <rect x="85" y="150" width="30" height="40" fill="var(--colour-gold)" opacity="0.5" class="window" />
+  
+  <!-- Door -->
+  <rect x="70" y="200" width="60" height="50" fill="var(--colour-stone-dark)" rx="30" ry="0" />
+  
+  <!-- Icon -->
+  <text x="100" y="50" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">🏰</text>
+</svg>
+
+<style>
+  .window {
+    animation: windowGlow 3s ease-in-out infinite;
+  }
+  
+  @keyframes windowGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .window {
+      animation: none;
+      opacity: 0.5;
+    }
+  }
+</style>

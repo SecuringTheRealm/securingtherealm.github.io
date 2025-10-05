@@ -1,0 +1,55 @@
+---
+// Scrolls tower section for newsletter page
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 160 250"
+  class={className}
+  role="img"
+  aria-label="Arcane Scrolls tower illustration"
+  style="width: 100%; max-width: 160px; height: auto;"
+>
+  <title>Arcane Scrolls Tower</title>
+  
+  <!-- Scrolls tower -->
+  <rect x="0" y="0" width="160" height="250" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" />
+  
+  <!-- Battlements -->
+  <rect x="0" y="0" width="35" height="25" fill="var(--colour-teal-dark)" />
+  <rect x="50" y="0" width="35" height="25" fill="var(--colour-teal-dark)" />
+  <rect x="100" y="0" width="35" height="25" fill="var(--colour-teal-dark)" />
+  
+  <!-- Windows -->
+  <rect x="30" y="60" width="35" height="45" fill="var(--colour-gold)" opacity="0.5" class="window" />
+  <rect x="95" y="60" width="35" height="45" fill="var(--colour-gold)" opacity="0.5" class="window" />
+  <rect x="62" y="140" width="35" height="45" fill="var(--colour-gold)" opacity="0.5" class="window" />
+  
+  <!-- Door -->
+  <rect x="50" y="200" width="60" height="50" fill="var(--colour-stone-dark)" rx="5" />
+  
+  <!-- Icon -->
+  <text x="80" y="50" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">📜</text>
+</svg>
+
+<style>
+  .window {
+    animation: windowGlow 3s ease-in-out infinite;
+  }
+  
+  @keyframes windowGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .window {
+      animation: none;
+      opacity: 0.5;
+    }
+  }
+</style>

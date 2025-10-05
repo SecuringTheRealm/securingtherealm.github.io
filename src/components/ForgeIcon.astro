@@ -1,0 +1,72 @@
+---
+// Forge castle section for projects page
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 180 200"
+  class={className}
+  role="img"
+  aria-label="Forge illustration"
+  style="width: 100%; max-width: 180px; height: auto;"
+>
+  <title>The Forge</title>
+  
+  <!-- Forge building -->
+  <rect x="0" y="50" width="180" height="150" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" />
+  
+  <!-- Chimney with smoke -->
+  <rect x="130" y="0" width="30" height="50" fill="var(--colour-stone-dark)" />
+  
+  <!-- Smoke -->
+  <circle cx="145" cy="-20" r="15" fill="#888" opacity="0.3" class="smoke smoke1" />
+  <circle cx="150" cy="-40" r="18" fill="#888" opacity="0.2" class="smoke smoke2" />
+  
+  <!-- Anvil windows -->
+  <rect x="20" y="90" width="60" height="60" fill="var(--colour-gold)" opacity="0.6" class="window" />
+  <rect x="100" y="90" width="60" height="60" fill="var(--colour-gold)" opacity="0.6" class="window" />
+  
+  <!-- Door -->
+  <rect x="55" y="160" width="70" height="40" fill="var(--colour-stone-dark)" rx="8" />
+  
+  <!-- Icon -->
+  <text x="90" y="80" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">⚒️</text>
+</svg>
+
+<style>
+  .window {
+    animation: forgeGlow 2s ease-in-out infinite;
+  }
+  
+  @keyframes forgeGlow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+  
+  @keyframes smokeRise {
+    0% { transform: translateY(0); opacity: 0.3; }
+    100% { transform: translateY(-20px); opacity: 0; }
+  }
+  
+  .smoke {
+    animation: smokeRise 3s ease-in-out infinite;
+  }
+  
+  .smoke2 {
+    animation-delay: 1.5s;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .window {
+      animation: none;
+      opacity: 0.6;
+    }
+    .smoke {
+      animation: none;
+    }
+  }
+</style>
