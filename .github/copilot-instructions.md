@@ -34,23 +34,50 @@ npm start
 # Hot module replacement: ✅ Enabled
 # Postcondition: Server running, can access site locally
 
-# 3. Type checking (runs automatically before build)
+# 3. Linting (Biome)
+npm run lint
+# Time: ~2 seconds
+# Checks formatting, imports, and code quality
+# Exit code 0: All checks pass (may have warnings)
+
+# 3a. Auto-fix lint issues
+npm run lint:fix
+# Time: ~3 seconds
+# Fixes formatting and import organization
+# Safe fixes applied automatically
+
+# 3b. Format only
+npm run format
+# Time: ~2 seconds
+# Formats code without linting
+
+# 4. Type checking (runs automatically before build)
 npx astro check
 # Time: ~5 seconds
 # Must pass with 0 errors before build succeeds
 
-# 4. Production build
+# 5. Production build
 npm run build
-# Time: ~1.6 seconds
+# Time: ~1.8 seconds
 # Output: dist/ directory with static HTML/CSS/JS
 # Postcondition: dist/ contains 9+ HTML pages, assets, sitemap
 
-# 5. Preview production build
+# 6. Preview production build
 npm run preview
 # Time: Starts in ~1 second
 # URL: http://localhost:4321 (or 4322 if 4321 is busy)
 # Postcondition: Serves content from dist/
 ```
+
+### Linting & Formatting
+
+**Biome** is used for linting and formatting (replaced ESLint and Prettier).
+
+- **Configuration**: `biome.json`
+- **Lint**: `npm run lint` - Check code quality, formatting, import organization
+- **Fix**: `npm run lint:fix` - Auto-fix safe issues
+- **Format**: `npm run format` - Format code only
+- **Note**: Warnings are acceptable; only errors block CI/CD
 
 ### Runtime Versions
 - **Node.js**: 18+ required (tested with 18.x, 20.x)

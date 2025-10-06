@@ -276,12 +276,39 @@ Add screenshots for UI changes
 
 ## Checklist
 - [ ] Code follows project style guidelines
+- [ ] Linting passes (`npm run lint`)
+- [ ] TypeScript checks pass (`npx astro check`)
+- [ ] Build succeeds (`npm run build`)
 - [ ] Self-reviewed code
 - [ ] Commented complex code sections
 - [ ] Updated documentation
-- [ ] No new warnings or errors
+- [ ] No new errors
 - [ ] Tested on multiple browsers/devices
 - [ ] Checked accessibility
+```
+
+## Code Quality
+
+### Linting and Formatting
+
+This project uses **Biome** for linting and formatting.
+
+**Before committing:**
+1. Run `npm run lint` to check for issues
+2. Run `npm run lint:fix` to auto-fix safe issues
+3. Address any remaining warnings or errors
+
+**Biome Configuration:**
+- File: `biome.json`
+- Checks: Formatting, import organization, code quality
+- Warnings are acceptable in most cases
+- Errors must be fixed before merging
+
+**Common Commands:**
+```bash
+npm run lint        # Check for issues
+npm run lint:fix    # Auto-fix safe issues
+npm run format      # Format code only
 ```
 
 ## Design System

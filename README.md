@@ -53,6 +53,28 @@ The built site will be in the `dist/` directory.
 npm run build:fast
 ```
 
+### Linting and Formatting
+
+This project uses [Biome](https://biomejs.dev/) for linting and formatting.
+
+Check for lint and format issues:
+
+```bash
+npm run lint
+```
+
+Auto-fix lint and format issues:
+
+```bash
+npm run lint:fix
+```
+
+Format code only:
+
+```bash
+npm run format
+```
+
 ### Syncing YouTube Videos
 
 The site automatically syncs videos from the [Securing the Realm YouTube channel](https://www.youtube.com/@SecuringTheRealm) into the talks collection. Videos are only added if they don't already exist (checked by videoUrl).

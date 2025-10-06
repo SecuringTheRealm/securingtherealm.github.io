@@ -1,20 +1,20 @@
 ---
 export interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  article?: boolean;
-  publishDate?: Date;
-  tags?: string[];
+	title?: string;
+	description?: string;
+	image?: string;
+	article?: boolean;
+	publishDate?: Date;
+	tags?: string[];
 }
 
 const {
-  title = 'Securing the Realm',
-  description = 'Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.',
-  image = '/str-logo.png',
-  article = false,
-  publishDate,
-  tags = []
+	title = 'Securing the Realm',
+	description = 'Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.',
+	image = '/str-logo.png',
+	article = false,
+	publishDate,
+	tags = [],
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -23,41 +23,44 @@ const socialImage = new URL(image, Astro.site);
 
 // JSON-LD for organization
 const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Securing the Realm',
-  url: Astro.site,
-  logo: socialImage,
-  description: 'Cybersecurity, Azure innovation, and Microsoft AI education through fantasy storytelling',
-  sameAs: [
-    'https://www.youtube.com/@SecuringTheRealm',
-    'https://github.com/SecuringTheRealm',
-    'https://www.linkedin.com/company/securing-the-realm'
-  ]
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: 'Securing the Realm',
+	url: Astro.site,
+	logo: socialImage,
+	description:
+		'Cybersecurity, Azure innovation, and Microsoft AI education through fantasy storytelling',
+	sameAs: [
+		'https://www.youtube.com/@SecuringTheRealm',
+		'https://github.com/SecuringTheRealm',
+		'https://www.linkedin.com/company/securing-the-realm',
+	],
 };
 
 // JSON-LD for article (if applicable)
-const articleSchema = article ? {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: title,
-  description: description,
-  image: socialImage,
-  datePublished: publishDate?.toISOString(),
-  author: {
-    '@type': 'Organization',
-    name: 'Securing the Realm'
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'Securing the Realm',
-    logo: {
-      '@type': 'ImageObject',
-      url: socialImage
-    }
-  },
-  keywords: tags.join(', ')
-} : null;
+const articleSchema = article
+	? {
+			'@context': 'https://schema.org',
+			'@type': 'BlogPosting',
+			headline: title,
+			description: description,
+			image: socialImage,
+			datePublished: publishDate?.toISOString(),
+			author: {
+				'@type': 'Organization',
+				name: 'Securing the Realm',
+			},
+			publisher: {
+				'@type': 'Organization',
+				name: 'Securing the Realm',
+				logo: {
+					'@type': 'ImageObject',
+					url: socialImage,
+				},
+			},
+			keywords: tags.join(', '),
+		}
+	: null;
 ---
 
 <!-- Canonical URL -->

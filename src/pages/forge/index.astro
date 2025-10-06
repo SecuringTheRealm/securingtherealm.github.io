@@ -1,12 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 import ForgeIcon from '../../components/ForgeIcon.astro';
+import Base from '../../layouts/Base.astro';
 
 const allProjects = await getCollection('projects');
-const activeProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.data.status === 'active');
-const otherProjects = allProjects.filter((p: CollectionEntry<'projects'>) => p.data.status !== 'active');
+const activeProjects = allProjects.filter(
+	(p: CollectionEntry<'projects'>) => p.data.status === 'active'
+);
+const otherProjects = allProjects.filter(
+	(p: CollectionEntry<'projects'>) => p.data.status !== 'active'
+);
 ---
 
 <Base title="Forge - Projects & Code">

@@ -1,15 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 import LibraryIcon from '../../components/LibraryIcon.astro';
+import Base from '../../layouts/Base.astro';
 
 const allBlogPosts = await getCollection('blog', ({ data }: CollectionEntry<'blog'>) => {
-  return data.draft !== true;
+	return data.draft !== true;
 });
 
-const sortedPosts = allBlogPosts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
-  b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+const sortedPosts = allBlogPosts.sort(
+	(a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
+		b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 

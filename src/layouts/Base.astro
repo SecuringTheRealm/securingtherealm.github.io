@@ -3,21 +3,21 @@ import '../styles/global.css';
 import Seo from '../components/Seo.astro';
 
 export interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  article?: boolean;
-  publishDate?: Date;
-  tags?: string[];
+	title?: string;
+	description?: string;
+	image?: string;
+	article?: boolean;
+	publishDate?: Date;
+	tags?: string[];
 }
 
-const { 
-  title = 'Securing the Realm', 
-  description = 'Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.',
-  image,
-  article,
-  publishDate,
-  tags
+const {
+	title = 'Securing the Realm',
+	description = 'Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.',
+	image,
+	article,
+	publishDate,
+	tags,
 } = Astro.props;
 ---
 
