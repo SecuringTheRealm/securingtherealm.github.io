@@ -38,7 +38,7 @@ jobs:
       - name: Fetch latest XML
         run: |
           mkdir -p .cache
-          curl -sL 'https://www.youtube.com/feeds/videos.xml?channel_id=UCS4KTDaZTiyiMj2yZztwmlg' -o .cache/current.xml
+          curl -sL 'https://www.youtube.com/feeds/videos.xml?playlist_id=PLo9Ah7HeyG1QVWTBPzOROBQNqinh0ZPWv' -o .cache/current.xml
 
       - name: Check XML changes
         id: diff

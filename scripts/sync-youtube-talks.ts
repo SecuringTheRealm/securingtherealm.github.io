@@ -4,9 +4,9 @@
  * Run this script before building: `npx tsx scripts/sync-youtube-talks.ts`
  */
 
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { XMLParser } from 'fast-xml-parser';
-import * as fs from 'fs';
-import * as path from 'path';
 
 interface YouTubeEntry {
 	id: string;
@@ -30,8 +30,8 @@ interface Talk {
 	tags: string[];
 }
 
-const YOUTUBE_CHANNEL_ID = 'UCS4KTDaZTiyiMj2yZztwmlg';
-const YOUTUBE_FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
+const YOUTUBE_PLAYLIST_ID = 'PLo9Ah7HeyG1QVWTBPzOROBQNqinh0ZPWv';
+const YOUTUBE_FEED_URL = `https://www.youtube.com/feeds/videos.xml?playlist_id=${YOUTUBE_PLAYLIST_ID}`;
 const TALKS_DIR = path.join(process.cwd(), 'src/content/talks');
 
 /**
@@ -108,15 +108,15 @@ function entryToTalk(entry: YouTubeEntry): Talk {
 
 	// Extract description
 	let description = '';
-	if (entry['media:group'] && entry['media:group']['media:description']) {
+	if (entry['media:group']?.['media:description']) {
 		description = entry['media:group']['media:description'];
 	}
 
 	// Truncate description to a reasonable length for summary
-	const summary = description.length > 200 ? description.substring(0, 197) + '...' : description;
+	const summary = description.length > 200 ? `${description.substring(0, 197)}...` : description;
 
 	// Generate filename-safe slug from title
-	const slug = entry.title
+	const _slug = entry.title
 		.toLowerCase()
 		.replace(/[^a-z0-9]+/g, '-')
 		.replace(/^-+|-+$/g, '');
@@ -152,7 +152,7 @@ function saveTalk(talk: Talk): string {
 		return filename;
 	}
 
-	fs.writeFileSync(filePath, JSON.stringify(talk, null, 2) + '\n', 'utf-8');
+	fs.writeFileSync(filePath, `${JSON.stringify(talk, null, 2)}\n`, 'utf-8');
 	return filename;
 }
 

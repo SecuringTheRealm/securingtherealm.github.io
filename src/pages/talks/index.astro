@@ -3,18 +3,13 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import TowerIcon from '../../components/TowerIcon.astro';
 import Base from '../../layouts/Base.astro';
+import { getYouTubeEmbedUrl } from '../../utils/youtube';
 
 const allTalks = await getCollection('talks');
 const sortedTalks = allTalks.sort(
 	(a: CollectionEntry<'talks'>, b: CollectionEntry<'talks'>) =>
 		b.data.date.valueOf() - a.data.date.valueOf()
 );
-
-function getYouTubeEmbedUrl(url: string | undefined): string | null {
-	if (!url) return null;
-	const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)?.[1];
-	return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : null;
-}
 
 // Pre-process talks with embed URLs
 const talksWithEmbeds = sortedTalks.map((talk: CollectionEntry<'talks'>) => ({
