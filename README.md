@@ -40,7 +40,30 @@ Build the static site for production:
 npm run build
 ```
 
+This will:
+1. Sync YouTube videos from the Securing the Realm channel to the talks collection
+2. Run TypeScript type checking
+3. Build the static site
+
 The built site will be in the `dist/` directory.
+
+**Note**: To build without syncing YouTube videos (faster for testing), use:
+
+```bash
+npm run build:fast
+```
+
+### Syncing YouTube Videos
+
+The site automatically syncs videos from the [Securing the Realm YouTube channel](https://www.youtube.com/@SecuringTheRealm) into the talks collection. Videos are only added if they don't already exist (checked by videoUrl).
+
+To manually sync YouTube videos:
+
+```bash
+npm run sync:youtube
+```
+
+This creates JSON files in `src/content/talks/` for each new video.
 
 ### Preview
 
@@ -100,7 +123,11 @@ draft: false
 
 ### Talks
 
-Add talks to `src/content/talks/` as JSON files:
+Talks are stored in `src/content/talks/` as JSON files. You can add talks manually or sync them from YouTube.
+
+**Manual Entry:**
+
+Create a JSON file in `src/content/talks/`:
 
 ```json
 {
@@ -112,6 +139,16 @@ Add talks to `src/content/talks/` as JSON files:
   "summary": "Talk description",
   "tags": ["Azure", "AI"]
 }
+```
+
+**YouTube Sync:**
+
+The build process automatically syncs videos from the [Securing the Realm YouTube channel](https://www.youtube.com/@SecuringTheRealm). Videos are only added if they don't already exist (checked by `videoUrl`), so manually created talk entries won't be overwritten.
+
+To manually trigger a sync:
+
+```bash
+npm run sync:youtube
 ```
 
 ### Projects
