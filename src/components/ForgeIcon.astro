@@ -12,55 +12,95 @@ const { class: className } = Astro.props;
   class={className}
   role="img"
   aria-label="Forge illustration"
-  style="width: 100%; max-width: 180px; height: auto;"
+  style="width: 100%; max-width: 180px; height: auto; image-rendering: pixelated; image-rendering: crisp-edges;"
 >
   <title>The Forge</title>
-  
+
   <!-- Forge building -->
-  <rect x="0" y="50" width="180" height="150" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" />
-  
-  <!-- Chimney with smoke -->
-  <rect x="130" y="0" width="30" height="50" fill="var(--colour-stone-dark)" />
-  
-  <!-- Smoke -->
-  <circle cx="145" cy="-20" r="15" fill="#888" opacity="0.3" class="smoke smoke1" />
-  <circle cx="150" cy="-40" r="18" fill="#888" opacity="0.2" class="smoke smoke2" />
-  
-  <!-- Anvil windows -->
-  <rect x="20" y="90" width="60" height="60" fill="var(--colour-gold)" opacity="0.6" class="window" />
-  <rect x="100" y="90" width="60" height="60" fill="var(--colour-gold)" opacity="0.6" class="window" />
-  
-  <!-- Door -->
-  <rect x="55" y="160" width="70" height="40" fill="var(--colour-stone-dark)" rx="8" />
-  
+  <rect x="0" y="48" width="180" height="152" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" />
+
+  <!-- Brick details -->
+  <rect x="10" y="58" width="24" height="16" fill="var(--colour-stone)" opacity="0.15" />
+  <rect x="50" y="58" width="24" height="16" fill="var(--colour-stone)" opacity="0.15" />
+  <rect x="110" y="58" width="24" height="16" fill="var(--colour-stone)" opacity="0.15" />
+  <rect x="150" y="58" width="24" height="16" fill="var(--colour-stone)" opacity="0.15" />
+
+  <!-- Chimney (pixel-style) -->
+  <rect x="132" y="0" width="32" height="48" fill="var(--colour-stone-dark)" stroke="var(--colour-stone)" stroke-width="2" />
+  <rect x="136" y="-4" width="24" height="4" fill="var(--colour-stone)" />
+
+  <!-- Smoke (pixelated) -->
+  <rect x="140" y="-24" width="12" height="12" fill="#888" opacity="0.3" class="smoke smoke1" />
+  <rect x="136" y="-40" width="16" height="16" fill="#888" opacity="0.2" class="smoke smoke2" />
+  <rect x="144" y="-60" width="12" height="12" fill="#888" opacity="0.15" class="smoke smoke3" />
+
+  <!-- Anvil windows with glow -->
+  <rect x="16" y="86" width="64" height="64" fill="#000" opacity="0.6" />
+  <rect x="20" y="90" width="56" height="56" fill="var(--colour-gold)" opacity="0.6" class="window forge-window" />
+  <rect x="44" y="90" width="8" height="56" fill="#ff6600" opacity="0.4" class="forge-glow" />
+
+  <rect x="96" y="86" width="64" height="64" fill="#000" opacity="0.6" />
+  <rect x="100" y="90" width="56" height="56" fill="var(--colour-gold)" opacity="0.6" class="window forge-window" />
+  <rect x="124" y="90" width="8" height="56" fill="#ff6600" opacity="0.4" class="forge-glow" />
+
+  <!-- Door (rectangular pixel style) -->
+  <rect x="54" y="162" width="72" height="38" fill="var(--colour-stone-dark)" />
+  <rect x="86" y="162" width="4" height="38" fill="#000" opacity="0.4" />
+  <rect x="78" y="178" width="12" height="12" fill="var(--colour-stone)" opacity="0.3" />
+
   <!-- Icon -->
-  <text x="90" y="80" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">⚒️</text>
+  <text x="90" y="75" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">⚒️</text>
 </svg>
 
 <style>
-  .window {
+  svg {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
+  @keyframes forgeGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+
+  .forge-glow {
     animation: forgeGlow 2s ease-in-out infinite;
   }
-  
-  @keyframes forgeGlow {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
+
+  .forge-window {
+    animation: forgeGlow 1.5s ease-in-out infinite;
   }
-  
-  .smoke {
-    animation: smokeRise 3s ease-in-out infinite;
+
+  /* Pixel-art smoke animation */
+  @keyframes smokeRise {
+    0% { transform: translateY(0); opacity: 0.3; }
+    25% { transform: translateY(-8px); opacity: 0.25; }
+    50% { transform: translateY(-16px); opacity: 0.2; }
+    75% { transform: translateY(-24px); opacity: 0.1; }
+    100% { transform: translateY(-32px); opacity: 0; }
   }
-  
+
+  .smoke1 {
+    animation: smokeRise 4s ease-out infinite;
+  }
+
   .smoke2 {
-    animation-delay: 1.5s;
+    animation: smokeRise 4s ease-out infinite;
+    animation-delay: 1.3s;
   }
-  
+
+  .smoke3 {
+    animation: smokeRise 4s ease-out infinite;
+    animation-delay: 2.6s;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .window {
+    .forge-window, .forge-glow {
       animation: none;
-      opacity: 0.6;
+      opacity: 0.5;
     }
-    .smoke {
+    .smoke1, .smoke2, .smoke3 {
       animation: none;
     }
   }

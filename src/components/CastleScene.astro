@@ -12,152 +12,458 @@ const { class: className } = Astro.props;
   class={className}
   role="img"
   aria-label="Interactive castle map with clickable areas for navigation"
-  style="width: 100%; height: auto; max-height: 600px;"
+  style="width: 100%; height: auto; max-height: 600px; image-rendering: pixelated; image-rendering: crisp-edges;"
 >
   <title>Castle Navigation Map</title>
   <desc>An interactive 8-bit style castle with four sections: Tower for talks, Library for blog, Forge for projects, and Arcane Scrolls for newsletter</desc>
-  
-  <!-- Sky/Background -->
-  <rect width="1200" height="600" fill="#0a2730" />
-  
-  <!-- Ground -->
-  <rect y="450" width="1200" height="150" fill="#1a3a3a" />
-  
-  <!-- Castle Wall (main structure) -->
-  <rect x="150" y="300" width="900" height="150" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" />
-  
-  <!-- Left Tower (Talks) -->
+
+  <!-- Sky/Background with stars and moon -->
+  <defs>
+    <radialGradient id="skyGradient" cx="50%" cy="30%">
+      <stop offset="0%" style="stop-color:#1a3545;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a1820;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#skyGradient)" />
+
+  <!-- Moon -->
+  <circle cx="1050" cy="100" r="40" fill="#e8dcc0" opacity="0.9" />
+  <circle cx="1058" cy="95" r="8" fill="#0a1820" opacity="0.15" />
+  <circle cx="1048" cy="108" r="12" fill="#0a1820" opacity="0.1" />
+
+  <!-- Stars (twinkling) -->
+  <rect x="50" y="30" width="4" height="4" fill="#fff" opacity="0.9" class="star star1" />
+  <rect x="150" y="60" width="4" height="4" fill="#fff" opacity="0.7" class="star star2" />
+  <rect x="300" y="20" width="4" height="4" fill="#fff" opacity="0.95" class="star star3" />
+  <rect x="500" y="50" width="4" height="4" fill="#fff" opacity="0.8" class="star star1" />
+  <rect x="700" y="25" width="4" height="4" fill="#fff" opacity="0.85" class="star star2" />
+  <rect x="900" y="45" width="4" height="4" fill="#fff" opacity="0.75" class="star star3" />
+  <rect x="200" y="90" width="4" height="4" fill="#fff" opacity="0.8" class="star star2" />
+  <rect x="850" y="70" width="4" height="4" fill="#fff" opacity="0.9" class="star star1" />
+
+  <!-- Ground with isometric pattern and depth -->
+  <rect y="480" width="1200" height="120" fill="#163028" />
+
+  <!-- Isometric ground tiles (darker near bottom for depth) -->
+  <polygon points="0,480 1200,480 1200,485 0,490" fill="#1a3a30" />
+  <polygon points="0,500 1200,495 1200,500 0,510" fill="#143025" />
+
+  <!-- Grass pixels (scattered for texture) -->
+  <rect y="480" x="20" width="8" height="4" fill="#2a5a45" opacity="0.6" />
+  <rect y="481" x="80" width="8" height="4" fill="#2a5a45" opacity="0.7" />
+  <rect y="482" x="180" width="8" height="4" fill="#2a5a45" opacity="0.5" />
+  <rect y="480" x="280" width="8" height="4" fill="#2a5a45" opacity="0.8" />
+  <rect y="483" x="420" width="8" height="4" fill="#2a5a45" opacity="0.6" />
+  <rect y="481" x="580" width="8" height="4" fill="#2a5a45" opacity="0.7" />
+  <rect y="482" x="720" width="8" height="4" fill="#2a5a45" opacity="0.5" />
+  <rect y="480" x="860" width="8" height="4" fill="#2a5a45" opacity="0.8" />
+  <rect y="481" x="1000" width="8" height="4" fill="#2a5a45" opacity="0.6" />
+  <rect y="482" x="1120" width="8" height="4" fill="#2a5a45" opacity="0.7" />
+
+  <!-- Castle Wall foundation (isometric base) -->
+  <polygon points="120,460 1080,460 1080,480 120,480" fill="#1a4a45" />
+  <polygon points="1080,460 1080,480 1100,475 1100,455" fill="#0f3530" />
+
+  <!-- Castle Wall (main structure) with isometric depth -->
+  <rect x="150" y="320" width="900" height="140" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="3" />
+
+  <!-- Wall right side (isometric depth face) -->
+  <polygon points="1050,320 1080,310 1080,450 1050,460" fill="#0d3a3a" stroke="var(--colour-stone)" stroke-width="2" />
+
+  <!-- Wall brick pattern (staggered) -->
+  <rect x="160" y="330" width="32" height="16" fill="var(--colour-stone)" opacity="0.12" />
+  <rect x="208" y="330" width="32" height="16" fill="var(--colour-stone)" opacity="0.12" />
+  <rect x="256" y="330" width="32" height="16" fill="var(--colour-stone)" opacity="0.12" />
+  <rect x="176" y="354" width="32" height="16" fill="var(--colour-stone)" opacity="0.12" />
+  <rect x="224" y="354" width="32" height="16" fill="var(--colour-stone)" opacity="0.12" />
+  <rect x="160" y="378" width="32" height="16" fill="var(--colour-stone)" opacity="0.12" />
+
+  <!-- Battlements on wall -->
+  <rect x="150" y="312" width="24" height="8" fill="var(--colour-stone)" />
+  <rect x="150" y="320" width="24" height="16" fill="var(--colour-teal-dark)" />
+  <rect x="198" y="312" width="24" height="8" fill="var(--colour-stone)" />
+  <rect x="198" y="320" width="24" height="16" fill="var(--colour-teal-dark)" />
+  <rect x="350" y="312" width="24" height="8" fill="var(--colour-stone)" />
+  <rect x="350" y="320" width="24" height="16" fill="var(--colour-teal-dark)" />
+
+  <!-- Left Tower (Talks) with isometric depth -->
   <a href="/talks/" aria-label="Visit the Tower to watch talks and presentations" class="castle-section" data-section="tower">
     <g class="tower-group">
-      <!-- Tower body -->
-      <rect x="200" y="150" width="180" height="300" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" class="tower-main" />
-      <!-- Battlements -->
-      <rect x="200" y="150" width="40" height="30" fill="var(--colour-teal-dark)" />
-      <rect x="260" y="150" width="40" height="30" fill="var(--colour-teal-dark)" />
-      <rect x="320" y="150" width="40" height="30" fill="var(--colour-teal-dark)" />
-      <!-- Windows -->
-      <rect x="245" y="220" width="30" height="40" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <rect x="305" y="220" width="30" height="40" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <rect x="275" y="300" width="30" height="40" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <!-- Door -->
-      <rect x="260" y="380" width="60" height="70" fill="var(--colour-stone-dark)" rx="30" ry="0" />
+      <!-- Tower body (front face) -->
+      <rect x="180" y="160" width="160" height="300" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="3" class="tower-main" />
+
+      <!-- Tower right side (isometric depth) -->
+      <polygon points="340,160 370,145 370,430 340,460" fill="#0d3a3a" stroke="var(--colour-stone)" stroke-width="2" />
+
+      <!-- Brick pattern (staggered for authentic look) -->
+      <rect x="190" y="170" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="234" y="170" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="278" y="170" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="212" y="194" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="256" y="194" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+
+      <!-- Battlements (pixel-perfect crenellations) -->
+      <rect x="180" y="152" width="28" height="8" fill="var(--colour-stone)" />
+      <rect x="180" y="160" width="28" height="20" fill="var(--colour-teal-dark)" />
+      <rect x="236" y="152" width="28" height="8" fill="var(--colour-stone)" />
+      <rect x="236" y="160" width="28" height="20" fill="var(--colour-teal-dark)" />
+      <rect x="292" y="152" width="28" height="8" fill="var(--colour-stone)" />
+      <rect x="292" y="160" width="28" height="20" fill="var(--colour-teal-dark)" />
+
+      <!-- Battlement depth (isometric) -->
+      <polygon points="320,152 340,145 340,153 320,160" fill="var(--colour-stone)" opacity="0.7" />
+
+      <!-- Flagpole with isometric positioning -->
+      <rect x="354" y="128" width="4" height="24" fill="var(--colour-stone-dark)" />
+      <rect x="357" y="125" width="3" height="24" fill="var(--colour-stone)" opacity="0.3" />
+      <polygon points="358,128 358,136 374,132" fill="var(--colour-gold)" class="flag" />
+      <polygon points="358,128 358,136 374,132" fill="var(--colour-gold-light)" opacity="0.6" transform="translate(1,-1)" />
+
+      <!-- Windows with depth shadows (pixel-grid aligned) -->
+      <rect x="216" y="226" width="32" height="40" fill="#000" opacity="0.7" />
+      <rect x="220" y="230" width="24" height="32" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="232" y="230" width="2" height="32" fill="var(--colour-stone-dark)" opacity="0.4" />
+
+      <rect x="284" y="226" width="32" height="40" fill="#000" opacity="0.7" />
+      <rect x="288" y="230" width="24" height="32" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="300" y="230" width="2" height="32" fill="var(--colour-stone-dark)" opacity="0.4" />
+
+      <rect x="250" y="306" width="32" height="40" fill="#000" opacity="0.7" />
+      <rect x="254" y="310" width="24" height="32" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="266" y="310" width="2" height="32" fill="var(--colour-stone-dark)" opacity="0.4" />
+
+      <!-- Door (arched pixel style with depth) -->
+      <rect x="244" y="392" width="52" height="68" fill="var(--colour-stone-dark)" />
+      <rect x="244" y="392" width="8" height="8" fill="var(--colour-teal-bg)" />
+      <rect x="288" y="392" width="8" height="8" fill="var(--colour-teal-bg)" />
+      <rect x="248" y="388" width="8" height="8" fill="var(--colour-stone-dark)" />
+      <rect x="284" y="388" width="8" height="8" fill="var(--colour-stone-dark)" />
+      <rect x="256" y="384" width="28" height="8" fill="var(--colour-stone-dark)" />
+
+      <!-- Door panel details -->
+      <rect x="262" y="408" width="4" height="36" fill="#000" opacity="0.3" />
+      <rect x="274" y="408" width="4" height="36" fill="#000" opacity="0.3" />
+      <circle cx="282" cy="424" r="3" fill="var(--colour-gold)" opacity="0.6" />
+
       <!-- Icon -->
-      <text x="290" y="200" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">🏰</text>
-      <text x="290" y="340" text-anchor="middle" fill="var(--colour-parchment)" font-size="14" font-family="'Press Start 2P', monospace">TOWER</text>
+      <text x="260" y="208" text-anchor="middle" fill="var(--colour-gold)" font-size="28" font-family="'Press Start 2P', monospace">🏰</text>
+      <text x="260" y="370" text-anchor="middle" fill="var(--colour-parchment)" font-size="11" font-family="'Press Start 2P', monospace">TOWER</text>
     </g>
   </a>
   
-  <!-- Library (Blog) -->
+  <!-- Library (Blog) with isometric depth -->
   <a href="/blog/" aria-label="Enter the Library to read blog posts and articles" class="castle-section" data-section="library">
     <g class="library-group">
-      <!-- Library building -->
-      <rect x="450" y="230" width="200" height="220" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" class="library-main" />
-      <!-- Roof -->
-      <polygon points="450,230 550,180 650,230" fill="var(--colour-stone)" stroke="var(--colour-stone-dark)" stroke-width="3" />
-      <!-- Windows -->
-      <rect x="480" y="280" width="60" height="50" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <rect x="580" y="280" width="60" height="50" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <rect x="480" y="360" width="60" height="50" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <rect x="580" y="360" width="60" height="50" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <!-- Door -->
-      <rect x="525" y="390" width="50" height="60" fill="var(--colour-stone-dark)" rx="5" />
+      <!-- Library building (front face) -->
+      <rect x="430" y="240" width="200" height="220" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="3" class="library-main" />
+
+      <!-- Library right side (isometric depth) -->
+      <polygon points="630,240 660,225 660,445 630,460" fill="#0d3a3a" stroke="var(--colour-stone)" stroke-width="2" />
+
+      <!-- Brick details (staggered) -->
+      <rect x="440" y="250" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="484" y="250" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="556" y="250" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="600" y="250" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+
+      <!-- Roof (isometric pixel-art style) -->
+      <polygon points="420,240 530,180 640,240" fill="var(--colour-stone)" stroke="var(--colour-stone-dark)" stroke-width="3" />
+      <!-- Roof right face (isometric depth) -->
+      <polygon points="530,180 560,165 670,225 640,240" fill="#5a6a68" stroke="var(--colour-stone-dark)" stroke-width="2" />
+
+      <!-- Roof tiles (staggered pattern) -->
+      <rect x="456" y="205" width="20" height="6" fill="var(--colour-stone-dark)" opacity="0.25" />
+      <rect x="480" y="205" width="20" height="6" fill="var(--colour-stone-dark)" opacity="0.25" />
+      <rect x="504" y="205" width="20" height="6" fill="var(--colour-stone-dark)" opacity="0.25" />
+      <rect x="528" y="205" width="20" height="6" fill="var(--colour-stone-dark)" opacity="0.25" />
+      <rect x="552" y="205" width="20" height="6" fill="var(--colour-stone-dark)" opacity="0.25" />
+      <rect x="576" y="205" width="20" height="6" fill="var(--colour-stone-dark)" opacity="0.25" />
+
+      <!-- Windows (pixel-grid aligned with cross frames) -->
+      <rect x="454" y="284" width="60" height="52" fill="#000" opacity="0.7" />
+      <rect x="458" y="288" width="52" height="44" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="482" y="288" width="3" height="44" fill="var(--colour-stone-dark)" opacity="0.5" />
+      <rect x="458" y="308" width="52" height="3" fill="var(--colour-stone-dark)" opacity="0.5" />
+
+      <rect x="546" y="284" width="60" height="52" fill="#000" opacity="0.7" />
+      <rect x="550" y="288" width="52" height="44" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="574" y="288" width="3" height="44" fill="var(--colour-stone-dark)" opacity="0.5" />
+      <rect x="550" y="308" width="52" height="3" fill="var(--colour-stone-dark)" opacity="0.5" />
+
+      <rect x="454" y="364" width="60" height="52" fill="#000" opacity="0.7" />
+      <rect x="458" y="368" width="52" height="44" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="482" y="368" width="3" height="44" fill="var(--colour-stone-dark)" opacity="0.5" />
+      <rect x="458" y="388" width="52" height="3" fill="var(--colour-stone-dark)" opacity="0.5" />
+
+      <rect x="546" y="364" width="60" height="52" fill="#000" opacity="0.7" />
+      <rect x="550" y="368" width="52" height="44" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="574" y="368" width="3" height="44" fill="var(--colour-stone-dark)" opacity="0.5" />
+      <rect x="550" y="388" width="52" height="3" fill="var(--colour-stone-dark)" opacity="0.5" />
+
+      <!-- Door (rectangular pixel style with depth) -->
+      <rect x="502" y="404" width="48" height="56" fill="var(--colour-stone-dark)" />
+      <rect x="524" y="404" width="3" height="56" fill="#000" opacity="0.4" />
+      <circle cx="540" cy="432" r="3" fill="var(--colour-gold)" opacity="0.6" />
+
       <!-- Icon -->
-      <text x="550" y="260" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">📚</text>
+      <text x="530" y="268" text-anchor="middle" fill="var(--colour-gold)" font-size="28" font-family="'Press Start 2P', monospace">📚</text>
     </g>
   </a>
   
-  <!-- Forge (Projects) -->
+  <!-- Forge (Projects) with isometric depth -->
   <a href="/forge/" aria-label="Visit the Forge to see code projects and repositories" class="castle-section" data-section="forge">
     <g class="forge-group">
-      <!-- Forge building -->
-      <rect x="720" y="250" width="180" height="200" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" class="forge-main" />
-      <!-- Chimney with smoke -->
-      <rect x="850" y="200" width="30" height="50" fill="var(--colour-stone-dark)" />
-      <!-- Smoke -->
-      <circle cx="865" cy="180" r="15" fill="#888" opacity="0.3" class="smoke" />
-      <circle cx="870" cy="160" r="18" fill="#888" opacity="0.2" class="smoke" />
-      <!-- Anvil window -->
-      <rect x="740" y="300" width="60" height="60" fill="var(--colour-gold)" opacity="0.4" class="window" />
-      <rect x="820" y="300" width="60" height="60" fill="var(--colour-gold)" opacity="0.4" class="window" />
-      <!-- Door -->
-      <rect x="765" y="380" width="70" height="70" fill="var(--colour-stone-dark)" rx="8" />
+      <!-- Forge building (front face) -->
+      <rect x="700" y="260" width="180" height="200" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="3" class="forge-main" />
+
+      <!-- Forge right side (isometric depth) -->
+      <polygon points="880,260 910,245 910,445 880,460" fill="#0d3a3a" stroke="var(--colour-stone)" stroke-width="2" />
+
+      <!-- Brick details (staggered) -->
+      <rect x="710" y="270" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="754" y="270" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="820" y="270" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="732" y="294" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+
+      <!-- Chimney (isometric pixel-style) -->
+      <rect x="850" y="210" width="32" height="50" fill="var(--colour-stone-dark)" stroke="var(--colour-stone)" stroke-width="2" />
+      <polygon points="882,210 895,205 895,255 882,260" fill="#4a3a2a" stroke="var(--colour-stone)" stroke-width="1" />
+      <rect x="850" y="206" width="32" height="4" fill="var(--colour-stone)" />
+      <polygon points="882,206 895,201 895,205 882,210" fill="var(--colour-stone)" opacity="0.7" />
+
+      <!-- Smoke (pixelated with depth) -->
+      <rect x="858" y="190" width="12" height="12" fill="#999" opacity="0.3" class="smoke smoke1" />
+      <rect x="854" y="172" width="16" height="16" fill="#999" opacity="0.2" class="smoke smoke2" />
+      <rect x="862" y="150" width="12" height="12" fill="#999" opacity="0.15" class="smoke smoke3" />
+
+      <!-- Anvil windows with forge glow -->
+      <rect x="716" y="308" width="60" height="60" fill="#000" opacity="0.7" />
+      <rect x="720" y="312" width="52" height="52" fill="var(--colour-gold)" opacity="0.4" class="window forge-window" />
+      <rect x="742" y="312" width="8" height="52" fill="#ff6600" opacity="0.5" class="forge-glow" />
+      <rect x="720" y="334" width="52" height="8" fill="#ff8800" opacity="0.3" class="forge-glow" />
+
+      <rect x="804" y="308" width="60" height="60" fill="#000" opacity="0.7" />
+      <rect x="808" y="312" width="52" height="52" fill="var(--colour-gold)" opacity="0.4" class="window forge-window" />
+      <rect x="830" y="312" width="8" height="52" fill="#ff6600" opacity="0.5" class="forge-glow" />
+      <rect x="808" y="334" width="52" height="8" fill="#ff8800" opacity="0.3" class="forge-glow" />
+
+      <!-- Door (wide pixel style with depth) -->
+      <rect x="746" y="396" width="68" height="64" fill="var(--colour-stone-dark)" />
+      <rect x="778" y="396" width="3" height="64" fill="#000" opacity="0.4" />
+      <circle cx="802" cy="428" r="3" fill="var(--colour-stone)" opacity="0.5" />
+
       <!-- Icon -->
-      <text x="810" y="340" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">⚒️</text>
+      <text x="790" y="292" text-anchor="middle" fill="var(--colour-gold)" font-size="28" font-family="'Press Start 2P', monospace">⚒️</text>
+      <text x="790" y="387" text-anchor="middle" fill="var(--colour-parchment)" font-size="11" font-family="'Press Start 2P', monospace">FORGE</text>
     </g>
   </a>
   
-  <!-- Arcane Scrolls (Newsletter) -->
+  <!-- Arcane Scrolls (Newsletter) with isometric depth -->
   <a href="/newsletter/" aria-label="Visit Arcane Scrolls to subscribe to the newsletter" class="castle-section" data-section="scrolls">
     <g class="scrolls-group">
-      <!-- Scrolls tower -->
-      <rect x="970" y="200" width="160" height="250" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="4" class="scrolls-main" />
-      <!-- Battlements -->
-      <rect x="970" y="200" width="35" height="25" fill="var(--colour-teal-dark)" />
-      <rect x="1020" y="200" width="35" height="25" fill="var(--colour-teal-dark)" />
-      <rect x="1070" y="200" width="35" height="25" fill="var(--colour-teal-dark)" />
-      <!-- Windows -->
-      <rect x="1000" y="260" width="35" height="45" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <rect x="1075" y="260" width="35" height="45" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <rect x="1037" y="340" width="35" height="45" fill="var(--colour-gold)" opacity="0.3" class="window" />
-      <!-- Door -->
-      <rect x="1020" y="390" width="60" height="60" fill="var(--colour-stone-dark)" rx="5" />
+      <!-- Scrolls tower (front face) -->
+      <rect x="948" y="210" width="140" height="250" fill="var(--colour-teal-bg)" stroke="var(--colour-stone)" stroke-width="3" class="scrolls-main" />
+
+      <!-- Tower right side (isometric depth) -->
+      <polygon points="1088,210 1118,195 1118,445 1088,460" fill="#0d3a3a" stroke="var(--colour-stone)" stroke-width="2" />
+
+      <!-- Brick details (staggered) -->
+      <rect x="958" y="220" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="1002" y="220" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+      <rect x="1046" y="220" width="28" height="14" fill="var(--colour-stone)" opacity="0.1" />
+
+      <!-- Battlements (pixel-perfect crenellations) -->
+      <rect x="948" y="202" width="28" height="8" fill="var(--colour-stone)" />
+      <rect x="948" y="210" width="28" height="20" fill="var(--colour-teal-dark)" />
+      <rect x="992" y="202" width="28" height="8" fill="var(--colour-stone)" />
+      <rect x="992" y="210" width="28" height="20" fill="var(--colour-teal-dark)" />
+      <rect x="1036" y="202" width="28" height="8" fill="var(--colour-stone)" />
+      <rect x="1036" y="210" width="28" height="20" fill="var(--colour-teal-dark)" />
+
+      <!-- Battlement depth (isometric) -->
+      <polygon points="1076,202 1088,197 1088,205 1076,210" fill="var(--colour-stone)" opacity="0.7" />
+
+      <!-- Mystical orb on top with glow -->
+      <circle cx="1090" cy="190" r="8" fill="var(--colour-gold)" class="mystical-orb" />
+      <circle cx="1092" cy="188" r="4" fill="var(--colour-gold-light)" opacity="0.9" />
+      <circle cx="1090" cy="190" r="12" fill="var(--colour-gold)" opacity="0.2" class="orb-glow" />
+
+      <!-- Windows with arched tops (pixel-grid aligned) -->
+      <rect x="972" y="266" width="36" height="44" fill="#000" opacity="0.7" />
+      <rect x="976" y="270" width="28" height="36" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="976" y="266" width="6" height="6" fill="var(--colour-gold)" opacity="0.25" />
+      <rect x="998" y="266" width="6" height="6" fill="var(--colour-gold)" opacity="0.25" />
+
+      <rect x="1028" y="266" width="36" height="44" fill="#000" opacity="0.7" />
+      <rect x="1032" y="270" width="28" height="36" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="1032" y="266" width="6" height="6" fill="var(--colour-gold)" opacity="0.25" />
+      <rect x="1054" y="266" width="6" height="6" fill="var(--colour-gold)" opacity="0.25" />
+
+      <rect x="1000" y="346" width="36" height="44" fill="#000" opacity="0.7" />
+      <rect x="1004" y="350" width="28" height="36" fill="var(--colour-gold)" opacity="0.35" class="window" />
+      <rect x="1004" y="346" width="6" height="6" fill="var(--colour-gold)" opacity="0.25" />
+      <rect x="1026" y="346" width="6" height="6" fill="var(--colour-gold)" opacity="0.25" />
+
+      <!-- Door (rectangular pixel style with depth) -->
+      <rect x="998" y="404" width="48" height="56" fill="var(--colour-stone-dark)" />
+      <rect x="1020" y="404" width="3" height="56" fill="#000" opacity="0.4" />
+      <circle cx="1036" cy="432" r="3" fill="var(--colour-gold)" opacity="0.6" />
+
       <!-- Icon -->
-      <text x="1050" y="250" text-anchor="middle" fill="var(--colour-gold)" font-size="32" font-family="'Press Start 2P', monospace">📜</text>
+      <text x="1020" y="250" text-anchor="middle" fill="var(--colour-gold)" font-size="28" font-family="'Press Start 2P', monospace">📜</text>
+      <text x="1018" y="330" text-anchor="middle" fill="var(--colour-parchment)" font-size="10" font-family="'Press Start 2P', monospace">SCROLLS</text>
     </g>
   </a>
 </svg>
 
 <style>
+  svg {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+
   .castle-section {
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.15s steps(3);
   }
-  
+
   .castle-section:hover .tower-main,
   .castle-section:hover .library-main,
   .castle-section:hover .forge-main,
   .castle-section:hover .scrolls-main {
     fill: var(--colour-teal-light);
-    filter: drop-shadow(0 0 15px var(--colour-gold));
+    filter: drop-shadow(0 0 20px var(--colour-gold));
   }
-  
+
   .castle-section:hover .window {
-    opacity: 0.8;
+    opacity: 0.7;
     fill: var(--colour-gold-light);
   }
-  
+
   .castle-section:focus {
-    outline: 3px solid var(--colour-gold);
+    outline: 4px solid var(--colour-gold);
     outline-offset: 4px;
   }
-  
+
   .castle-section:focus .tower-main,
   .castle-section:focus .library-main,
   .castle-section:focus .forge-main,
   .castle-section:focus .scrolls-main {
     stroke: var(--colour-gold);
-    stroke-width: 6;
+    stroke-width: 5;
   }
-  
+
+  /* Star twinkle animation */
+  @keyframes starTwinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .star1 {
+    animation: starTwinkle 3s ease-in-out infinite;
+  }
+
+  .star2 {
+    animation: starTwinkle 3s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+
+  .star3 {
+    animation: starTwinkle 3s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+
+  /* Flag wave animation */
+  @keyframes flagWave {
+    0%, 100% { transform: skewY(0deg); }
+    50% { transform: skewY(-3deg); }
+  }
+
+  .flag {
+    animation: flagWave 2s ease-in-out infinite;
+    transform-origin: left center;
+  }
+
+  /* Pixel-art smoke animation */
   @keyframes smokeRise {
-    0% { transform: translateY(0); opacity: 0.3; }
-    100% { transform: translateY(-20px); opacity: 0; }
+    0% { transform: translate(0, 0); opacity: 0.3; }
+    25% { transform: translate(-2px, -10px); opacity: 0.25; }
+    50% { transform: translate(2px, -20px); opacity: 0.2; }
+    75% { transform: translate(-1px, -30px); opacity: 0.1; }
+    100% { transform: translate(0, -40px); opacity: 0; }
   }
-  
-  .smoke {
-    animation: smokeRise 3s ease-in-out infinite;
+
+  .smoke1 {
+    animation: smokeRise 5s ease-out infinite;
   }
-  
-  .smoke:nth-child(2) {
-    animation-delay: 1.5s;
+
+  .smoke2 {
+    animation: smokeRise 5s ease-out infinite;
+    animation-delay: 1.6s;
   }
-  
+
+  .smoke3 {
+    animation: smokeRise 5s ease-out infinite;
+    animation-delay: 3.2s;
+  }
+
+  /* Forge glow animation (more intense pulsing) */
+  @keyframes forgeGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  .forge-glow {
+    animation: forgeGlow 1.5s ease-in-out infinite;
+  }
+
+  .forge-window {
+    animation: forgeGlow 2s ease-in-out infinite;
+  }
+
+  /* Mystical orb pulse with glow */
+  @keyframes orbPulse {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes orbGlow {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
+  }
+
+  .mystical-orb {
+    animation: orbPulse 2s ease-in-out infinite;
+  }
+
+  .orb-glow {
+    animation: orbGlow 2s ease-in-out infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .castle-section {
       transition: none;
     }
-    .smoke {
+    .star1, .star2, .star3 {
       animation: none;
+      opacity: 0.8;
+    }
+    .flag {
+      animation: none;
+    }
+    .smoke1, .smoke2, .smoke3 {
+      animation: none;
+      opacity: 0.2;
+    }
+    .forge-glow, .forge-window {
+      animation: none;
+      opacity: 0.4;
+    }
+    .mystical-orb, .orb-glow {
+      animation: none;
+      opacity: 0.8;
     }
   }
 </style>

@@ -1,6 +1,6 @@
 # AGENTS Guidelines
 
-This repository uses **TypeScript** and **Next.js**. Use the practices below when contributing.
+This repository uses **TypeScript** and **Astro**. Use the practices below when contributing.
 
 ## General Best Practices
 
@@ -20,14 +20,23 @@ This repository uses **TypeScript** and **Next.js**. Use the practices below whe
 - Prefix private class members with an underscore (`_`).
 - Use `ALL_CAPS` for constants.
 
-## React Guidelines
+## Astro Component Guidelines
 
-- Use functional components with hooks.
-- Adhere to the React hook rules (do not call hooks conditionally).
-- Use the `React.FC` type for components that accept `children`.
-- Keep components small and focused and place styling in CSS modules.
+- Use `.astro` files for Astro components.
+- Define component props using TypeScript interfaces exported in the frontmatter.
+- Use functional components for any embedded React/Preact components.
+- Keep components small and focused with styles scoped within the component.
 - Develop reusable components whenever possible.
-- Implement error boundaries where needed.
+- Use the `class:list` directive for conditional styling.
+
+## SVG and Pixel Art Guidelines
+
+- For pixel art SVG components, always use `image-rendering: pixelated` and `image-rendering: crisp-edges`.
+- Use `viewBox` for proper scaling and maintain aspect ratios.
+- Align all pixel art elements to an 8-pixel or 4-pixel grid for authentic retro aesthetics.
+- Use CSS variables for theming (e.g., `var(--colour-teal-bg)`, `var(--colour-stone)`).
+- Implement animations using CSS keyframes with `steps()` timing for frame-by-frame effects.
+- Always include proper ARIA labels and accessibility attributes.
 
 ## Error Handling
 
@@ -36,5 +45,6 @@ This repository uses **TypeScript** and **Next.js**. Use the practices below whe
 
 ## Linting and Formatting
 
-- Use **Biome** for linting and formatting. Run `biome check .` and `biome format .` before committing.
-- You can also run `npm run lint` to execute the Next.js lint configuration.
+- Use **Biome** for linting and formatting. Run `npm run lint` or `biome check .` before committing.
+- Use `npm run lint:fix` or `biome check --write .` to automatically fix issues.
+- Use `npm run format` or `biome format --write .` for formatting.
