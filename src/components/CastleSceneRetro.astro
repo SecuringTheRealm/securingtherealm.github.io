@@ -90,7 +90,7 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
   <!-- Sky Background -->
   <rect width="1200" height="480" fill={`url(#${uid}-sky)`}></rect>
 
-  <!-- Stars -->
+  <!-- Stars (Nintendo sparkle style) -->
   {
     [
       [120, 80],
@@ -101,29 +101,27 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
       [1080, 128],
       [200, 160],
       [600, 136],
-    ].map(([x, y]) => (
-      <g class="star-twinkle">
-        <rect
-          x={x + 3}
-          y={y}
-          width="2"
-          height="8"
-          fill="var(--colour-parchment)"
-          opacity="0.8"
+    ].map(([x, y], i) => (
+      <g class="star-twinkle star-rotate" style={`animation-delay: ${i * 0.4}s`}>
+        <!-- Main sparkle points -->
+        <polygon
+          points={`${x + 4},${y} ${x + 5},${y + 3} ${x + 8},${y + 4} ${x + 5},${y + 5} ${x + 4},${y + 8} ${x + 3},${y + 5} ${x},${y + 4} ${x + 3},${y + 3}`}
+          fill="#fff9e6"
+          opacity="0.9"
         />
-        <rect
-          x={x}
-          y={y + 3}
-          width="8"
-          height="2"
-          fill="var(--colour-parchment)"
-          opacity="0.8"
+        <!-- Inner glow -->
+        <circle
+          cx={x + 4}
+          cy={y + 4}
+          r="2"
+          fill="#ffcc00"
+          opacity="0.6"
         />
       </g>
     ))
   }
 
-  <!-- Moon (crisp circle, top-right light source) -->
+  <!-- Moon (Nintendo-style with gentle smile) -->
   <circle
     cx="1080"
     cy="120"
@@ -137,30 +135,98 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     r="40"
     fill="#f3e9d2"
     stroke="#d5d5c5"
-    stroke-width="2"></circle>
-  <!-- Moon craters (hard pixel shapes) -->
-  <rect x="1068" y="108" width="8" height="8" fill="#d5d5c5" opacity="0.4"
-  ></rect>
-  <rect x="1084" y="120" width="8" height="8" fill="#d5d5c5" opacity="0.3"
-  ></rect>
+    stroke-width="2"
+    class="moon-sway"></circle>
+  <!-- Closed sleepy eyes -->
+  <path
+    d="M 1068 116 Q 1072 118 1076 116"
+    stroke="#d5a425"
+    stroke-width="2"
+    fill="none"
+    stroke-linecap="round"
+    class="moon-sway"></path>
+  <path
+    d="M 1084 116 Q 1088 118 1092 116"
+    stroke="#d5a425"
+    stroke-width="2"
+    fill="none"
+    stroke-linecap="round"
+    class="moon-sway"></path>
+  <!-- Gentle smile -->
+  <path
+    d="M 1072 128 Q 1080 132 1088 128"
+    stroke="#d5a425"
+    stroke-width="2"
+    fill="none"
+    stroke-linecap="round"
+    class="moon-sway"></path>
+  <!-- Rosy cheeks -->
+  <ellipse
+    cx="1066"
+    cy="124"
+    rx="6"
+    ry="4"
+    fill="#ff9999"
+    opacity="0.4"
+    class="moon-sway"></ellipse>
+  <ellipse
+    cx="1094"
+    cy="124"
+    rx="6"
+    ry="4"
+    fill="#ff9999"
+    opacity="0.4"
+    class="moon-sway"></ellipse>
 
   <!-- Ground -->
   <rect x="0" y="480" width="1200" height="120" fill={`url(#${uid}-ground)`}
   ></rect>
 
   <!-- Grass texture (pixel tufts, 8px grid) -->
+    <!-- Grass texture (pixel tufts, 8px grid) -->
   {
     [...Array(60)].map((_: undefined, i: number) => {
-      const x = (i * 20) % 1200
-      const y = 480 + ((i * 3) % 5) * 8
+      const x = (i * 113) % 1200
+      const y = 488 + ((i * 37) % 32)
       return (
-        <g opacity="0.4">
-          <rect x={x} y={y} width="2" height="8" fill="#4a6a3a" />
-          <rect x={x + 4} y={y + 2} width="2" height="6" fill="#4a6a3a" />
-        </g>
+        <rect
+          x={x}
+          y={y}
+          width="4"
+          height="8"
+          fill="var(--colour-grass)"
+          opacity="0.6"
+        />
       )
     })
   }
+
+  <!-- Foreground Flowers (Nintendo charm with parallax) -->
+  <g class="flower-sway" style="animation-delay: 0s">
+    <rect x="160" y="540" width="2" height="12" fill="#4a8a3a" />
+    <circle cx="161" cy="536" r="5" fill="#ff6b9d" />
+    <circle cx="161" cy="536" r="2" fill="#ffcc00" />
+  </g>
+  <g class="flower-sway" style="animation-delay: 0.3s">
+    <rect x="340" y="536" width="2" height="16" fill="#4a8a3a" />
+    <circle cx="341" cy="532" r="6" fill="#ffaa33" />
+    <circle cx="341" cy="532" r="2" fill="#fff" />
+  </g>
+  <g class="flower-sway" style="animation-delay: 0.6s">
+    <rect x="520" y="544" width="2" height="10" fill="#4a8a3a" />
+    <circle cx="521" cy="540" r="4" fill="#9999ff" />
+    <circle cx="521" cy="540" r="1.5" fill="#ffcc00" />
+  </g>
+  <g class="flower-sway" style="animation-delay: 0.9s">
+    <rect x="780" y="538" width="2" height="14" fill="#4a8a3a" />
+    <circle cx="781" cy="534" r="5" fill="#ff9999" />
+    <circle cx="781" cy="534" r="2" fill="#fff9e6" />
+  </g>
+  <g class="flower-sway" style="animation-delay: 1.2s">
+    <rect x="980" y="542" width="2" height="12" fill="#4a8a3a" />
+    <circle cx="981" cy="538" r="5" fill="#ffcc00" />
+    <circle cx="981" cy="538" r="2" fill="#ff6600" />
+  </g>
 
   <!-- INTEGRATED FOUNDATION (Dover-style plinth) -->
   <rect
@@ -356,6 +422,14 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         font-size="11"
         letter-spacing="1">TOWER</text
       >
+
+      <!-- Hover sparkles -->
+      <g class="hover-sparkle" opacity="0">
+        <polygon points="170,110 172,114 176,116 172,118 170,122 168,118 164,116 168,114" fill="#ffcc00" />
+        <polygon points="310,110 312,114 316,116 312,118 310,122 308,118 304,116 308,114" fill="#ffcc00" />
+        <polygon points="170,420 172,424 176,426 172,428 170,432 168,428 164,426 168,424" fill="#ffcc00" />
+        <polygon points="310,420 312,424 316,426 312,428 310,432 308,428 304,426 308,424" fill="#ffcc00" />
+      </g>
 
       <rect
         x="160"
@@ -574,6 +648,14 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         letter-spacing="1">LIBRARY</text
       >
 
+      <!-- Hover sparkles -->
+      <g class="hover-sparkle" opacity="0">
+        <polygon points="370,190 372,194 376,196 372,198 370,202 368,198 364,196 368,194" fill="#ffcc00" />
+        <polygon points="550,190 552,194 556,196 552,198 550,202 548,198 544,196 548,194" fill="#ffcc00" />
+        <polygon points="370,425 372,429 376,431 372,433 370,437 368,433 364,431 368,429" fill="#ffcc00" />
+        <polygon points="550,425 552,429 556,431 552,433 550,437 548,433 544,431 548,429" fill="#ffcc00" />
+      </g>
+
       <rect
         x="360"
         y="180"
@@ -723,6 +805,27 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         )
       })
     }
+
+    <!-- Hidden Owl Character (Nintendo charm) -->
+    <g class="owl-blink">
+      <!-- Owl body -->
+      <ellipse cx="728" cy="148" rx="10" ry="12" fill="#8b7355" />
+      <!-- Wings -->
+      <ellipse cx="720" cy="150" rx="4" ry="6" fill="#6b5845" />
+      <ellipse cx="736" cy="150" rx="4" ry="6" fill="#6b5845" />
+      <!-- Face -->
+      <circle cx="728" cy="146" r="8" fill="#d5c4a1" />
+      <!-- Eyes -->
+      <circle cx="724" cy="145" r="3" fill="#fff" />
+      <circle cx="732" cy="145" r="3" fill="#fff" />
+      <circle cx="724" cy="145" r="2" fill="#000" class="owl-pupil" />
+      <circle cx="732" cy="145" r="2" fill="#000" class="owl-pupil" />
+      <!-- Beak -->
+      <path d="M 728 148 L 726 151 L 730 151 Z" fill="#ffaa33" />
+      <!-- Ear tufts -->
+      <rect x="722" y="140" width="2" height="4" fill="#8b7355" />
+      <rect x="732" y="140" width="2" height="4" fill="#8b7355" />
+    </g>
 
     <!-- Keep Windows (aligned grid) -->
     {
@@ -944,31 +1047,28 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         fill="var(--colour-white)"
         opacity="0.08"></rect>
 
-      <!-- Smoke -->
-      <ellipse
-        cx="960"
-        cy="184"
-        rx="16"
-        ry="12"
-        fill="var(--colour-smoke)"
-        opacity="0.4"
-        class="smoke smoke-1"></ellipse>
-      <ellipse
-        cx="956"
-        cy="168"
-        rx="20"
-        ry="14"
-        fill="var(--colour-smoke)"
-        opacity="0.3"
-        class="smoke smoke-2"></ellipse>
-      <ellipse
-        cx="964"
-        cy="152"
-        rx="18"
-        ry="13"
-        fill="var(--colour-smoke)"
-        opacity="0.2"
-        class="smoke smoke-3"></ellipse>
+      <!-- Smoke (puffy cartoon clouds) -->
+      <g class="smoke smoke-1">
+        <circle cx="952" cy="184" r="8" fill="#e0e0e0" opacity="0.5" />
+        <circle cx="960" cy="182" r="10" fill="#e0e0e0" opacity="0.5" />
+        <circle cx="968" cy="184" r="8" fill="#e0e0e0" opacity="0.5" />
+        <circle cx="956" cy="188" r="7" fill="#e0e0e0" opacity="0.5" />
+        <circle cx="964" cy="188" r="7" fill="#e0e0e0" opacity="0.5" />
+      </g>
+      <g class="smoke smoke-2">
+        <circle cx="948" cy="168" r="10" fill="#e0e0e0" opacity="0.4" />
+        <circle cx="956" cy="166" r="12" fill="#e0e0e0" opacity="0.4" />
+        <circle cx="966" cy="168" r="10" fill="#e0e0e0" opacity="0.4" />
+        <circle cx="952" cy="172" r="9" fill="#e0e0e0" opacity="0.4" />
+        <circle cx="962" cy="172" r="9" fill="#e0e0e0" opacity="0.4" />
+      </g>
+      <g class="smoke smoke-3">
+        <circle cx="956" cy="152" r="9" fill="#e0e0e0" opacity="0.3" />
+        <circle cx="964" cy="150" r="11" fill="#e0e0e0" opacity="0.3" />
+        <circle cx="972" cy="152" r="9" fill="#e0e0e0" opacity="0.3" />
+        <circle cx="960" cy="156" r="8" fill="#e0e0e0" opacity="0.3" />
+        <circle cx="968" cy="156" r="8" fill="#e0e0e0" opacity="0.3" />
+      </g>
 
       <!-- Deep Interior Shadow (visible through open front) -->
       <rect
@@ -1088,6 +1188,22 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         fill="var(--colour-white)"
         opacity="0.4"></rect>
 
+      <!-- Animated Hammer -->
+      <g class="hammer-strike">
+        <!-- Handle -->
+        <rect x="928" y="370" width="4" height="20" fill="#8b6f47" />
+        <!-- Head -->
+        <rect x="924" y="366" width="12" height="8" fill="var(--colour-stone-dark)" />
+        <!-- Shine -->
+        <rect x="932" y="368" width="2" height="2" fill="#fff" opacity="0.6" />
+      </g>
+
+      <!-- Impact sparkles -->
+      <g class="impact-stars">
+        <path d="M 916 380 L 918 382 L 916 384 L 914 382 Z" fill="#ffcc00" opacity="0" />
+        <path d="M 924 380 L 926 382 L 924 384 L 922 382 Z" fill="#ffcc00" opacity="0" />
+      </g>
+
       <!-- Tools on wall (hammer, tongs) -->
       <rect
         x="888"
@@ -1159,6 +1275,14 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         font-size="11"
         letter-spacing="1">FORGE</text
       >
+
+      <!-- Hover sparkles -->
+      <g class="hover-sparkle" opacity="0">
+        <polygon points="890,210 892,214 896,216 892,218 890,222 888,218 884,216 888,214" fill="#ffcc00" />
+        <polygon points="1030,210 1032,214 1036,216 1032,218 1030,222 1028,218 1024,216 1028,214" fill="#ffcc00" />
+        <polygon points="890,425 892,429 896,431 892,433 890,437 888,433 884,431 888,429" fill="#ffcc00" />
+        <polygon points="1030,425 1032,429 1036,431 1032,433 1030,437 1028,433 1024,431 1028,429" fill="#ffcc00" />
+      </g>
 
       <rect
         x="880"
@@ -1244,6 +1368,14 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         font-size="9"
         letter-spacing="1">NEWSLETTER</text
       >
+
+      <!-- Hover sparkles -->
+      <g class="hover-sparkle" opacity="0">
+        <polygon points="1046,520 1048,524 1052,526 1048,528 1046,532 1044,528 1040,526 1044,524" fill="#ffcc00" />
+        <polygon points="1176,520 1178,524 1182,526 1178,528 1176,532 1174,528 1170,526 1174,524" fill="#ffcc00" />
+        <polygon points="1046,592 1048,596 1052,598 1048,600 1046,604 1044,600 1040,598 1044,596" fill="#ffcc00" />
+        <polygon points="1176,592 1178,596 1182,598 1178,600 1176,604 1174,600 1170,598 1174,596" fill="#ffcc00" />
+      </g>
 
       <rect
         x="1032"
@@ -1357,6 +1489,30 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     opacity: 0.15;
   }
 
+  .hover-sparkle {
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .castle-section:hover .hover-sparkle {
+    opacity: 1 !important;
+    animation: sparkle-spin 0.8s ease-in-out;
+  }
+
+  @keyframes sparkle-spin {
+    0% {
+      transform: scale(0) rotate(0deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2) rotate(180deg);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1) rotate(360deg);
+      opacity: 1;
+    }
+  }
+
   .window-flicker {
     animation: window-flicker 2.5s steps(2, end) infinite;
   }
@@ -1411,6 +1567,11 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     animation: star-twinkle 3s ease-in-out infinite;
   }
 
+  .star-rotate {
+    animation: star-twinkle 3s ease-in-out infinite, star-rotate 4s linear infinite;
+    transform-origin: center;
+  }
+
   @keyframes star-twinkle {
     0%,
     100% {
@@ -1421,8 +1582,25 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     }
   }
 
+  @keyframes star-rotate {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(180deg) scale(1.1);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+
   .moon-glow {
     animation: moon-pulse 5s ease-in-out infinite;
+  }
+
+  .moon-sway {
+    animation: moon-sway 8s ease-in-out infinite;
+    transform-origin: center;
   }
 
   @keyframes moon-pulse {
@@ -1435,18 +1613,35 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     }
   }
 
+  @keyframes moon-sway {
+    0%, 100% {
+      transform: translateX(0) translateY(0);
+    }
+    25% {
+      transform: translateX(3px) translateY(-2px);
+    }
+    75% {
+      transform: translateX(-3px) translateY(2px);
+    }
+  }
+
   .flag-wave {
     animation: flag-wave 2.5s ease-in-out infinite;
     transform-origin: left center;
   }
 
   @keyframes flag-wave {
-    0%,
-    100% {
-      transform: scaleX(1);
+    0%, 100% {
+      transform: scaleX(1) scaleY(1);
+    }
+    25% {
+      transform: scaleX(0.88) scaleY(1.06);
     }
     50% {
-      transform: scaleX(0.92);
+      transform: scaleX(0.94) scaleY(1.02);
+    }
+    75% {
+      transform: scaleX(0.92) scaleY(1.04);
     }
   }
 
@@ -1522,6 +1717,85 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     }
   }
 
+  .owl-blink {
+    animation: owl-bob 3s ease-in-out infinite;
+  }
+
+  .owl-pupil {
+    animation: owl-blink 4s ease-in-out infinite;
+  }
+
+  @keyframes owl-bob {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+
+  @keyframes owl-blink {
+    0%, 48%, 52%, 100% {
+      transform: scaleY(1);
+    }
+    50% {
+      transform: scaleY(0.1);
+    }
+  }
+
+  .hammer-strike {
+    animation: hammer-strike 1.5s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+
+  .impact-stars {
+    animation: impact-flash 1.5s ease-in-out infinite;
+  }
+
+  @keyframes hammer-strike {
+    0%, 70%, 100% {
+      transform: rotate(0deg) translateY(0);
+    }
+    10% {
+      transform: rotate(-25deg) translateY(-4px);
+    }
+    20% {
+      transform: rotate(-30deg) translateY(-6px);
+    }
+    25% {
+      transform: rotate(10deg) translateY(2px);
+    }
+    30% {
+      transform: rotate(0deg) translateY(0);
+    }
+  }
+
+  @keyframes impact-flash {
+    0%, 24%, 28%, 70%, 100% {
+      opacity: 0;
+    }
+    25%, 27% {
+      opacity: 1;
+    }
+  }
+
+  .flower-sway {
+    animation: flower-sway 3s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+
+  @keyframes flower-sway {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-3deg);
+    }
+    75% {
+      transform: rotate(3deg);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .castle-section {
       transition: none;
@@ -1533,11 +1807,18 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     .forge-pulse,
     .smoke,
     .star-twinkle,
+    .star-rotate,
     .moon-glow,
+    .moon-sway,
     .flag-wave,
     .spark,
     .ember,
-    .torch-flicker {
+    .torch-flicker,
+    .owl-blink,
+    .owl-pupil,
+    .hammer-strike,
+    .impact-stars,
+    .flower-sway {
       animation: none !important;
     }
   }
