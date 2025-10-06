@@ -1,0 +1,55 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import LibraryIcon from '../../components/LibraryIcon.astro';
+import Base from '../../layouts/Base.astro';
+
+const allBlogPosts = await getCollection('blog', ({ data }: CollectionEntry<'blog'>) => {
+	return data.draft !== true;
+});
+
+const sortedPosts = allBlogPosts.sort(
+	(a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
+		b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Base title="Library - Blog Posts">
+  <div class="container" style="padding: var(--space-16) var(--space-4);">
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: var(--space-8);">
+      <LibraryIcon />
+      <h1 style="text-align: center; margin-top: var(--space-6); margin-bottom: var(--space-4);">📚 The Library</h1>
+      <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto var(--space-4) auto;">
+        Welcome to the Library, where we document our adventures in technology, security, and AI.
+      </p>
+      <div style="margin-top: var(--space-4);">
+        <a href="/blog/rss.xml" style="font-size: var(--font-size-sm); padding: var(--space-2) var(--space-4); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-full); font-weight: var(--font-weight-bold);">
+          📡 RSS Feed
+        </a>
+      </div>
+    </div>
+
+    <div style="max-width: 900px; margin: 0 auto;">
+      {sortedPosts.map((post: CollectionEntry<'blog'>) => (
+        <article style="margin-bottom: var(--space-8); padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer);">
+          <h2 style="margin-bottom: var(--space-3);">
+            <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+          </h2>
+          <p style="font-size: var(--font-size-sm); color: var(--colour-stone-light); margin-bottom: var(--space-3);">
+            {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+          <p style="margin-bottom: var(--space-4);">{post.data.description}</p>
+          {post.data.tags.length > 0 && (
+            <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+              {post.data.tags.map((tag: string) => (
+                <span style="font-size: var(--font-size-sm); padding: var(--space-1) var(--space-3); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-full);">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>

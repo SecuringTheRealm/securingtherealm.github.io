@@ -17,6 +17,7 @@ This directory contains Architecture Decision Records (ADRs) for the Agentic Adv
 | Number | Title                     | Status   | Date       | Description                         |
 | ------ | ------------------------- | -------- | ---------- | ----------------------------------- |
 | 0000   | [Using ADRs](template.md) | Accepted | 2025-06-10 | Template for architecture decisions |
+| 0001   | [Migration from Next.js to Astro](0001-migration-nextjs-to-astro.md) | Accepted | 2025-01-15 | Rebuild site with Astro for better performance and 8-bit castle theme |
 
 ## ADR Statuses
 
