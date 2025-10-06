@@ -1,15 +1,6 @@
 /* Global Styles - Securing the Realm */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import './tokens.css';
-
-/* Font Imports */
-@font-face {
-  font-family: 'Press Start 2P';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-}
-
 /* Base Styles */
 *,
 *::before,
