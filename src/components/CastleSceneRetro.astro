@@ -1,9 +1,18 @@
 ---
 /**
  * CastleSceneRetro.astro
- * Strict 8-bit Dover-style integrated fortress.
- * Single architectural language: 8px grid, unified outline, one light source (top-right).
- * Reduced palette: 8-16 colours, consistent stone treatment, hard pixel shadows.
+ * SNES/NES-style 8-bit pixel art castle scene.
+ *
+ * Nintendo design principles:
+ * - Strict 8px grid alignment
+ * - No smooth curves (stacked pixel rectangles only)
+ * - Discrete animation frames (steps() functions)
+ * - Limited color palette via CSS variables
+ * - Hard pixel edges (crispEdges rendering)
+ * - Chunky, readable silhouettes
+ * - Character and charm in every element
+ *
+ * Dover-style integrated fortress with Nintendo magic.
  */
 
 const uid = Math.random().toString(36).slice(2, 11)
@@ -158,6 +167,16 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         />
       )
     })
+  }
+
+  <!-- Ground pebbles (SNES-style texture detail) -->
+  {
+    [
+      [240, 518], [420, 510], [580, 524], [760, 516], [920, 508],
+      [180, 512], [340, 520], [650, 514], [840, 522], [1040, 510]
+    ].map(([x, y]) => (
+      <rect x={x} y={y} width="4" height="4" fill="var(--colour-stone-dark)" opacity="0.3" />
+    ))
   }
 
   <!-- Foreground Flowers (8-bit pixel flowers) -->
@@ -824,43 +843,23 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     ></rect>
     <path d="M 616 296 L 612 300 L 620 300 Z" fill="var(--colour-stone-dark)"
     ></path>
-    <ellipse
-      cx="616"
-      cy="288"
-      rx="6"
-      ry="8"
-      fill="var(--colour-forge-orange)"
-      opacity="0.8"
-      class="torch-flicker"></ellipse>
-    <ellipse
-      cx="616"
-      cy="284"
-      rx="4"
-      ry="6"
-      fill="var(--colour-forge-yellow)"
-      opacity="0.9"
-      class="torch-flicker"></ellipse>
+    <!-- Flame (SNES pixel blocks) -->
+    <g class="torch-flicker">
+      <rect x="612" y="288" width="8" height="8" fill="var(--colour-forge-orange)" opacity="0.9" />
+      <rect x="614" y="284" width="4" height="4" fill="var(--colour-forge-yellow)" opacity="1" />
+      <rect x="613" y="280" width="6" height="4" fill="var(--colour-forge-yellow)" opacity="0.8" />
+    </g>
     <!-- Right torch -->
     <rect x="820" y="300" width="8" height="16" fill="var(--colour-stone-dark)"
     ></rect>
     <path d="M 824 296 L 820 300 L 828 300 Z" fill="var(--colour-stone-dark)"
     ></path>
-    <ellipse
-      cx="824"
-      cy="288"
-      rx="6"
-      ry="8"
-      fill="var(--colour-forge-orange)"
-      opacity="0.8"
-      class="torch-flicker"></ellipse>
-    <ellipse
-      cx="824"
-      cy="284"
-      rx="4"
-      ry="6"
-      fill="var(--colour-forge-yellow)"
-      opacity="0.9"
-      class="torch-flicker"></ellipse>
+    <!-- Flame (SNES pixel blocks) -->
+    <g class="torch-flicker">
+      <rect x="820" y="288" width="8" height="8" fill="var(--colour-forge-orange)" opacity="0.9" />
+      <rect x="822" y="284" width="4" height="4" fill="var(--colour-forge-yellow)" opacity="1" />
+      <rect x="821" y="280" width="6" height="4" fill="var(--colour-forge-yellow)" opacity="0.8" />
+    </g>
 
     <!-- Keep Gate -->
     <rect
@@ -1056,21 +1055,46 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         opacity="0.8"></rect>
 
       <!-- Forge/Furnace with Glow (center back) -->
-      <rect
-        x="936"
-        y="320"
-        width="48"
-        height="64"
-        fill={`url(#${uid}-forge-glow)`}
-        class="forge-glow-animation"></rect>
-      <rect
-        x="940"
-        y="324"
-        width="40"
-        height="56"
-        fill="var(--colour-forge-orange)"
-        opacity="0.9"
-        class="forge-glow-animation"></rect>
+      <!-- Stone furnace structure -->
+      <rect x="928" y="320" width="64" height="72" fill="var(--colour-stone-dark)" stroke="var(--colour-black)" stroke-width="2" />
+
+      <!-- Furnace opening/arch (SNES pixel arch) -->
+      <rect x="936" y="360" width="48" height="32" fill="var(--colour-black)" opacity="0.8" />
+      <rect x="940" y="352" width="40" height="8" fill="var(--colour-black)" opacity="0.8" />
+      <rect x="944" y="348" width="32" height="4" fill="var(--colour-black)" opacity="0.8" />
+
+      <!-- Iron grate bars (pixel perfect) -->
+      <rect x="944" y="360" width="2" height="32" fill="var(--colour-stone-dark)" opacity="0.6" />
+      <rect x="952" y="360" width="2" height="32" fill="var(--colour-stone-dark)" opacity="0.6" />
+      <rect x="960" y="360" width="2" height="32" fill="var(--colour-stone-dark)" opacity="0.6" />
+      <rect x="968" y="360" width="2" height="32" fill="var(--colour-stone-dark)" opacity="0.6" />
+      <rect x="976" y="360" width="2" height="32" fill="var(--colour-stone-dark)" opacity="0.6" />
+
+      <!-- Glowing coals/fire inside (layered) -->
+      <g class="forge-glow-animation">
+        <!-- Deep glow layer -->
+        <rect x="940" y="368" width="40" height="20" fill="var(--colour-forge-orange)" opacity="0.9" />
+        <!-- Hot spots (pixel coals) -->
+        <rect x="944" y="372" width="8" height="8" fill="var(--colour-forge-yellow)" opacity="1" />
+        <rect x="956" y="376" width="8" height="8" fill="var(--colour-forge-yellow)" opacity="1" />
+        <rect x="968" y="372" width="8" height="8" fill="var(--colour-forge-yellow)" opacity="1" />
+        <!-- Bright center -->
+        <rect x="952" y="368" width="16" height="12" fill="var(--colour-forge-yellow)" opacity="0.95" />
+      </g>
+
+      <!-- Heat shimmer/glow effect above opening -->
+      <rect x="936" y="344" width="48" height="4" fill="var(--colour-forge-orange)" opacity="0.4" class="forge-glow-animation" />
+      <rect x="940" y="340" width="40" height="4" fill="var(--colour-forge-yellow)" opacity="0.3" class="forge-glow-animation" />
+
+      <!-- Stone texture details -->
+      <rect x="932" y="328" width="8" height="8" fill="var(--colour-black)" opacity="0.15" />
+      <rect x="980" y="332" width="8" height="8" fill="var(--colour-black)" opacity="0.15" />
+      <rect x="936" y="380" width="8" height="8" fill="var(--colour-black)" opacity="0.15" />
+
+      <!-- Furnace highlights (right side, from top-right light) -->
+      <rect x="984" y="324" width="4" height="64" fill="var(--colour-white)" opacity="0.12" />
+      <!-- Furnace shadow (left side) -->
+      <rect x="928" y="324" width="4" height="64" fill="var(--colour-black)" opacity="0.25" />
 
       <!-- Forge sparks (8-bit particles) -->
       <rect
@@ -1102,28 +1126,31 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
         fill="var(--colour-forge-yellow)"
         class="spark spark-4"></rect>
 
-      <!-- Glowing embers rising (Nintendo magic) -->
-      <circle
-        cx="952"
-        cy="280"
-        r="2"
+      <!-- Glowing embers rising (SNES pixel particles) -->
+      <rect
+        x="950"
+        y="278"
+        width="4"
+        height="4"
         fill="var(--colour-forge-yellow)"
-        opacity="0.8"
-        class="ember ember-1"></circle>
-      <circle
-        cx="964"
-        cy="260"
-        r="2"
+        opacity="0.9"
+        class="ember ember-1"></rect>
+      <rect
+        x="962"
+        y="258"
+        width="4"
+        height="4"
         fill="var(--colour-forge-orange)"
-        opacity="0.6"
-        class="ember ember-2"></circle>
-      <circle
-        cx="958"
-        cy="240"
-        r="1.5"
+        opacity="0.7"
+        class="ember ember-2"></rect>
+      <rect
+        x="956"
+        y="238"
+        width="4"
+        height="4"
         fill="var(--colour-gold-light)"
-        opacity="0.4"
-        class="ember ember-3"></circle>
+        opacity="0.5"
+        class="ember ember-3"></rect>
 
       <!-- Anvil (visible in front) -->
       <rect
@@ -1343,68 +1370,22 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
     </g>
   </a>
 
-  <!-- Ground Shadows (SEGA-style layered depth) -->
-  <!-- Deep shadow layer -->
-  <ellipse
-    cx="240"
-    cy="488"
-    rx="80"
-    ry="16"
-    fill="var(--colour-black)"
-    opacity="0.3"></ellipse>
-  <!-- Mid shadow -->
-  <ellipse
-    cx="240"
-    cy="486"
-    rx="72"
-    ry="14"
-    fill="var(--colour-black)"
-    opacity="0.15"></ellipse>
+  <!-- Ground Shadows (SNES pixel rectangles) -->
+  <!-- Tower shadow -->
+  <rect x="168" y="482" width="144" height="8" fill="var(--colour-black)" opacity="0.35" />
+  <rect x="176" y="490" width="128" height="8" fill="var(--colour-black)" opacity="0.15" />
 
-  <ellipse
-    cx="460"
-    cy="488"
-    rx="100"
-    ry="16"
-    fill="var(--colour-black)"
-    opacity="0.3"></ellipse>
-  <ellipse
-    cx="460"
-    cy="486"
-    rx="92"
-    ry="14"
-    fill="var(--colour-black)"
-    opacity="0.15"></ellipse>
+  <!-- Library shadow -->
+  <rect x="368" y="482" width="184" height="8" fill="var(--colour-black)" opacity="0.35" />
+  <rect x="376" y="490" width="168" height="8" fill="var(--colour-black)" opacity="0.15" />
 
-  <ellipse
-    cx="720"
-    cy="488"
-    rx="120"
-    ry="16"
-    fill="var(--colour-black)"
-    opacity="0.35"></ellipse>
-  <ellipse
-    cx="720"
-    cy="486"
-    rx="112"
-    ry="14"
-    fill="var(--colour-black)"
-    opacity="0.15"></ellipse>
+  <!-- Keep shadow (largest) -->
+  <rect x="608" y="482" width="224" height="8" fill="var(--colour-black)" opacity="0.4" />
+  <rect x="616" y="490" width="208" height="8" fill="var(--colour-black)" opacity="0.2" />
 
-  <ellipse
-    cx="960"
-    cy="488"
-    rx="80"
-    ry="16"
-    fill="var(--colour-black)"
-    opacity="0.3"></ellipse>
-  <ellipse
-    cx="960"
-    cy="486"
-    rx="72"
-    ry="14"
-    fill="var(--colour-black)"
-    opacity="0.15"></ellipse>
+  <!-- Forge shadow -->
+  <rect x="888" y="482" width="144" height="8" fill="var(--colour-black)" opacity="0.35" />
+  <rect x="896" y="490" width="128" height="8" fill="var(--colour-black)" opacity="0.15" />
 </svg>
 
 <style>
@@ -1681,10 +1662,16 @@ const BrickRow = (x: number, y: number, width: number, offset = 0) => {
   @keyframes torch-flicker {
     0%,
     100% {
+      opacity: 1;
+    }
+    25% {
       opacity: 0.9;
     }
     50% {
       opacity: 0.7;
+    }
+    75% {
+      opacity: 0.85;
     }
   }
 
