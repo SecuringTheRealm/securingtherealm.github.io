@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx biome check:*)"
+      "Bash(npx biome check:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []
