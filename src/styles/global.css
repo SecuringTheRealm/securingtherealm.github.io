@@ -69,6 +69,34 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+/* Navigation Links with Castle Theme Hover */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: attr(data-castle-name);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--colour-teal-dark);
+  border: 2px solid var(--colour-gold);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+  z-index: 100;
+}
+
+.nav-link:hover::after {
+  opacity: 1;
+}
+
 /* Lists */
 ul, ol {
   margin-left: var(--space-6);
@@ -184,12 +212,22 @@ pre {
   html {
     font-size: 14px;
   }
-  
+
   h1 {
     font-size: var(--font-size-2xl);
   }
-  
+
   h2 {
     font-size: var(--font-size-xl);
+  }
+
+  /* Scale down logo on mobile */
+  header nav img {
+    max-height: 36px;
+  }
+
+  /* Hide branding text on mobile to save space */
+  header nav a span {
+    display: none;
   }
 }

@@ -1,0 +1,462 @@
+---
+/**
+ * CastleSceneRetro.astro
+ * 8-bit pixel art castle scene inspired by Dover Castle and classic Zelda games.
+ * Integrated castle with tower, library, forge, battlements, and newsletter scrolls.
+ * All coordinates snap to 8px grid, 2px strokes, CSS variable colors only.
+ */
+
+const uid = Math.random().toString(36).slice(2, 11);
+
+// Reusable window component (inline) - returns coordinate object
+const Window = (x: number, y: number) => ({
+  outer: { x, y, width: 32, height: 40 },
+  inner: { x: x + 2, y: y + 2, width: 28, height: 36 },
+  crossV: { x: x + 14, y: y + 2, width: 2, height: 36 },
+  crossH: { x: x + 2, y: y + 18, width: 28, height: 2 },
+});
+
+// Reusable merlon/battlement component
+const Merlon = (x: number, y: number) => ({
+  main: { x, y, width: 24, height: 24 },
+  highlight: { x: x + 2, y, width: 20, height: 2 },
+  shadow: { x, y: y + 2, width: 2, height: 20 },
+});
+
+// Brick texture helper (8x8 grid-aligned bricks)
+const Brick = (x: number, y: number, offset = 0) => ({
+  main: { x: x + offset, y, width: 16, height: 8 },
+  highlight: { x: x + offset + 1, y: y + 1, width: 14, height: 2 },
+});
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1200 600"
+  role="img"
+  aria-labelledby={`${uid}-title`}
+  class="castle-scene-retro"
+>
+  <title id={`${uid}-title`}>Securing the Realm - 8-bit Castle Navigation</title>
+  <desc id={`${uid}-desc`}>
+    A pixel-art castle with four sections: Tower (talks), Library (blog), Forge (projects), and Newsletter scrolls.
+  </desc>
+
+  <defs>
+    <linearGradient id={`${uid}-sky`} x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color: var(--colour-sky-dark)" />
+      <stop offset="60%" style="stop-color: var(--colour-teal-dark)" />
+      <stop offset="100%" style="stop-color: var(--colour-teal-bg)" />
+    </linearGradient>
+
+    <linearGradient id={`${uid}-ground`} x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color: var(--colour-grass)" />
+      <stop offset="40%" style="stop-color: var(--colour-ground-mid)" />
+      <stop offset="100%" style="stop-color: var(--colour-ground-dark)" />
+    </linearGradient>
+
+    <radialGradient id={`${uid}-forge-glow`}>
+      <stop offset="0%" style="stop-color: var(--colour-forge-yellow); stop-opacity: 0.9" />
+      <stop offset="60%" style="stop-color: var(--colour-forge-orange); stop-opacity: 0.6" />
+      <stop offset="100%" style="stop-color: var(--colour-forge-orange); stop-opacity: 0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Sky Background -->
+  <rect width="1200" height="480" fill={`url(#${uid}-sky)`} />
+
+  <!-- Stars -->
+  {[[120, 80], [280, 120], [480, 40], [720, 96], [920, 64], [1080, 128], [200, 160], [600, 136]].map(([x, y]) => (
+    <g class="star-twinkle">
+      <rect x={x + 3} y={y} width="2" height="8" fill="var(--colour-parchment)" opacity="0.8" />
+      <rect x={x} y={y + 3} width="8" height="2" fill="var(--colour-parchment)" opacity="0.8" />
+    </g>
+  ))}
+
+  <!-- Moon -->
+  <circle cx="1080" cy="120" r="48" fill="var(--colour-parchment)" opacity="0.3" class="moon-glow" />
+  <circle cx="1080" cy="120" r="40" fill="var(--colour-parchment)" />
+  <!-- Moon craters (8-bit style) -->
+  <circle cx="1072" cy="112" r="8" fill="var(--colour-stone-light)" opacity="0.3" />
+  <circle cx="1088" cy="124" r="6" fill="var(--colour-stone-light)" opacity="0.3" />
+  <circle cx="1084" cy="108" r="4" fill="var(--colour-stone-light)" opacity="0.3" />
+
+  <!-- Ground -->
+  <rect x="0" y="480" width="1200" height="120" fill={`url(#${uid}-ground)`} />
+  
+  <!-- Grass texture (8-bit pixel blades) -->
+  {[...Array(80)].map((_, i: number) => {
+    const x = (i * 15 + (i % 3) * 8) % 1200;
+    const y = 480 + (i % 3) * 4;
+    return (
+      <g opacity="0.3">
+        <rect x={x} y={y} width="2" height="8" fill="var(--colour-grass)" />
+        <rect x={x + 4} y={y + 2} width="2" height="6" fill="var(--colour-grass)" />
+      </g>
+    );
+  })}
+
+  <!-- Foundation -->
+  <rect x="80" y="440" width="1040" height="40" fill="var(--colour-foundation-dark)" stroke="var(--colour-black)" stroke-width="2" />
+  <rect x="80" y="440" width="1040" height="4" fill="var(--colour-white)" opacity="0.08" />
+
+  <!-- TOWER SECTION (Left) -->
+  <a href="/talks/" aria-label="Tower - View video talks">
+    <g class="castle-section">
+      <!-- Tower Body -->
+      <rect x="160" y="200" width="160" height="240" fill="var(--colour-stone)" stroke="var(--colour-black)" stroke-width="2" />
+      <rect x="312" y="200" width="8" height="240" fill="var(--colour-white)" opacity="0.10" />
+      <rect x="160" y="200" width="8" height="240" fill="var(--colour-black)" opacity="0.15" />
+
+      <!-- Tower brick texture (subtle 8-bit detail) -->
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((row: number) => (
+        <g opacity="0.08">
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((col: number) => {
+            const b = Brick(168 + col * 16, 208 + row * 16, row % 2 === 0 ? 0 : -8);
+            return <rect {...b.main} fill="var(--colour-black)" />;
+          })}
+        </g>
+      ))}
+
+      <!-- Tower flag (animated) -->
+      <rect x="236" y="152" width="8" height="48" fill="var(--colour-stone-dark)" />
+      <path d="M 244 156 L 268 164 L 244 172 Z" fill="var(--colour-gold)" stroke="var(--colour-gold-dark)" stroke-width="1" class="flag-wave" />
+      <path d="M 244 156 L 268 164 L 244 172 Z" fill="var(--colour-gold-dark)" opacity="0.3" transform="translate(2, 2)" />
+
+      <!-- Tower Battlements -->
+      {[0, 1, 2, 3, 4, 5].map((i: number) => {
+        const m = Merlon(160 + i * 24 + (i % 2 === 0 ? 0 : 12), 176);
+        return (
+          <g>
+            <rect {...m.main} fill="var(--colour-stone)" stroke="var(--colour-black)" stroke-width="2" />
+            <rect {...m.highlight} fill="var(--colour-white)" opacity="0.12" />
+            <rect {...m.shadow} fill="var(--colour-black)" opacity="0.15" />
+          </g>
+        );
+      })}
+
+      <!-- Tower Windows -->
+      {[Window(200, 240), Window(200, 312), Window(200, 384)].map((w) => (
+        <g class="window-glow">
+          <rect {...w.outer} fill="var(--colour-black)" opacity="0.25" />
+          <rect {...w.inner} fill="var(--colour-gold)" opacity="0.7" />
+          <rect {...w.crossV} fill="var(--colour-stone-dark)" opacity="0.4" />
+          <rect {...w.crossH} fill="var(--colour-stone-dark)" opacity="0.4" />
+        </g>
+      ))}
+
+      <!-- Tower Door -->
+      <rect x="220" y="384" width="40" height="48" fill="var(--colour-stone-dark)" />
+      <ellipse cx="240" cy="384" rx="20" ry="8" fill="var(--colour-stone-dark)" />
+      <rect x="224" y="388" width="32" height="44" fill="var(--colour-teal-dark)" opacity="0.8" />
+      <circle cx="252" cy="412" r="3" fill="var(--colour-gold)" />
+
+      <!-- Label -->
+      <text x="240" y="168" text-anchor="middle" fill="var(--colour-parchment)" 
+        font-family="'Press Start 2P', monospace" font-size="11" letter-spacing="1">TOWER</text>
+
+      <rect x="160" y="176" width="160" height="264" fill="var(--colour-gold)" opacity="0" class="section-hover" />
+    </g>
+  </a>
+
+  <!-- LIBRARY SECTION (Center-Left) -->
+  <a href="/blog/" aria-label="Library - Read blog posts">
+    <g class="castle-section">
+      <!-- Library Body -->
+      <rect x="360" y="240" width="200" height="200" fill="var(--colour-stone)" stroke="var(--colour-black)" stroke-width="2" />
+      <rect x="552" y="240" width="8" height="200" fill="var(--colour-white)" opacity="0.10" />
+      <rect x="360" y="240" width="8" height="200" fill="var(--colour-black)" opacity="0.15" />
+
+      <!-- Library brick texture -->
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((row: number) => (
+        <g opacity="0.08">
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((col: number) => {
+            const b = Brick(368 + col * 16, 248 + row * 16, row % 2 === 0 ? 0 : -8);
+            return <rect {...b.main} fill="var(--colour-black)" />;
+          })}
+        </g>
+      ))}
+
+      <!-- Library flag -->
+      <rect x="456" y="132" width="8" height="48" fill="var(--colour-stone-dark)" />
+      <path d="M 464 136 L 488 144 L 464 152 Z" fill="var(--colour-gold)" stroke="var(--colour-gold-dark)" stroke-width="1" class="flag-wave" style="animation-delay: 0.5s" />
+      <path d="M 464 136 L 488 144 L 464 152 Z" fill="var(--colour-gold-dark)" opacity="0.3" transform="translate(2, 2)" />
+
+      <!-- Library Roof -->
+      <path d="M 350 240 L 460 180 L 570 240 Z" fill="var(--colour-roof-depth)" stroke="var(--colour-black)" stroke-width="2" />
+      <path d="M 460 180 L 460 200 L 350 240 Z" fill="var(--colour-black)" opacity="0.2" />
+
+      <!-- Library Battlements -->
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i: number) => {
+        const m = Merlon(360 + i * 24 + (i % 2 === 0 ? 0 : 12), 216);
+        return (
+          <g>
+            <rect {...m.main} fill="var(--colour-stone)" stroke="var(--colour-black)" stroke-width="2" />
+            <rect {...m.highlight} fill="var(--colour-white)" opacity="0.12" />
+            <rect {...m.shadow} fill="var(--colour-black)" opacity="0.15" />
+          </g>
+        );
+      })}
+
+      <!-- Library Windows -->
+      {[Window(380, 272), Window(444, 272), Window(508, 272), Window(380, 344), Window(508, 344)].map((w) => (
+        <g class="window-glow">
+          <rect {...w.outer} fill="var(--colour-black)" opacity="0.25" />
+          <rect {...w.inner} fill="var(--colour-gold)" opacity="0.7" />
+          <rect {...w.crossV} fill="var(--colour-stone-dark)" opacity="0.4" />
+          <rect {...w.crossH} fill="var(--colour-stone-dark)" opacity="0.4" />
+        </g>
+      ))}
+
+      <!-- Library Door -->
+      <rect x="440" y="384" width="40" height="48" fill="var(--colour-stone-dark)" />
+      <ellipse cx="460" cy="384" rx="20" ry="8" fill="var(--colour-stone-dark)" />
+      <rect x="444" y="388" width="32" height="44" fill="var(--colour-teal-dark)" opacity="0.8" />
+      <circle cx="472" cy="412" r="3" fill="var(--colour-gold)" />
+
+      <!-- Label -->
+      <text x="460" y="168" text-anchor="middle" fill="var(--colour-parchment)" 
+        font-family="'Press Start 2P', monospace" font-size="11" letter-spacing="1">LIBRARY</text>
+
+      <rect x="360" y="180" width="210" height="260" fill="var(--colour-gold)" opacity="0" class="section-hover" />
+    </g>
+  </a>
+
+  <!-- MAIN KEEP (Center - backdrop) -->
+  <g>
+    <rect x="600" y="160" width="240" height="280" fill="var(--colour-stone)" stroke="var(--colour-black)" stroke-width="2" />
+    <rect x="832" y="160" width="8" height="280" fill="var(--colour-white)" opacity="0.10" />
+    <rect x="600" y="160" width="8" height="280" fill="var(--colour-black)" opacity="0.15" />
+
+    <!-- Keep Battlements -->
+    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i: number) => {
+      const m = Merlon(600 + i * 24 + (i % 2 === 0 ? 0 : 12), 136);
+      return (
+        <g>
+          <rect {...m.main} fill="var(--colour-stone)" stroke="var(--colour-black)" stroke-width="2" />
+          <rect {...m.highlight} fill="var(--colour-white)" opacity="0.12" />
+          <rect {...m.shadow} fill="var(--colour-black)" opacity="0.15" />
+        </g>
+      );
+    })}
+
+    <!-- Keep Windows -->
+    {[Window(632, 192), Window(768, 192), Window(632, 272), Window(768, 272), Window(632, 352), Window(768, 352)].map((w) => (
+      <g class="window-glow">
+        <rect {...w.outer} fill="var(--colour-black)" opacity="0.25" />
+        <rect {...w.inner} fill="var(--colour-gold)" opacity="0.7" />
+        <rect {...w.crossV} fill="var(--colour-stone-dark)" opacity="0.4" />
+        <rect {...w.crossH} fill="var(--colour-stone-dark)" opacity="0.4" />
+      </g>
+    ))}
+
+    <!-- Keep Gate -->
+    <rect x="684" y="368" width="72" height="72" fill="var(--colour-teal-dark)" stroke="var(--colour-black)" stroke-width="2" />
+    <rect x="712" y="368" width="2" height="72" fill="var(--colour-stone-dark)" opacity="0.5" />
+  </g>
+
+  <!-- FORGE SECTION (Right) -->
+  <a href="/forge/" aria-label="Forge - Explore code projects">
+    <g class="castle-section">
+      <!-- Forge Body -->
+      <rect x="880" y="280" width="160" height="160" fill="var(--colour-stone)" stroke="var(--colour-black)" stroke-width="2" />
+      <rect x="1032" y="280" width="8" height="160" fill="var(--colour-white)" opacity="0.10" />
+      <rect x="880" y="280" width="8" height="160" fill="var(--colour-black)" opacity="0.15" />
+
+      <!-- Chimney -->
+      <rect x="936" y="200" width="48" height="80" fill="var(--colour-stone-dark)" stroke="var(--colour-black)" stroke-width="2" />
+      <rect x="976" y="200" width="8" height="80" fill="var(--colour-white)" opacity="0.08" />
+
+      <!-- Smoke -->
+      <ellipse cx="960" cy="184" rx="16" ry="12" fill="var(--colour-smoke)" opacity="0.4" class="smoke smoke-1" />
+      <ellipse cx="956" cy="168" rx="20" ry="14" fill="var(--colour-smoke)" opacity="0.3" class="smoke smoke-2" />
+      <ellipse cx="964" cy="152" rx="18" ry="13" fill="var(--colour-smoke)" opacity="0.2" class="smoke smoke-3" />
+
+      <!-- Forge Window with Glow -->
+      <rect x="916" y="320" width="88" height="64" fill={`url(#${uid}-forge-glow)`} class="forge-glow-animation" />
+      <rect x="920" y="324" width="80" height="56" fill="var(--colour-forge-orange)" opacity="0.8" class="forge-glow-animation" />
+      
+      <!-- Forge sparks (8-bit particles) -->
+      <rect x="912" y="316" width="4" height="4" fill="var(--colour-forge-yellow)" class="spark spark-1" />
+      <rect x="1000" y="312" width="4" height="4" fill="var(--colour-forge-yellow)" class="spark spark-2" />
+      <rect x="924" y="308" width="4" height="4" fill="var(--colour-gold-light)" class="spark spark-3" />
+      <rect x="988" y="318" width="4" height="4" fill="var(--colour-forge-yellow)" class="spark spark-4" />
+
+      <!-- Forge Door -->
+      <rect x="920" y="384" width="40" height="48" fill="var(--colour-stone-dark)" />
+      <ellipse cx="940" cy="384" rx="20" ry="8" fill="var(--colour-stone-dark)" />
+      <rect x="924" y="388" width="32" height="44" fill="var(--colour-teal-dark)" opacity="0.8" />
+      <circle cx="952" cy="412" r="3" fill="var(--colour-gold)" />
+
+      <!-- Forge Battlements -->
+      {[0, 1, 2, 3, 4, 5].map((i: number) => {
+        const m = Merlon(880 + i * 24 + (i % 2 === 0 ? 0 : 12), 256);
+        return (
+          <g>
+            <rect {...m.main} fill="var(--colour-stone)" stroke="var(--colour-black)" stroke-width="2" />
+            <rect {...m.highlight} fill="var(--colour-white)" opacity="0.12" />
+            <rect {...m.shadow} fill="var(--colour-black)" opacity="0.15" />
+          </g>
+        );
+      })}
+
+      <!-- Label -->
+      <text x="960" y="248" text-anchor="middle" fill="var(--colour-parchment)" 
+        font-family="'Press Start 2P', monospace" font-size="11" letter-spacing="1">FORGE</text>
+
+      <rect x="880" y="200" width="160" height="240" fill="var(--colour-gold)" opacity="0" class="section-hover" />
+    </g>
+  </a>
+
+  <!-- NEWSLETTER SCROLLS (Bottom Right) -->
+  <a href="/newsletter/" aria-label="Newsletter - Subscribe to updates">
+    <g class="castle-section">
+      <!-- Scroll -->
+      <rect x="1040" y="496" width="112" height="72" rx="4" fill="var(--colour-parchment)" stroke="var(--colour-stone-dark)" stroke-width="2" />
+      <ellipse cx="1040" cy="532" rx="8" ry="36" fill="var(--colour-parchment-light)" stroke="var(--colour-stone-dark)" stroke-width="2" />
+      <ellipse cx="1152" cy="532" rx="8" ry="36" fill="var(--colour-parchment)" stroke="var(--colour-stone-dark)" stroke-width="2" />
+      
+      <!-- Wax Seal -->
+      <circle cx="1096" cy="532" r="16" fill="var(--colour-gold-dark)" stroke="var(--colour-black)" stroke-width="2" />
+      <text x="1096" y="538" text-anchor="middle" fill="var(--colour-parchment)" 
+        font-family="'Press Start 2P', monospace" font-size="12" font-weight="700">S</text>
+
+      <!-- Label -->
+      <text x="1096" y="488" text-anchor="middle" fill="var(--colour-parchment)" 
+        font-family="'Press Start 2P', monospace" font-size="9" letter-spacing="1">NEWSLETTER</text>
+
+      <rect x="1032" y="480" width="128" height="96" fill="var(--colour-gold)" opacity="0" class="section-hover" />
+    </g>
+  </a>
+
+  <!-- Ground Shadows -->
+  <ellipse cx="240" cy="488" rx="80" ry="16" fill="var(--colour-black)" opacity="0.2" />
+  <ellipse cx="460" cy="488" rx="100" ry="16" fill="var(--colour-black)" opacity="0.2" />
+  <ellipse cx="720" cy="488" rx="120" ry="16" fill="var(--colour-black)" opacity="0.25" />
+  <ellipse cx="960" cy="488" rx="80" ry="16" fill="var(--colour-black)" opacity="0.2" />
+</svg>
+
+<style>
+  .castle-scene-retro {
+    width: 100%;
+    height: auto;
+    max-width: 1200px;
+    display: block;
+    shape-rendering: crispEdges;
+  }
+
+  @supports (image-rendering: pixelated) {
+    .castle-scene-retro {
+      image-rendering: pixelated;
+    }
+  }
+
+  .castle-section {
+    cursor: pointer;
+    transition: transform 0.25s ease-in-out;
+  }
+
+  .castle-section:hover {
+    transform: scale(1.02);
+  }
+
+  .castle-section:focus-visible {
+    outline: 3px solid var(--colour-gold);
+    outline-offset: 4px;
+  }
+
+  .section-hover {
+    transition: opacity 0.25s ease-in-out;
+  }
+
+  .castle-section:hover .section-hover {
+    opacity: 0.15;
+  }
+
+  .window-glow {
+    animation: window-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes window-pulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  .forge-glow-animation {
+    animation: forge-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes forge-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .smoke {
+    animation: smoke-rise 4s ease-in-out infinite;
+  }
+
+  .smoke-1 { animation-delay: 0s; }
+  .smoke-2 { animation-delay: 1.3s; }
+  .smoke-3 { animation-delay: 2.6s; }
+
+  @keyframes smoke-rise {
+    0% { transform: translateY(0) scale(1); opacity: 0.4; }
+    50% { opacity: 0.2; }
+    100% { transform: translateY(-32px) scale(1.3); opacity: 0; }
+  }
+
+  .star-twinkle {
+    animation: star-twinkle 2.5s ease-in-out infinite;
+  }
+
+  @keyframes star-twinkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .moon-glow {
+    animation: moon-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes moon-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+
+  .flag-wave {
+    animation: flag-wave 2s ease-in-out infinite;
+    transform-origin: left center;
+  }
+
+  @keyframes flag-wave {
+    0%, 100% { transform: scaleX(1) translateX(0); }
+    25% { transform: scaleX(0.95) translateX(-2px); }
+    50% { transform: scaleX(1) translateX(0); }
+    75% { transform: scaleX(1.05) translateX(2px); }
+  }
+
+  .spark {
+    animation: spark-pop 1.5s ease-in-out infinite;
+  }
+
+  .spark-1 { animation-delay: 0s; }
+  .spark-2 { animation-delay: 0.3s; }
+  .spark-3 { animation-delay: 0.6s; }
+  .spark-4 { animation-delay: 0.9s; }
+
+  @keyframes spark-pop {
+    0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+    20% { opacity: 1; transform: translateY(-8px) scale(1); }
+    40% { opacity: 0.8; transform: translateY(-16px) scale(0.8); }
+    60% { opacity: 0.4; transform: translateY(-24px) scale(0.6); }
+    80%, 100% { opacity: 0; transform: translateY(-32px) scale(0.3); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .castle-section { transition: none; }
+    .castle-section:hover { transform: none; }
+    .window-glow, .forge-glow-animation, .smoke, .star-twinkle, .moon-glow, .flag-wave, .spark {
+      animation: none !important;
+    }
+  }
+</style>

@@ -1,64 +1,117 @@
 ---
-import CastleScene from '../components/CastleScene.astro';
-import Base from '../layouts/Base.astro';
+import CastleSceneRetro from '../components/CastleSceneRetro.astro'
+import Base from '../layouts/Base.astro'
 ---
 
 <Base title="Securing the Realm - Castle Gate">
   <div class="container" style="padding: var(--space-16) var(--space-4);">
     <section style="text-align: center; margin-bottom: var(--space-16);">
       <h1 style="margin-bottom: var(--space-8);">Welcome to the Castle</h1>
-      <p style="font-size: var(--font-size-lg); max-width: 800px; margin: 0 auto var(--space-8) auto;">
-        Embark on a journey where technology meets adventure. Through epic storytelling and engaging demos, 
-        we transform complex cybersecurity and AI topics into adventurous quests.
+      <p
+        style="font-size: var(--font-size-lg); max-width: 800px; margin: 0 auto var(--space-8) auto;"
+      >
+        Embark on a journey where technology meets adventure. Through epic
+        storytelling and engaging demos, we transform complex cybersecurity and
+        AI topics into adventurous quests.
       </p>
     </section>
 
     <section style="margin-bottom: var(--space-16);">
       <!-- Interactive Castle Scene -->
       <div style="max-width: 1200px; margin: 0 auto var(--space-12) auto;">
-        <CastleScene />
+        <CastleSceneRetro />
       </div>
-      
+
       <!-- Text-based Navigation Fallback -->
-      <h2 style="text-align: center; margin-bottom: var(--space-8);">Explore the Realm</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-6);">
-        
+      <h2 style="text-align: center; margin-bottom: var(--space-8);">
+        Explore the Realm
+      </h2>
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-6);"
+      >
         <!-- Tower - Talks -->
-        <a href="/talks/" class="realm-card glow-on-hover" style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); text-align: center; display: block; transition: transform var(--transition-base);">
-          <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);">🏰 Tower</h3>
-          <p style="margin: 0; color: var(--colour-parchment);">Watch talks and presentations on Azure, AI, and cybersecurity</p>
+        <a
+          href="/talks/"
+          class="realm-card glow-on-hover"
+          style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); text-align: center; display: block; transition: transform var(--transition-base);"
+        >
+          <h3
+            style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);"
+          >
+            🏰 Tower
+          </h3>
+          <p style="margin: 0; color: var(--colour-parchment);">
+            Watch talks and presentations on Azure, AI, and cybersecurity
+          </p>
         </a>
 
         <!-- Library - Blog -->
-        <a href="/blog/" class="realm-card glow-on-hover" style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); text-align: center; display: block; transition: transform var(--transition-base);">
-          <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);">📚 Library</h3>
-          <p style="margin: 0; color: var(--colour-parchment);">Read articles and insights on technology and security</p>
+        <a
+          href="/blog/"
+          class="realm-card glow-on-hover"
+          style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); text-align: center; display: block; transition: transform var(--transition-base);"
+        >
+          <h3
+            style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);"
+          >
+            📚 Library
+          </h3>
+          <p style="margin: 0; color: var(--colour-parchment);">
+            Read articles and insights on technology and security
+          </p>
         </a>
 
         <!-- Forge - Projects -->
-        <a href="/forge/" class="realm-card glow-on-hover" style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); text-align: center; display: block; transition: transform var(--transition-base);">
-          <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);">⚒️ Forge</h3>
-          <p style="margin: 0; color: var(--colour-parchment);">Explore code projects and open-source contributions</p>
+        <a
+          href="/forge/"
+          class="realm-card glow-on-hover"
+          style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); text-align: center; display: block; transition: transform var(--transition-base);"
+        >
+          <h3
+            style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);"
+          >
+            ⚒️ Forge
+          </h3>
+          <p style="margin: 0; color: var(--colour-parchment);">
+            Explore code projects and open-source contributions
+          </p>
         </a>
 
         <!-- Newsletter - Scrolls -->
-        <a href="/newsletter/" class="realm-card glow-on-hover" style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); text-align: center; display: block; transition: transform var(--transition-base);">
-          <h3 style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);">📜 Arcane Scrolls</h3>
-          <p style="margin: 0; color: var(--colour-parchment);">Subscribe to receive updates and insights</p>
+        <a
+          href="/newsletter/"
+          class="realm-card glow-on-hover"
+          style="padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); text-align: center; display: block; transition: transform var(--transition-base);"
+        >
+          <h3
+            style="font-size: var(--font-size-xl); margin-bottom: var(--space-4);"
+          >
+            📜 Arcane Scrolls
+          </h3>
+          <p style="margin: 0; color: var(--colour-parchment);">
+            Subscribe to receive updates and insights
+          </p>
         </a>
       </div>
     </section>
 
     <section style="max-width: 800px; margin: 0 auto; text-align: center;">
       <h2 style="margin-bottom: var(--space-6);">Our Quest</h2>
-      <p style="font-size: var(--font-size-lg); line-height: var(--line-height-relaxed);">
-        Through epic storytelling and engaging demos, we transform complex topics like deploying 
-        Large-Language Models (LLMs), Small-Language Models (SLMs), and Agentic AI into adventurous quests. 
-        Whether you're a seasoned tech adventurer or a curious newcomer, you'll gain insights into 
-        Azure's cutting-edge capabilities, responsible AI practices, and open-source projects—all while 
-        battling kobolds, training AI elves, and unlocking the secrets of the Crystal Keep.
+      <p
+        style="font-size: var(--font-size-lg); line-height: var(--line-height-relaxed);"
+      >
+        Through epic storytelling and engaging demos, we transform complex
+        topics like deploying Large-Language Models (LLMs), Small-Language
+        Models (SLMs), and Agentic AI into adventurous quests. Whether you're a
+        seasoned tech adventurer or a curious newcomer, you'll gain insights
+        into Azure's cutting-edge capabilities, responsible AI practices, and
+        open-source projects—all while battling kobolds, training AI elves, and
+        unlocking the secrets of the Crystal Keep.
       </p>
-      <a href="/about/" style="display: inline-block; margin-top: var(--space-6); padding: var(--space-3) var(--space-6); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-outer); font-weight: var(--font-weight-bold);">
+      <a
+        href="/about/"
+        style="display: inline-block; margin-top: var(--space-6); padding: var(--space-3) var(--space-6); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-outer); font-weight: var(--font-weight-bold);"
+      >
         Learn More About Our Mission
       </a>
     </section>

@@ -15,7 +15,23 @@
   --colour-parchment-light: #f9f4e7;
   --colour-ink: #1a1a1a;
   --colour-white: #ffffff;
-  
+  --colour-black: #000000;
+
+  /* Castle/Environment Colors */
+  --colour-sky-dark: #0a1820;
+  --colour-ground: #143025;
+  --colour-ground-dark: #163028;
+  --colour-ground-mid: #1a3a30;
+  --colour-grass: #2a5a45;
+  --colour-foundation: #1a4a45;
+  --colour-foundation-dark: #0f3530;
+  --colour-depth-face: #0d3a3a;
+  --colour-chimney-depth: #4a3a2a;
+  --colour-roof-depth: #5a6a68;
+  --colour-smoke: #999999;
+  --colour-forge-orange: #ff6600;
+  --colour-forge-yellow: #ff8800;
+
   /* Semantic Colors */
   --colour-bg-primary: var(--colour-teal-bg);
   --colour-bg-secondary: var(--colour-parchment);

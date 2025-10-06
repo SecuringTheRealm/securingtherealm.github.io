@@ -2,19 +2,12 @@
 
 ## Repository Overview
 
-**Securing the Realm** is a static website built with **Astro 5.14.1** that transforms cybersecurity, Azure, and AI content into an 8-bit fantasy castle-themed experience. The site uses TypeScript strict mode, content collections for type-safe content management, and custom CSS properties for theming.
-
-**Repository Stats:**
-- **Type**: Static site (no server-side rendering)
-- **Size**: ~700 dependencies, ~50 source files
-- **Languages**: TypeScript (95%), CSS (3%), Markdown/MDX (2%)
-- **Framework**: Astro 5.14.1 with content collections
-- **Deployment**: GitHub Pages at https://securing.quest
-- **Build Time**: ~1.6 seconds for full static build
+**Securing the Realm** is a static website built with **Astro** that transforms cybersecurity, Azure, and AI content into an 8-bit fantasy castle-themed experience. The site uses TypeScript strict mode, content collections for type-safe content management, and custom CSS properties for theming. **Deployment**: GitHub Pages Static at https://securing.quest
 
 ## Build & Development Commands
 
 ### Essential Prerequisites
+
 **ALWAYS run `npm install` first** - The repository requires dependencies to be installed before any other command will work.
 
 ### Command Sequence (Validated)
@@ -80,6 +73,7 @@ npm run preview
 - **Note**: Warnings are acceptable; only errors block CI/CD
 
 ### Runtime Versions
+
 - **Node.js**: 18+ required (tested with 18.x, 20.x)
 - **npm**: 9+ (comes with Node.js)
 - **TypeScript**: 5.9.3 (installed via npm)
@@ -88,14 +82,17 @@ npm run preview
 ### Common Issues & Solutions
 
 **Issue**: `sh: astro: not found`
+
 - **Cause**: Dependencies not installed
 - **Solution**: Run `npm install` first
 
 **Issue**: Build fails with TypeScript errors
+
 - **Cause**: Strict mode enabled, type annotations missing
 - **Solution**: All parameters must be explicitly typed. Use `CollectionEntry<'blog'>` for content types
 
 **Issue**: Port 4321 already in use
+
 - **Behavior**: Astro automatically tries 4322, 4323, etc.
 - **Solution**: No action needed, check console for actual port
 
@@ -157,12 +154,14 @@ npm run preview
 **ALWAYS use design tokens from `src/styles/tokens.css`**. Never hardcode colors or spacing.
 
 **Color Palette:**
+
 - `--colour-teal-bg: #0f3c46` - Primary background
 - `--colour-gold: #d5a425` - Accents, CTAs, headings
 - `--colour-stone: #8a877f` - Secondary text
 - `--colour-parchment: #f3e9d2` - Light backgrounds
 
 **Typography:**
+
 - Headings: Press Start 2P (8-bit pixel font)
 - Body: Georgia serif
 - Code: Courier New monospace
@@ -170,6 +169,7 @@ npm run preview
 **Spacing Scale:** `--space-{1,2,3,4,6,8,12,16,20,24}` (4px increments)
 
 **Castle Navigation Metaphor:**
+
 - Tower → `/talks/` (Video presentations)
 - Library → `/blog/` (Blog posts)
 - Forge → `/forge/` (Code projects)
@@ -180,18 +180,21 @@ npm run preview
 ### Adding Content
 
 **Blog Post** (`src/content/blog/filename.md`):
+
 ```markdown
 ---
-title: "Post Title"
-description: "Brief description"
+title: 'Post Title'
+description: 'Brief description'
 pubDate: 2025-01-15
-tags: ["tag1", "tag2"]
+tags: ['tag1', 'tag2']
 draft: false
 ---
+
 # Content here
 ```
 
 **Talk** (`src/content/talks/talk-name.json`):
+
 ```json
 {
   "title": "Talk Title",
@@ -205,6 +208,7 @@ draft: false
 ```
 
 **Project** (`src/content/projects/project-name.json`):
+
 ```json
 {
   "name": "Project Name",
@@ -240,10 +244,12 @@ posts.map((post: CollectionEntry<'blog'>) => { ... })
 ### GitHub Actions Workflow (.github/workflows/publish.yml)
 
 **Triggers:**
+
 - Push to `main` branch
-- Daily cron: 0 0 * * * (checks for YouTube feed updates)
+- Daily cron: 0 0 \* \* \* (checks for YouTube feed updates)
 
 **Steps:**
+
 1. Checkout code
 2. Setup Node.js 20.x
 3. Cache npm dependencies
@@ -253,6 +259,7 @@ posts.map((post: CollectionEntry<'blog'>) => { ... })
 7. Deploy to GitHub Pages
 
 **Build Validation:**
+
 - TypeScript must pass with 0 errors
 - Astro check must succeed
 - Build must produce `dist/` with all pages
@@ -260,11 +267,13 @@ posts.map((post: CollectionEntry<'blog'>) => { ... })
 ### Pre-Commit Checks
 
 Before committing, ALWAYS run:
+
 ```bash
 npm run build  # Validates TypeScript and builds
 ```
 
 If build fails, fix TypeScript errors first. Common issues:
+
 - Missing type annotations on function parameters
 - Using `any` type (not allowed in strict mode)
 - Incorrect collection types
@@ -274,21 +283,25 @@ If build fails, fix TypeScript errors first. Common issues:
 ### Typical Development Flow
 
 1. **Create/edit content**:
+
    - Blog: Add `.md` file to `src/content/blog/`
    - Talk: Add `.json` to `src/content/talks/`
    - Project: Add `.json` to `src/content/projects/`
 
 2. **Create/edit components**:
+
    - Add `.astro` files to `src/components/`
    - ALWAYS use design tokens from `tokens.css`
    - Follow semantic HTML (header, nav, main, footer)
 
 3. **Create/edit pages**:
+
    - Add `.astro` files to `src/pages/`
    - Use `Base.astro` layout
    - Include `Seo.astro` component for metadata
 
 4. **Test locally**:
+
    ```bash
    npm run dev  # Hot reload enabled
    ```
@@ -310,6 +323,7 @@ If build fails, fix TypeScript errors first. Common issues:
 ### Common Patterns
 
 **Creating a new page:**
+
 ```astro
 ---
 import Base from '../layouts/Base.astro';
@@ -324,13 +338,14 @@ import Base from '../layouts/Base.astro';
 ```
 
 **Using content collections:**
+
 ```astro
 ---
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
 const posts = await getCollection('blog');
-const sorted = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
+const sorted = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
   b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
@@ -358,13 +373,28 @@ const sorted = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'
 5. **Test the build**: Run `npm run build` before committing to catch TypeScript errors
 6. **Accessibility matters**: All interactive elements need proper ARIA labels and keyboard support
 7. **Castle theme**: Maintain the fantasy/gaming metaphor in all content and UI elements
+8. **Biome linting**: Run `npm run lint` and `npm run lint:fix` regularly to keep code clean. Resolve warnings if possible.
+
+### Common Astro SVG Issues (Castle Scene)
+
+| Problem                          | Symptom                                 | Resolution                                                                          |
+| -------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------- |
+| Gradient outside `<defs>`        | Gradient ignored / flat fill            | Move gradient into `<defs>` and reference by `url(#id)`                             |
+| ID collisions                    | Multiple components override shared IDs | Prefix IDs with a locally scoped `uid` in frontmatter                               |
+| Blurry / soft edges              | Pixel art looks smeared                 | Use 8px grid alignment, `shape-rendering: crispEdges`, `image-rendering: pixelated` |
+| Too many tile `<use>` nodes      | Large DOM, slow dev refresh             | Replace bulk tiles with single base rect + sparse decorative chips                  |
+| Hardcoded colours                | Theme drift, inconsistent palette       | Always use CSS variables from `tokens.css`                                          |
+| Missing accessibility metadata   | Screen readers announce nothing         | Include `<title>` and `<desc>` plus `aria-label` on interactive links               |
+| Animations ignore reduced motion | Accessibility violation                 | Disable animations inside `@media (prefers-reduced-motion: reduce)`                 |
+| No light/shadow bands            | Flat silhouettes, poor depth            | Add 1 tile (8px) highlight (right) & shadow (left) bands at proper opacity          |
+| Filters used for glow            | Performance + visual blur               | Use opacity pulse layers (no `filter`, `blur`, `drop-shadow`)                       |
+| Unused frontmatter arrays        | Lint warnings                           | Either map them in template or remove unused declarations                           |
+| Improper layer order             | Elements render behind others           | Render order: background → walls → roofs → details → FX                             |
 
 ## Documentation Files
 
 - `README.md`: User-facing setup guide
-- `CONTRIBUTING.md`: Detailed contribution guidelines (7,000+ words)
-- `DESIGN.md`: Complete design system reference (6,400+ words)
-- `MIGRATION_SUMMARY.md`: Astro migration details
-- `docs/adr/0001-migration-nextjs-to-astro.md`: Architecture decision record
+- `DESIGN.md`: Complete design system reference
+- `docs/adr/index.md`: Architectural decision records
 
 **When in doubt**: Check these documentation files for detailed information on design patterns, coding standards, and architectural decisions.
