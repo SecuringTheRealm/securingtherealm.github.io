@@ -1,0 +1,37 @@
+---
+/**
+ * LibraryIcon.astro
+ * 8-bit pixel art library/books icon
+ */
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 80 80"
+  width="80"
+  height="80"
+  role="img"
+  aria-label="Library icon - stack of books"
+  class="library-icon"
+>
+  <title>Library</title>
+
+  <!-- Book 1 (bottom) - teal -->
+  <rect x="8" y="48" width="64" height="16" fill="var(--colour-teal-dark)" stroke="var(--colour-gold)" stroke-width="2"/>
+  <rect x="12" y="52" width="8" height="8" fill="var(--colour-gold)" opacity="0.3"/>
+
+  <!-- Book 2 (middle) - stone -->
+  <rect x="16" y="32" width="56" height="16" fill="var(--colour-stone)" stroke="var(--colour-gold)" stroke-width="2"/>
+  <rect x="20" y="36" width="8" height="8" fill="var(--colour-gold)" opacity="0.3"/>
+
+  <!-- Book 3 (top) - teal light -->
+  <rect x="24" y="16" width="48" height="16" fill="var(--colour-teal-light)" stroke="var(--colour-gold)" stroke-width="2"/>
+  <rect x="28" y="20" width="8" height="8" fill="var(--colour-gold)" opacity="0.3"/>
+</svg>
+
+<style>
+  .library-icon {
+    shape-rendering: crispEdges;
+    image-rendering: pixelated;
+  }
+</style>

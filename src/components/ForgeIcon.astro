@@ -1,0 +1,43 @@
+---
+/**
+ * ForgeIcon.astro
+ * 8-bit pixel art forge/anvil icon
+ */
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 80 80"
+  width="80"
+  height="80"
+  role="img"
+  aria-label="Forge icon - anvil and hammer"
+  class="forge-icon"
+>
+  <title>Forge</title>
+
+  <!-- Anvil base -->
+  <rect x="16" y="56" width="48" height="8" fill="var(--colour-stone)" stroke="var(--colour-gold)" stroke-width="2"/>
+
+  <!-- Anvil body -->
+  <rect x="24" y="40" width="32" height="16" fill="var(--colour-stone-dark)" stroke="var(--colour-gold)" stroke-width="2"/>
+
+  <!-- Anvil horn (left) -->
+  <rect x="20" y="32" width="16" height="8" fill="var(--colour-stone)" stroke="var(--colour-gold)" stroke-width="2"/>
+
+  <!-- Hammer head -->
+  <rect x="48" y="16" width="16" height="8" fill="var(--colour-stone-dark)" stroke="var(--colour-gold)" stroke-width="2"/>
+
+  <!-- Hammer handle -->
+  <rect x="52" y="24" width="8" height="24" fill="var(--colour-parchment-dark)" stroke="var(--colour-gold)" stroke-width="2"/>
+
+  <!-- Glow/spark -->
+  <rect x="32" y="28" width="8" height="8" fill="var(--colour-forge-yellow)" opacity="0.8"/>
+</svg>
+
+<style>
+  .forge-icon {
+    shape-rendering: crispEdges;
+    image-rendering: pixelated;
+  }
+</style>

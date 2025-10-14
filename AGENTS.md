@@ -6,6 +6,7 @@ This repository uses **TypeScript** and **Astro**. Use the practices below when 
 - `docs/prd.md` - Product requirements, features, user stories, design, content strategy
 - `docs/architecture.md` - Technical architecture, implementation patterns, decisions
 - `.github/copilot-instructions.md` - Complete development guide with build commands
+Do not update files under /docs/architecture or under /docs/prd - they are auto-generated.
 
 ## Critical Development Rules
 
