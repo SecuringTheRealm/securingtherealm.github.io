@@ -1,0 +1,8 @@
+{
+  "name": "str-foundry-local",
+  "description": "Example implementation of Azure AI Foundry running locally for content creation. Demonstrates how to develop and test AI models in a local environment before deploying to Azure.",
+  "repoUrl": "https://github.com/SecuringTheRealm/str-foundry-local",
+  "tech": ["TypeScript", "Azure AI Foundry", "Local Development", "AI"],
+  "status": "archived",
+  "firstPublic": "2025-05-7"
+}

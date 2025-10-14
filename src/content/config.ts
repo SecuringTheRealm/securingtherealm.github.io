@@ -33,6 +33,7 @@ const projects = defineCollection({
 		repoUrl: z.string().url(),
 		tech: z.array(z.string()).default([]),
 		status: z.enum(['active', 'archived', 'experimental']).default('active'),
+		firstPublic: z.coerce.date().optional(),
 	}),
 });
 

@@ -1,27 +1,31 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
-import CastleSceneRetro from '../components/CastleSceneRetro.astro';
-import Base from '../layouts/Base.astro';
-import { fetchYouTubeTalks } from '../utils/youtube';
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import CastleSceneRetro from '../components/CastleSceneRetro.astro'
+import Base from '../layouts/Base.astro'
+import { fetchYouTubeTalks } from '../utils/youtube'
 
 // Unified content item for the feed
 interface FeedItem {
-  title: string;
-  url: string;
-  date: Date;
-  source: string;
-  icon: string;
-  description: string;
+  title: string
+  url: string
+  date: Date
+  source: string
+  icon: string
+  description: string
 }
 
 // Get latest blog posts
-const blogPosts = await getCollection('blog', ({ data }: CollectionEntry<'blog'>) => {
-  return data.draft !== true;
-});
+const blogPosts = await getCollection(
+  'blog',
+  ({ data }: CollectionEntry<'blog'>) => {
+    return data.draft !== true
+  }
+)
 const latestBlogPosts: FeedItem[] = blogPosts
-  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
-    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  .sort(
+    (a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
+      b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
   .slice(0, 3)
   .map((post: CollectionEntry<'blog'>) => ({
@@ -31,11 +35,11 @@ const latestBlogPosts: FeedItem[] = blogPosts
     source: 'Library',
     icon: '📚',
     description: post.data.description,
-  }));
+  }))
 
 // Get latest talks (manual + YouTube)
-const manualTalks = await getCollection('talks');
-const youtubeTalks = await fetchYouTubeTalks();
+const manualTalks = await getCollection('talks')
+const youtubeTalks = await fetchYouTubeTalks()
 
 const allTalks = [
   ...manualTalks.map((talk: CollectionEntry<'talks'>) => ({
@@ -54,29 +58,36 @@ const allTalks = [
     icon: '🏰',
     description: talk.summary,
   })),
-];
+]
 
 const latestTalks = allTalks
   .sort((a, b) => b.date.valueOf() - a.date.valueOf())
-  .slice(0, 3);
+  .slice(0, 3)
 
 // Get latest projects
-const projects = await getCollection('projects');
+const projects = await getCollection('projects')
 const latestProjects: FeedItem[] = projects
+  .filter((p: CollectionEntry<'projects'>) => p.data.firstPublic !== undefined)
+  .sort((a: CollectionEntry<'projects'>, b: CollectionEntry<'projects'>) => {
+    if (!a.data.firstPublic && !b.data.firstPublic) return 0
+    if (!a.data.firstPublic) return 1
+    if (!b.data.firstPublic) return -1
+    return b.data.firstPublic.valueOf() - a.data.firstPublic.valueOf()
+  })
   .slice(0, 2)
   .map((project: CollectionEntry<'projects'>) => ({
     title: project.data.name,
     url: `/forge/#${project.id}`,
-    date: new Date(), // Projects don't have dates, use current
+    date: project.data.firstPublic || new Date(),
     source: 'Forge',
     icon: '⚒️',
     description: project.data.description,
-  }));
+  }))
 
 // Combine and sort all content by date
 const latestContent = [...latestBlogPosts, ...latestTalks, ...latestProjects]
   .sort((a, b) => b.date.valueOf() - a.date.valueOf())
-  .slice(0, 6);
+  .slice(0, 6)
 ---
 
 <Base title="Securing the Realm - Castle Gate">
@@ -177,33 +188,43 @@ const latestContent = [...latestBlogPosts, ...latestTalks, ...latestProjects]
         Latest Adventures
       </h2>
       <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-        {latestContent.map((item) => (
-          <a
-            href={item.url}
-            style="display: block; padding: var(--space-4); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); transition: transform var(--transition-base); text-decoration: none;"
-            class="feed-item"
-          >
-            <div style="display: flex; align-items: flex-start; gap: var(--space-3);">
-              <div style="flex-shrink: 0; font-size: var(--font-size-2xl);">{item.icon}</div>
-              <div style="flex: 1; min-width: 0;">
-                <div style="display: flex; align-items: baseline; gap: var(--space-2); margin-bottom: var(--space-2); flex-wrap: wrap;">
-                  <h3 style="margin: 0; font-size: var(--font-size-lg); color: var(--colour-gold);">
-                    {item.title}
-                  </h3>
-                  <span style="font-size: var(--font-size-xs); color: var(--colour-stone-light); white-space: nowrap;">
-                    {item.source}
-                  </span>
+        {
+          latestContent.map((item) => (
+            <a
+              href={item.url}
+              style="display: block; padding: var(--space-4); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); transition: transform var(--transition-base); text-decoration: none;"
+              class="feed-item"
+            >
+              <div style="display: flex; align-items: flex-start; gap: var(--space-3);">
+                <div style="flex-shrink: 0; font-size: var(--font-size-2xl);">
+                  {item.icon}
                 </div>
-                <p style="margin: 0; color: var(--colour-parchment); font-size: var(--font-size-sm); line-height: var(--line-height-relaxed);">
-                  {item.description.length > 150 ? `${item.description.substring(0, 147)}...` : item.description}
-                </p>
-                <p style="margin-top: var(--space-2); margin-bottom: 0; font-size: var(--font-size-xs); color: var(--colour-stone-light);">
-                  {item.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </p>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="display: flex; align-items: baseline; gap: var(--space-2); margin-bottom: var(--space-2); flex-wrap: wrap;">
+                    <h3 style="margin: 0; font-size: var(--font-size-lg); color: var(--colour-gold);">
+                      {item.title}
+                    </h3>
+                    <span style="font-size: var(--font-size-xs); color: var(--colour-stone-light); white-space: nowrap;">
+                      {item.source}
+                    </span>
+                  </div>
+                  <p style="margin: 0; color: var(--colour-parchment); font-size: var(--font-size-sm); line-height: var(--line-height-relaxed);">
+                    {item.description.length > 150
+                      ? `${item.description.substring(0, 147)}...`
+                      : item.description}
+                  </p>
+                  <p style="margin-top: var(--space-2); margin-bottom: 0; font-size: var(--font-size-xs); color: var(--colour-stone-light);">
+                    {item.date.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </p>
+                </div>
               </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          ))
+        }
       </div>
     </section>
 

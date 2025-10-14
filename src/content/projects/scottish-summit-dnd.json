@@ -1,0 +1,8 @@
+{
+  "name": "scottish-summit-dnd",
+  "description": "Demo application showcasing AI-powered D&D gameplay, originally presented at Scottish Summit 2024. Features interactive storytelling with Azure OpenAI integration.",
+  "repoUrl": "https://github.com/SecuringTheRealm/scottish-summit-dnd",
+  "tech": ["TypeScript", "Azure OpenAI", "React", "AI"],
+  "status": "archive",
+  "firstPublic": "2024-10-16"
+}

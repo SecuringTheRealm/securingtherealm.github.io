@@ -1,0 +1,8 @@
+{
+  "name": "str-mcp-purview",
+  "description": "An MCP (Model Context Protocol) implementation for Microsoft Purview with a D&D-themed interface. Makes data governance and compliance management more engaging through fantasy storytelling.",
+  "repoUrl": "https://github.com/SecuringTheRealm/str-mcp-purview",
+  "tech": ["Python", "Microsoft Purview", "MCP", "Data Governance"],
+  "status": "experimental",
+  "firstPublic": "2025-04-13"
+}

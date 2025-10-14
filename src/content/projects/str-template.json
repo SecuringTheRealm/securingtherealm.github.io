@@ -1,0 +1,8 @@
+{
+  "name": "str-template",
+  "description": "A template repository for Securing the Realm development projects. Provides standardized project structure, configuration, and best practices for new STR initiatives.",
+  "repoUrl": "https://github.com/SecuringTheRealm/str-template",
+  "tech": ["Template", "DevOps", "Best Practices"],
+  "status": "active",
+  "firstPublic": "2025-06-10"
+}
