@@ -1,0 +1,123 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import TowerIcon from '../../components/TowerIcon.astro';
+import Base from '../../layouts/Base.astro';
+import { fetchYouTubeTalks, getYouTubeEmbedUrl } from '../../utils/youtube';
+
+// Unified talk type for rendering
+interface UnifiedTalk {
+	id: string;
+	title: string;
+	date: Date;
+	event: string;
+	videoUrl?: string;
+	slidesUrl?: string;
+	eventUrl?: string;
+	summary: string;
+	tags: string[];
+	embedUrl: string | null;
+}
+
+// Get manual talks from content collection
+const manualTalks = await getCollection('talks');
+
+// Get YouTube talks dynamically at build time
+const youtubeTalks = await fetchYouTubeTalks();
+
+// Convert manual talks to unified format
+const unifiedManualTalks: UnifiedTalk[] = manualTalks.map((talk: CollectionEntry<'talks'>) => ({
+	id: talk.id,
+	title: talk.data.title,
+	date: talk.data.date,
+	event: talk.data.event,
+	videoUrl: talk.data.videoUrl,
+	slidesUrl: talk.data.slidesUrl,
+	eventUrl: talk.data.eventUrl,
+	summary: talk.data.summary,
+	tags: talk.data.tags,
+	embedUrl: getYouTubeEmbedUrl(talk.data.videoUrl),
+}));
+
+// Convert YouTube talks to unified format
+const unifiedYouTubeTalks: UnifiedTalk[] = youtubeTalks.map((talk, index) => ({
+	id: `youtube-${index}`,
+	title: talk.title,
+	date: talk.date,
+	event: talk.event,
+	videoUrl: talk.videoUrl,
+	summary: talk.summary,
+	tags: talk.tags,
+	embedUrl: getYouTubeEmbedUrl(talk.videoUrl),
+}));
+
+// Merge and sort all talks by date (newest first)
+const allTalks = [...unifiedManualTalks, ...unifiedYouTubeTalks].sort(
+	(a, b) => b.date.valueOf() - a.date.valueOf()
+);
+---
+
+<Base title="Tower - Talks & Presentations">
+  <div class="container" style="padding: var(--space-16) var(--space-4);">
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: var(--space-12);">
+      <TowerIcon />
+      <h1 style="text-align: center; margin-top: var(--space-6); margin-bottom: var(--space-4);">🏰 The Tower</h1>
+      <p style="text-align: center; font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto;">
+        Watch talks, presentations, and video content from conferences and events.
+      </p>
+    </div>
+
+    <div style="max-width: 900px; margin: 0 auto;">
+      {allTalks.map((talk: UnifiedTalk) => (
+        <article style="margin-bottom: var(--space-12); padding: var(--space-6); background: var(--colour-teal-dark); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer);">
+          <h2 style="margin-bottom: var(--space-3);">{talk.title}</h2>
+          <p style="font-size: var(--font-size-sm); color: var(--colour-stone-light); margin-bottom: var(--space-2);">
+            {talk.event} • {talk.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+          <p style="margin-bottom: var(--space-4);">{talk.summary}</p>
+
+          {talk.embedUrl && (
+            <div style="margin-bottom: var(--space-4); aspect-ratio: 16/9; background: black; border-radius: var(--radius-md); overflow: hidden;">
+              <iframe
+                width="100%"
+                height="100%"
+                src={talk.embedUrl}
+                title={talk.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          )}
+
+          <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+            {talk.videoUrl && !talk.embedUrl && (
+              <a href={talk.videoUrl} target="_blank" rel="noopener noreferrer" style="padding: var(--space-2) var(--space-4); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-md); font-weight: var(--font-weight-bold);">
+                🎥 Watch Video
+              </a>
+            )}
+            {talk.slidesUrl && (
+              <a href={talk.slidesUrl} target="_blank" rel="noopener noreferrer" style="padding: var(--space-2) var(--space-4); background: transparent; color: var(--colour-gold); border: 2px solid var(--colour-gold); border-radius: var(--radius-md); font-weight: var(--font-weight-bold);">
+                📊 View Slides
+              </a>
+            )}
+            {talk.eventUrl && (
+              <a href={talk.eventUrl} target="_blank" rel="noopener noreferrer" style="padding: var(--space-2) var(--space-4); background: transparent; color: var(--colour-gold); border: 2px solid var(--colour-gold); border-radius: var(--radius-md); font-weight: var(--font-weight-bold);">
+                📅 Event Details
+              </a>
+            )}
+          </div>
+
+          {talk.tags.length > 0 && (
+            <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4);">
+              {talk.tags.map((tag: string) => (
+                <span style="font-size: var(--font-size-sm); padding: var(--space-1) var(--space-3); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-full);">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>

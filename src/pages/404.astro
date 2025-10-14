@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404 - Off The Map">
+  <div class="container" style="padding: var(--space-16) var(--space-4); text-align: center; min-height: 60vh; display: flex; flex-direction: column; justify-content: center;">
+    <h1 style="font-size: var(--font-size-5xl); margin-bottom: var(--space-6);">404</h1>
+    <p style="font-size: var(--font-size-2xl); margin-bottom: var(--space-4); font-family: 'Press Start 2P', monospace;">
+      You've Ventured Off The Map
+    </p>
+    <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8); max-width: 600px; margin-left: auto; margin-right: auto;">
+      It seems you've wandered into uncharted territory. Fear not, brave adventurer! 
+      Use the navigation above to return to familiar lands.
+    </p>
+    
+    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+      <a href="/" style="display: inline-block; padding: var(--space-3) var(--space-6); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-outer); font-weight: var(--font-weight-bold);">
+        Return to Castle Gate
+      </a>
+      <a href="/talks/" style="display: inline-block; padding: var(--space-3) var(--space-6); background: transparent; color: var(--colour-gold); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); font-weight: var(--font-weight-bold);">
+        Visit the Tower
+      </a>
+      <a href="/blog/" style="display: inline-block; padding: var(--space-3) var(--space-6); background: transparent; color: var(--colour-gold); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer); font-weight: var(--font-weight-bold);">
+        Enter the Library
+      </a>
+    </div>
+  </div>
+</Base>

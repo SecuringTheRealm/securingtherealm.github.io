@@ -1,0 +1,8 @@
+{
+  "name": "str-agentic-adventures",
+  "description": "AI-powered web app for tabletop RPGs that replaces the human Dungeon Master while maintaining creativity, flexibility, and immersion.",
+  "repoUrl": "https://github.com/SecuringTheRealm/str-agentic-adventures",
+  "tech": ["Python", "Vite","TypeScript", "Azure OpenAI", "Astro", "Azure AI Foundry", "Bicep", "Biome","Agent Framework"],
+  "status": "active",
+  "firstPublic": "2025-06-10"
+}

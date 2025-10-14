@@ -1,0 +1,194 @@
+---
+import '../styles/global.css';
+import Search from '../components/Search.astro';
+import Seo from '../components/Seo.astro';
+
+export interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	article?: boolean;
+	publishDate?: Date;
+	tags?: string[];
+}
+
+const {
+	title = 'Securing the Realm',
+	description = 'Cybersecurity, Azure innovation, and Microsoft AI converge with the enchanting world of tabletop games.',
+	image,
+	article,
+	publishDate,
+	tags,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- SEO and Meta Tags -->
+    <Seo
+      title={title}
+      description={description}
+      image={image}
+      article={article}
+      publishDate={publishDate}
+      tags={tags}
+    />
+  </head>
+  <body>
+    <a href="#content" class="skip-link">Skip to content</a>
+
+    <header>
+      <nav class="container">
+        <div class="nav-wrapper">
+          <a
+            href="/"
+            class="logo-link"
+            aria-label="Securing the Realm - Home"
+          >
+            <img
+              src="/str-logo.png"
+              alt="Securing the Realm logo"
+              class="logo-img"
+            />
+            <span class="logo-text">
+              Securing the Realm
+            </span>
+          </a>
+
+          <div class="nav-search">
+            <Search />
+          </div>
+
+          <button
+            class="mobile-menu-toggle"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            type="button"
+          >
+            <span class="hamburger"></span>
+          </button>
+
+          <ul class="nav-menu">
+            <li>
+              <a href="/talks/" class="nav-link" data-castle-name="Tower"
+                >Talks</a>
+            </li>
+            <li>
+              <a href="/blog/" class="nav-link" data-castle-name="Library"
+                >Blog</a>
+            </li>
+            <li>
+              <a href="/forge/" class="nav-link" data-castle-name="Forge"
+                >Code</a>
+            </li>
+            <li>
+              <a
+                href="/newsletter/"
+                class="nav-link"
+                data-castle-name="Arcane Scrolls">Newsletter</a>
+            </li>
+            <li><a href="/about/">About</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <script>
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+
+      mobileMenuToggle?.addEventListener('click', () => {
+        const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+        mobileMenuToggle.setAttribute('aria-expanded', String(!isExpanded));
+        navMenu?.classList.toggle('is-open');
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest('.nav-wrapper')) {
+          mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+          navMenu?.classList.remove('is-open');
+        }
+      });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+          navMenu?.classList.remove('is-open');
+        }
+      });
+    </script>
+
+    <main id="content">
+      <slot />
+    </main>
+
+    <footer
+      class="container"
+      style="margin-top: var(--space-16); padding: var(--space-8) 0; border-top: 2px solid var(--colour-gold);"
+    >
+      <div style="text-align: center;">
+        <h2
+          style="font-size: var(--font-size-lg); margin-bottom: var(--space-4);"
+        >
+          Elsewhere
+        </h2>
+        <ul
+          style="display: flex; justify-content: center; gap: var(--space-8); list-style: none; margin: 0;"
+        >
+          <li>
+            <a
+              href="https://www.youtube.com/@SecuringTheRealm"
+              target="_blank"
+              rel="noopener noreferrer">YouTube</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/SecuringTheRealm"
+              target="_blank"
+              rel="noopener noreferrer">GitHub</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/company/securing-the-realm"
+              target="_blank"
+              rel="noopener noreferrer">LinkedIn</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://open.spotify.com/show/SecuringTheRealm"
+              target="_blank"
+              rel="noopener noreferrer">Spotify</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://podcasts.apple.com/podcast/securing-the-realm"
+              target="_blank"
+              rel="noopener noreferrer">Apple Podcasts</a
+            >
+          </li>
+        </ul>
+        <p
+          style="margin-top: var(--space-6); font-size: var(--font-size-sm); color: var(--colour-stone-light);"
+        >
+          © {new Date().getFullYear()} Securing the Realm. Content licensed under
+          CC BY-SA 4.0.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

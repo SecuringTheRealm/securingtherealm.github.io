@@ -1,0 +1,9 @@
+{
+  "title": "Securing the Realm and Autonomous Adventure: DM-less D&D with Azure AI",
+  "date": "2024-10-19",
+  "event": "Scottish Summit 2024",
+  "slidesUrl": "https://github.com/SecuringTheRealm/scottish-summit-dnd/blob/main/Chris%20Lloyd-Jones%20%26%20Josh%20McDonald%20-%20Securing%20the%20Realm.pdf",
+  "eventUrl": "https://www.linkedin.com/posts/joshmcdonaldmvp_scottishsummit2024-aberdeen-aitrack-activity-7229493818939580418-oJRD",
+  "summary": "Dungeons & Dragons (D&D) has long thrived on the creativity and guidance of the Dungeon Master (DM), orchestrating adventures for players. Recent advancements in AI and large language models (LLMs) present a new opportunity: a DM-less D&D experience. This session focuses on the practical application of LLMs and SLMs to facilitate an autonomous, engaging tabletop RPG experience, allowing every player to take in the narrative.",
+  "tags": ["AI", "Agentic Systems", "Azure", "Machine Learning","In Person"]
+}

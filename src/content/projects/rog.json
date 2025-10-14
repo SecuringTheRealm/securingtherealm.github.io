@@ -1,0 +1,8 @@
+{
+  "name": "rog",
+  "description": "Róg - A research project investigating disinformation and AI. Explores how AI systems can be used to detect and counter misinformation campaigns.",
+  "repoUrl": "https://github.com/SecuringTheRealm/rog",
+  "tech": ["AI", "Research", "Disinformation Detection"],
+  "status": "experimental",
+  "firstPublic": "2025-07-02"
+}

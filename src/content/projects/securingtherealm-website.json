@@ -1,0 +1,8 @@
+{
+  "name": "securingtherealm.github.io",
+  "description": "STR's public-facing website built with Astro. Features an 8-bit fantasy castle theme that transforms cybersecurity, Azure, and AI content into an immersive gaming experience.",
+  "repoUrl": "https://github.com/SecuringTheRealm/securingtherealm.github.io",
+  "tech": ["TypeScript", "Astro", "MDX", "Static Site Generation"],
+  "status": "active",
+  "firstPublic": "2025-4-8"
+}
