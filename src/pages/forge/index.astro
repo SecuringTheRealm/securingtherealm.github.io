@@ -1,26 +1,26 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-import { getCollection } from 'astro:content'
-import ForgeIcon from '../../components/ForgeIcon.astro'
-import Base from '../../layouts/Base.astro'
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import ForgeIcon from '../../components/ForgeIcon.astro';
+import Base from '../../layouts/Base.astro';
 
-const allProjects = await getCollection('projects')
+const allProjects = await getCollection('projects');
 const activeProjects = allProjects
-  .filter((p: CollectionEntry<'projects'>) => p.data.status === 'active')
-  .sort((a: CollectionEntry<'projects'>, b: CollectionEntry<'projects'>) => {
-    if (!a.data.firstPublic && !b.data.firstPublic) return 0
-    if (!a.data.firstPublic) return 1
-    if (!b.data.firstPublic) return -1
-    return b.data.firstPublic.valueOf() - a.data.firstPublic.valueOf()
-  })
+	.filter((p: CollectionEntry<'projects'>) => p.data.status === 'active')
+	.sort((a: CollectionEntry<'projects'>, b: CollectionEntry<'projects'>) => {
+		if (!a.data.firstPublic && !b.data.firstPublic) return 0;
+		if (!a.data.firstPublic) return 1;
+		if (!b.data.firstPublic) return -1;
+		return b.data.firstPublic.valueOf() - a.data.firstPublic.valueOf();
+	});
 const otherProjects = allProjects
-  .filter((p: CollectionEntry<'projects'>) => p.data.status !== 'active')
-  .sort((a: CollectionEntry<'projects'>, b: CollectionEntry<'projects'>) => {
-    if (!a.data.firstPublic && !b.data.firstPublic) return 0
-    if (!a.data.firstPublic) return 1
-    if (!b.data.firstPublic) return -1
-    return b.data.firstPublic.valueOf() - a.data.firstPublic.valueOf()
-  })
+	.filter((p: CollectionEntry<'projects'>) => p.data.status !== 'active')
+	.sort((a: CollectionEntry<'projects'>, b: CollectionEntry<'projects'>) => {
+		if (!a.data.firstPublic && !b.data.firstPublic) return 0;
+		if (!a.data.firstPublic) return 1;
+		if (!b.data.firstPublic) return -1;
+		return b.data.firstPublic.valueOf() - a.data.firstPublic.valueOf();
+	});
 ---
 
 <Base title="Forge - Projects & Code">

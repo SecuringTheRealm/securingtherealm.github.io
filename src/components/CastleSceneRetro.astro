@@ -15,42 +15,41 @@
  * Dover-style integrated fortress with Nintendo magic.
  */
 
-const uid = Math.random().toString(36).slice(2, 11)
+const uid = Math.random().toString(36).slice(2, 11);
 
 // STRICT 8PX GRID HELPERS
 // Window component - 32x32 standardized
 const Window = (x: number, y: number) => ({
-  outer: { x, y, width: 32, height: 32 },
-  frame: { x: x + 2, y: y + 2, width: 28, height: 28 },
-  light: { x: x + 4, y: y + 4, width: 24, height: 24 },
-  crossV: { x: x + 14, y: y + 2, width: 2, height: 28 },
-  crossH: { x: x + 2, y: y + 14, width: 28, height: 2 },
-  highlight: { x: x + 20, y: y + 6, width: 6, height: 20 }, // Right rim light
-})
+	outer: { x, y, width: 32, height: 32 },
+	frame: { x: x + 2, y: y + 2, width: 28, height: 28 },
+	light: { x: x + 4, y: y + 4, width: 24, height: 24 },
+	crossV: { x: x + 14, y: y + 2, width: 2, height: 28 },
+	crossH: { x: x + 2, y: y + 14, width: 28, height: 2 },
+	highlight: { x: x + 20, y: y + 6, width: 6, height: 20 }, // Right rim light
+});
 
 // Unified merlon/battlement - consistent 24x24
 const Merlon = (x: number, y: number) => ({
-  main: { x, y, width: 24, height: 24 },
-  highlight: { x: x + 18, y: y + 2, width: 4, height: 20 }, // Right rim
-  shadow: { x: x + 2, y: y + 2, width: 4, height: 20 }, // Left face
-})
+	main: { x, y, width: 24, height: 24 },
+	highlight: { x: x + 18, y: y + 2, width: 4, height: 20 }, // Right rim
+	shadow: { x: x + 2, y: y + 2, width: 4, height: 20 }, // Left face
+});
 
 // Brick pattern - stepped pixel blocks
 const BrickRow = (x: number, y: number, width: number, offset = 0) => {
-  const bricks: Array<{ x: number; y: number; width: number; height: number }> =
-    []
-  const brickWidth = 16
-  const brickHeight = 8
-  for (let i = 0; i < Math.floor(width / brickWidth); i++) {
-    bricks.push({
-      x: x + i * brickWidth + offset,
-      y,
-      width: brickWidth - 2,
-      height: brickHeight,
-    })
-  }
-  return bricks
-}
+	const bricks: Array<{ x: number; y: number; width: number; height: number }> = [];
+	const brickWidth = 16;
+	const brickHeight = 8;
+	for (let i = 0; i < Math.floor(width / brickWidth); i++) {
+		bricks.push({
+			x: x + i * brickWidth + offset,
+			y,
+			width: brickWidth - 2,
+			height: brickHeight,
+		});
+	}
+	return bricks;
+};
 ---
 
 <svg
