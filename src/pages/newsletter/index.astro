@@ -14,7 +14,12 @@ import Base from '../../layouts/Base.astro';
     </div>
 
     <div style="background: var(--colour-teal-dark); padding: var(--space-8); border: 2px solid var(--colour-gold); border-radius: var(--radius-outer);">
-      <h2 style="margin-bottom: var(--space-4);">What You'll Receive</h2>
+      <h2 style="margin-bottom: var(--space-4); text-align: center;">Coming Soon!</h2>
+      <p style="text-align: center; font-size: var(--font-size-lg); margin-bottom: var(--space-6); line-height: var(--line-height-relaxed);">
+        We're crafting our newsletter experience. In the meantime, follow us on your favorite platform to stay updated with our latest adventures!
+      </p>
+
+      <h3 style="margin-bottom: var(--space-4); text-align: center; font-size: var(--font-size-base);">What You'll Eventually Receive:</h3>
       <ul style="margin-bottom: var(--space-6); line-height: var(--line-height-relaxed);">
         <li>🎯 <strong>Weekly Quest Updates</strong>: New blog posts, talks, and projects</li>
         <li>🔐 <strong>Security Insights</strong>: Latest threats and defense strategies</li>
@@ -23,7 +28,8 @@ import Base from '../../layouts/Base.astro';
         <li>🎲 <strong>Behind the Dice</strong>: How we blend tech with tabletop gaming</li>
       </ul>
 
-      <form 
+      <!-- Newsletter form - temporarily disabled while we build the newsletter system
+      <form
         id="newsletter-form"
         action={import.meta.env.NEWSLETTER_POST_URL || '#'}
         method="POST"
@@ -72,19 +78,20 @@ import Base from '../../layouts/Base.astro';
         </p>
       </form>
 
-      <div id="form-success" style="display: none; margin-top: var(--space-4); padding: var(--space-4); background: #2d5016; border: 2px solid var(--colour-gold); border-radius: var(--radius-md); text-align: center;">
+      <div id="form-success" style="display: none; margin-top: var(--space-4); padding: var(--space-4); background: var(--colour-success-bg); border: 2px solid var(--colour-success-border); border-radius: var(--radius-md); text-align: center;">
         <p style="margin: 0; font-weight: var(--font-weight-bold);">✨ Success! Welcome to the quest, adventurer!</p>
       </div>
 
-      <div id="form-error" style="display: none; margin-top: var(--space-4); padding: var(--space-4); background: #5d1a1a; border: 2px solid #d32f2f; border-radius: var(--radius-md); text-align: center;">
+      <div id="form-error" style="display: none; margin-top: var(--space-4); padding: var(--space-4); background: var(--colour-error-bg); border: 2px solid var(--colour-error-border); border-radius: var(--radius-md); text-align: center;">
         <p style="margin: 0;">⚠️ An error occurred. Please try again later.</p>
       </div>
+      -->
     </div>
 
     <section style="margin-top: var(--space-12); text-align: center;">
-      <h2 style="margin-bottom: var(--space-4);">Prefer Other Channels?</h2>
+      <h2 style="margin-bottom: var(--space-4);">Follow Us</h2>
       <p style="margin-bottom: var(--space-6);">
-        Follow us on your favorite platform to stay updated:
+        Join us on your favorite platform to stay updated:
       </p>
       <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
         <a href="https://www.youtube.com/@SecuringTheRealm" target="_blank" rel="noopener noreferrer" style="padding: var(--space-2) var(--space-4); background: transparent; color: var(--colour-gold); border: 2px solid var(--colour-gold); border-radius: var(--radius-md); font-weight: var(--font-weight-bold);">
@@ -101,6 +108,7 @@ import Base from '../../layouts/Base.astro';
   </div>
 </Base>
 
+<!-- Newsletter form handler - temporarily disabled while we build the newsletter system
 <script>
   const form = document.getElementById('newsletter-form') as HTMLFormElement;
   const successMsg = document.getElementById('form-success');
@@ -108,10 +116,10 @@ import Base from '../../layouts/Base.astro';
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(form);
     const honeypot = formData.get('bot-field');
-    
+
     if (honeypot) {
       return;
     }
@@ -133,3 +141,4 @@ import Base from '../../layouts/Base.astro';
     }
   });
 </script>
+-->

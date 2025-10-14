@@ -1,9 +1,0 @@
-{
-  "title": "Securing AI Workloads in Azure",
-  "date": "2024-11-15",
-  "event": "Microsoft Build 2024",
-  "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  "slidesUrl": "https://example.com/slides",
-  "summary": "A comprehensive look at securing AI workloads in Azure, including best practices for deploying LLMs, implementing responsible AI, and maintaining compliance.",
-  "tags": ["Azure", "AI", "Security", "LLM"]
-}

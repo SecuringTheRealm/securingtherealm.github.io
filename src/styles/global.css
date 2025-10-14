@@ -244,6 +244,15 @@ pre {
   line-height: 1.4;
 }
 
+.nav-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 var(--space-4);
+  z-index: var(--z-index-dropdown);
+}
+
 .mobile-menu-toggle {
   display: none;
   background: transparent;
@@ -338,6 +347,43 @@ a[style*="background: transparent"]:hover {
     font-size: var(--font-size-xl);
   }
 
+  /* Sticky header on mobile */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-index-sticky);
+    background: var(--colour-bg-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Fade effect at bottom of header */
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to bottom, var(--colour-bg-primary), transparent);
+    pointer-events: none;
+    z-index: var(--z-index-sticky);
+  }
+
+  /* Add padding to main content so it doesn't hide under sticky header */
+  main {
+    padding-top: var(--space-4);
+  }
+
+  .nav-wrapper {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .logo-link {
+    order: 1;
+    flex: 0 0 auto;
+  }
+
   .logo-img {
     max-height: 36px;
   }
@@ -346,13 +392,24 @@ a[style*="background: transparent"]:hover {
     display: none;
   }
 
+  .nav-search {
+    order: 2;
+    position: relative;
+    flex: 1 1 auto;
+    margin: 0;
+    max-width: none;
+    z-index: var(--z-index-dropdown);
+  }
+
   .mobile-menu-toggle {
     display: block;
+    order: 3;
+    flex: 0 0 auto;
   }
 
   .nav-menu {
     position: absolute;
-    top: 100%;
+    top: calc(100% + var(--space-2));
     right: 0;
     left: 0;
     flex-direction: column;
@@ -360,7 +417,6 @@ a[style*="background: transparent"]:hover {
     background: var(--colour-teal-dark);
     border: 2px solid var(--colour-gold);
     border-radius: var(--radius-md);
-    margin-top: var(--space-2);
     padding: var(--space-2) 0;
     opacity: 0;
     visibility: hidden;
@@ -369,6 +425,8 @@ a[style*="background: transparent"]:hover {
                 transform var(--transition-base),
                 visibility var(--transition-base);
     box-shadow: var(--shadow-lg);
+    order: 4;
+    width: 100%;
   }
 
   .nav-menu.is-open {

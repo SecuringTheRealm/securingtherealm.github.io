@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css'
 import Seo from '../components/Seo.astro'
+import Search from '../components/Search.astro'
 
 export interface Props {
   title?: string
@@ -46,28 +47,36 @@ const {
 
     <header>
       <nav class="container">
-        <div
-          style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-4) 0;"
-        >
+        <div class="nav-wrapper">
           <a
             href="/"
-            style="display: flex; align-items: center; gap: var(--space-3);"
+            class="logo-link"
             aria-label="Securing the Realm - Home"
           >
             <img
-              src="/src/images/STR Logo Jun2025.png"
+              src="/str-logo.png"
               alt="Securing the Realm logo"
-              style="max-height: 48px; height: auto; width: auto;"
+              class="logo-img"
             />
-            <span
-              style="font-family: 'Press Start 2P', monospace; font-size: var(--font-size-lg);"
-            >
+            <span class="logo-text">
               Securing the Realm
             </span>
           </a>
-          <ul
-            style="display: flex; gap: var(--space-6); list-style: none; margin: 0;"
+
+          <div class="nav-search">
+            <Search />
+          </div>
+
+          <button
+            class="mobile-menu-toggle"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            type="button"
           >
+            <span class="hamburger"></span>
+          </button>
+
+          <ul class="nav-menu">
             <li>
               <a href="/talks/" class="nav-link" data-castle-name="Tower"
                 >Talks</a>
@@ -91,6 +100,34 @@ const {
         </div>
       </nav>
     </header>
+
+    <script>
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+
+      mobileMenuToggle?.addEventListener('click', () => {
+        const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+        mobileMenuToggle.setAttribute('aria-expanded', String(!isExpanded));
+        navMenu?.classList.toggle('is-open');
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (!target.closest('.nav-wrapper')) {
+          mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+          navMenu?.classList.remove('is-open');
+        }
+      });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+          navMenu?.classList.remove('is-open');
+        }
+      });
+    </script>
 
     <main id="content">
       <slot />

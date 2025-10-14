@@ -1,7 +1,0 @@
-{
-  "name": "AI Dungeon Master",
-  "description": "An AI-powered dungeon master assistant that helps game masters create dynamic adventures using Azure OpenAI.",
-  "repoUrl": "https://github.com/SecuringTheRealm/ai-dungeon-master",
-  "tech": ["TypeScript", "Azure OpenAI", "Next.js", "Python"],
-  "status": "active"
-}

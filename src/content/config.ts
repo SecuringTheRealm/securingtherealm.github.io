@@ -19,6 +19,7 @@ const talks = defineCollection({
 		event: z.string(),
 		videoUrl: z.string().url().optional(),
 		slidesUrl: z.string().url().optional(),
+		eventUrl: z.string().url().optional(),
 		summary: z.string(),
 		tags: z.array(z.string()).default([]),
 	}),

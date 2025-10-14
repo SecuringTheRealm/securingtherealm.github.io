@@ -1,0 +1,285 @@
+---
+import { buildSearchIndex, getFuseOptions } from '../utils/search';
+
+const searchData = await buildSearchIndex();
+---
+
+<div class="search-container">
+	<div class="search-wrapper">
+		<label for="search-input" class="sr-only">Search content</label>
+		<input
+			type="search"
+			id="search-input"
+			placeholder="Search..."
+			aria-label="Search content"
+			aria-controls="search-results"
+			aria-expanded="false"
+			autocomplete="off"
+		/>
+		<div id="search-results" role="listbox" aria-label="Search results" hidden>
+			<!-- Results will be populated by JavaScript -->
+		</div>
+	</div>
+</div>
+
+<script define:vars={{ searchData, fuseOptions: getFuseOptions() }} is:inline>
+	import('https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.mjs').then((module) => {
+		const Fuse = module.default;
+
+		const searchInput = document.getElementById('search-input');
+		const searchResults = document.getElementById('search-results');
+
+		if (!searchInput || !searchResults) {
+			throw new Error('Search elements not found');
+		}
+
+		// Initialize fuse.js
+		const fuse = new Fuse(searchData, fuseOptions);
+
+		let selectedIndex = -1;
+
+		// Handle search input
+		searchInput.addEventListener('input', (e) => {
+			const target = e.target;
+			const query = target.value.trim();
+
+			if (query.length < 2) {
+				hideResults();
+				return;
+			}
+
+			const results = fuse.search(query);
+			displayResults(results.slice(0, 8)); // Show top 8 results
+		});
+
+		// Handle keyboard navigation
+		searchInput.addEventListener('keydown', (e) => {
+			const resultItems = searchResults.querySelectorAll('[role="option"]');
+
+			switch (e.key) {
+				case 'ArrowDown':
+					e.preventDefault();
+					selectedIndex = Math.min(selectedIndex + 1, resultItems.length - 1);
+					updateSelection(resultItems);
+					break;
+				case 'ArrowUp':
+					e.preventDefault();
+					selectedIndex = Math.max(selectedIndex - 1, -1);
+					updateSelection(resultItems);
+					break;
+				case 'Enter':
+					e.preventDefault();
+					if (selectedIndex >= 0 && resultItems[selectedIndex]) {
+						const link = resultItems[selectedIndex].querySelector('a');
+						if (link) link.click();
+					}
+					break;
+				case 'Escape':
+					hideResults();
+					searchInput.blur();
+					break;
+			}
+		});
+
+		// Close results when clicking outside
+		document.addEventListener('click', (e) => {
+			const target = e.target;
+			if (!target.closest('.search-container')) {
+				hideResults();
+			}
+		});
+
+		function displayResults(results) {
+			if (results.length === 0) {
+				searchResults.innerHTML =
+					'<div class="no-results" role="option">No results found</div>';
+				showResults();
+				return;
+			}
+
+			searchResults.innerHTML = results
+				.map(
+					(result, index) => `
+				<div class="search-result" role="option" aria-selected="${index === selectedIndex}" data-index="${index}">
+					<a href="${result.item.url}">
+						<div class="result-type">${getTypeIcon(result.item.type)} ${result.item.type}</div>
+						<div class="result-title">${result.item.title}</div>
+						<div class="result-description">${truncate(result.item.description, 100)}</div>
+					</a>
+				</div>
+			`
+				)
+				.join('');
+
+			showResults();
+			selectedIndex = -1;
+		}
+
+		function updateSelection(items) {
+			items.forEach((item, index) => {
+				if (index === selectedIndex) {
+					item.setAttribute('aria-selected', 'true');
+					item.scrollIntoView({ block: 'nearest' });
+				} else {
+					item.setAttribute('aria-selected', 'false');
+				}
+			});
+		}
+
+		function showResults() {
+			searchResults.removeAttribute('hidden');
+			searchInput.setAttribute('aria-expanded', 'true');
+		}
+
+		function hideResults() {
+			searchResults.setAttribute('hidden', '');
+			searchInput.setAttribute('aria-expanded', 'false');
+			selectedIndex = -1;
+		}
+
+		function getTypeIcon(type) {
+			switch (type) {
+				case 'blog':
+					return '📚';
+				case 'talk':
+					return '🏰';
+				case 'project':
+					return '⚒️';
+				default:
+					return '📄';
+			}
+		}
+
+		function truncate(text, length) {
+			if (text.length <= length) return text;
+			return text.slice(0, length) + '...';
+		}
+	});
+</script>
+
+<style>
+	.search-container {
+		position: relative;
+		width: 100%;
+		max-width: 400px;
+	}
+
+	.search-wrapper {
+		position: relative;
+	}
+
+	#search-input {
+		width: 100%;
+		padding: var(--space-2) var(--space-3);
+		background: var(--colour-teal-bg);
+		border: 2px solid var(--colour-gold);
+		border-radius: var(--radius-md);
+		color: var(--colour-parchment);
+		font-size: var(--font-size-base);
+		font-family: var(--font-body);
+		transition: border-color var(--transition-fast);
+	}
+
+	#search-input:focus {
+		outline: none;
+		border-color: var(--colour-gold);
+		box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+	}
+
+	#search-input::placeholder {
+		color: var(--colour-stone-light);
+		opacity: 0.7;
+	}
+
+	#search-results {
+		position: absolute;
+		top: calc(100% + var(--space-2));
+		left: 0;
+		right: 0;
+		background: var(--colour-teal-dark);
+		border: 2px solid var(--colour-gold);
+		border-radius: var(--radius-md);
+		max-height: 400px;
+		overflow-y: auto;
+		z-index: var(--z-index-dropdown);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	}
+
+	.search-result {
+		border-bottom: 1px solid var(--colour-gold);
+	}
+
+	.search-result:last-child {
+		border-bottom: none;
+	}
+
+	.search-result a {
+		display: block;
+		padding: var(--space-3);
+		text-decoration: none;
+		color: var(--colour-parchment);
+		transition: background var(--transition-fast);
+	}
+
+	.search-result a:hover,
+	.search-result[aria-selected='true'] a {
+		background: rgba(212, 175, 55, 0.15);
+	}
+
+	.result-type {
+		font-size: var(--font-size-xs);
+		color: var(--colour-stone-light);
+		text-transform: uppercase;
+		margin-bottom: var(--space-1);
+	}
+
+	.result-title {
+		font-weight: var(--font-weight-bold);
+		margin-bottom: var(--space-1);
+		color: var(--colour-gold);
+	}
+
+	.result-description {
+		font-size: var(--font-size-sm);
+		color: var(--colour-stone-light);
+		line-height: var(--line-height-relaxed);
+	}
+
+	.no-results {
+		padding: var(--space-4);
+		text-align: center;
+		color: var(--colour-stone-light);
+		font-style: italic;
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 768px) {
+		.search-container {
+			max-width: 100%;
+		}
+
+		#search-results {
+			max-height: 300px;
+		}
+	}
+
+	/* Reduced motion */
+	@media (prefers-reduced-motion: reduce) {
+		#search-input,
+		.search-result a {
+			transition: none;
+		}
+	}
+</style>
