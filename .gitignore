@@ -1163,4 +1163,6 @@ $RECYCLE.BIN/
 # Astro build output
 dist/
 .astro/
-
+web-bundles/
+.bmad-core/
+.claude/commands/

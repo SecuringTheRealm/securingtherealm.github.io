@@ -2,97 +2,114 @@
 
 This repository uses **TypeScript** and **Astro**. Use the practices below when contributing.
 
+**📚 For comprehensive documentation, see:**
+- `docs/prd.md` - Product requirements, features, user stories, design, content strategy
+- `docs/architecture.md` - Technical architecture, implementation patterns, decisions
+- `.github/copilot-instructions.md` - Complete development guide with build commands
+
+## Critical Development Rules
+
+### TypeScript Strict Mode
+- **ALL** parameters must have explicit type annotations
+- **NO** `any` types allowed
+- Use `CollectionEntry<'blog'>` for content types
+- Example: `posts.map((post: CollectionEntry<'blog'>) => { ... })`
+
+### Design Tokens (NEVER HARDCODE)
+```css
+/* ✅ ALWAYS use CSS variables */
+background: var(--colour-teal-bg);
+padding: var(--space-4);
+
+/* ❌ NEVER hardcode values */
+background: #0f3c46;  /* BAD */
+padding: 16px;        /* BAD */
+```
+
+**Critical tokens:**
+- Colors: `--colour-teal-bg`, `--colour-gold`, `--colour-stone`, `--colour-parchment`
+- Spacing: `--space-{1,2,3,4,6,8,12,16,20,24}` (8px base grid)
+- Fonts: `--font-display` (Press Start 2P), `--font-body` (Georgia)
+
+### Build Validation
+**ALWAYS run before committing:**
+```bash
+npm run build  # Validates TypeScript + builds
+```
+
+**Build must pass with:**
+- Zero TypeScript errors
+- Zero Biome errors (warnings OK)
+- Successful Astro compilation
+
+### Content Collections Pattern
+```typescript
+// src/pages/blog/index.astro
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+// MUST type the parameter explicitly
+const posts = await getCollection('blog');
+const sorted = posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
+  b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+{sorted.map((post: CollectionEntry<'blog'>) => (
+  <article>
+    <h2>{post.data.title}</h2>
+  </article>
+))}
+```
+
+## Accessibility (WCAG AA Required)
+
+### Non-Negotiable Requirements
+- **Semantic HTML**: Use `<header>`, `<nav>`, `<main>`, `<article>`, `<footer>`
+- **ARIA labels**: All interactive elements without visible text need `aria-label`
+- **Color contrast**: ≥4.5:1 (validated)
+- **Keyboard nav**: Tab, Enter, Escape must work
+- **Skip-to-content**: First focusable element
+- **Alt text**: ALL images (including decorative SVGs)
+- **Reduced motion**: Disable animations with `@media (prefers-reduced-motion: reduce)`
+
+---
+
 ## General Best Practices
 
-- Follow a functional programming style wherever practical.
-- Prefer immutable data using `const` and `readonly`.
-- Use interfaces for data structures and types.
-- Take advantage of optional chaining (`?.`) and nullish coalescing (`??`).
-- Write comments and documentation in US English.
-- Use CSS variables for theme values and ensure components are responsive across screen sizes.
-- Log errors with contextual information.
+- Follow functional programming style (immutable data, `const`, `readonly`)
+- Use interfaces for data structures
+- Use optional chaining (`?.`) and nullish coalescing (`??`)
+- Write comments in US English
+- Ensure responsive design across all breakpoints
 
 ## TypeScript and Naming
 
-- Write all new code in TypeScript.
-- Use `PascalCase` for component names, interfaces, and type aliases.
-- Use `camelCase` for variables, functions, and methods.
-- Prefix private class members with an underscore (`_`).
-- Use `ALL_CAPS` for constants.
+- Use `PascalCase` for component names, interfaces, type aliases
+- Use `camelCase` for variables, functions, methods
+- Prefix private members with underscore (`_`)
+- Use `ALL_CAPS` for constants
 
 ## Astro Component Guidelines
 
-- Use `.astro` files for Astro components.
-- Define component props using TypeScript interfaces exported in the frontmatter.
-- Use functional components for any embedded React/Preact components.
-- Keep components small and focused with styles scoped within the component.
-- Develop reusable components whenever possible.
-- Use the `class:list` directive for conditional styling.
+- Define props using TypeScript interfaces in frontmatter
+- Keep components small and focused
+- Scope styles within component
+- Use `class:list` directive for conditional styling
 
-## SVG and Pixel Art Guidelines
+---
 
-### Retro Quality Standards
+## SVG and Pixel Art Guidelines (8-Bit Retro Theme)
 
-All SVG components follow strict 8-bit quality standards:
-
-#### Grid System
-- **8px base grid**: All elements align to an 8-pixel grid for consistency
-- **Snap all coordinates**: X and Y values must be multiples of 4 or 8
-- **No half-pixels**: Avoid sub-pixel coordinates to ensure crisp rendering
-
-#### Stroke and Structure
-- **Unified stroke width**: Always use 2px stroke width for all outlines
-- **Consistent style**: Never mix stroke widths within a single composition
-- **Isometric perspective**: Use 2:1 ratio for depth faces (2px horizontal = 1px vertical)
-
-#### Color Palette
-- **16-24 colors maximum**: Defined in `src/styles/tokens.css`
-- **Always use CSS variables**: Never hardcode hex colors like `#0f3c46`
-- **Primary palette**:
-  - Sky/Background: `--colour-teal-bg`, gradients for depth
-  - Buildings: `--colour-teal-bg` with `--colour-teal-light` highlights
-  - Stone/Structure: `--colour-stone`, `--colour-stone-dark`
-  - Accents: `--colour-gold`, `--colour-gold-light`
-  - Text: `--colour-parchment`
-
-#### Lighting and Shadows
-- **Consistent light direction**: Moon/sun positioned top-right = highlights on right, shadows on left
-- **Highlight placement**: Right edges and top surfaces receive `#fff` at 6-12% opacity
-- **Shadow placement**: Left edges and bottom surfaces receive `#000` at 10-20% opacity
-- **Cast shadows**: Ground shadows use `<ellipse>` with `#000` at 15-25% opacity
-
-#### Architectural Elements
-- **Windows**: 32x40px standard size, using reusable `<symbol id="window">`
-- **Doors**: 40x56px with arched pixel-art tops, using `<symbol id="door">`
-- **Merlons** (battlements): 24x24px, consistent spacing at 48px intervals
-- **Bricks**: 16x8px texture elements at 8% opacity for subtle detail
-
-#### Reusability
-- **Define symbols once**: Use `<defs><symbol>` for repeated elements
-- **Reference with `<use>`**: Place instances with `<use href="#symbol">`
-- **Benefits**: Consistency, smaller file size, easier maintenance
-
-#### Typography
-- **Font**: `'Press Start 2P', 'Courier New', monospace`
-- **Size**: 11px standard, 9px for longer labels like "NEWSLETTER"
-- **Spacing**: 1px letter-spacing for retro feel
-- **Color**: Always `var(--colour-parchment)`
-- **Single words**: Use "NEWSLETTER" not "NEWS LETTER", "CODE" not "PROJECTS"
-
-#### Animation Guidelines
-- **Subtle and smooth**: Avoid jarring steps() easing, use `ease-in-out`
-- **Duration ranges**:
-  - Quick: 0.8-1.5s (sparks, forge glow)
-  - Medium: 2-3s (flags, window glow, stars)
-  - Slow: 4s+ (smoke, moon glow)
-- **Respect motion preferences**: All animations disabled with `@media (prefers-reduced-motion: reduce)`
-
-#### Icons (16x16 Pixel Art)
-- **Consistent language**: All icons share 2px stroke, similar corner radius, unified silhouette
-- **Video**: Monitor frame with play triangle
-- **Book**: Two-page spread with spine and text lines
-- **Anvil**: Blacksmith anvil with hammer and sparks
-- **Scroll**: Parchment with curled edges and wax seal
+**Critical Standards:**
+- **8px grid**: All coordinates snap to multiples of 4 or 8
+- **2px stroke**: Unified stroke width across all elements
+- **CSS variables ONLY**: Never hardcode hex colors
+- **Reusable symbols**: Use `<defs><symbol>` and `<use href="#id">`
+- **Unique IDs**: Prefix with `uid` to avoid collisions
+- **Typography**: Press Start 2P, 11px, single words only
+- **Animations**: Respect `@media (prefers-reduced-motion: reduce)`
 
 ### Implementation Checklist
 
@@ -110,28 +127,11 @@ When creating or modifying SVG components:
 - [ ] ARIA labels and SVG metadata complete
 - [ ] File tested at 50% scale for legibility
 
-### Example Pattern: Reusable Window
+**For detailed SVG guidelines, see `docs/prd.md` Design Requirements section.**
 
-```astro
-<!-- In <defs> -->
-<symbol id="window" viewBox="0 0 32 40">
-  <rect width="32" height="40" fill="#000" opacity="0.25" />
-  <rect x="2" y="2" width="28" height="36" class="window-light" />
-  <rect x="14" y="2" width="2" height="36" fill="var(--colour-stone-dark)" opacity="0.4" />
-  <rect x="2" y="18" width="28" height="2" fill="var(--colour-stone-dark)" opacity="0.4" />
-</symbol>
+---
 
-<!-- In building -->
-<use href="#window" x="216" y="248" />
-```
-
-### Visual Consistency Rules
-
-For pixel art SVG components, always use `image-rendering: pixelated` and `image-rendering: crisp-edges`.
-
-Use CSS variables for theme values and ensure components are responsive across screen sizes.
-
-## Common Astro + SVG Pitfalls (Castle Scene Reference)
+## Common Pitfalls (Castle Scene Reference)
 
 When building or modifying the castle scene (or any SVG component) in Astro, watch for these recurring issues:
 
@@ -172,11 +172,7 @@ When building or modifying the castle scene (or any SVG component) in Astro, wat
    - ISSUE: Filter effects (blur/glow) degrade retro sharpness & performance.
    - FIX: Use simple opacity pulses or layered flat shapes (no `filter`, `feGaussianBlur`).
 
-
-## Error Handling
-
-- Wrap asynchronous operations in `try/catch` blocks.
-- Surface meaningful errors to the UI and log them for troubleshooting.
+---
 
 ## Linting and Formatting
 
