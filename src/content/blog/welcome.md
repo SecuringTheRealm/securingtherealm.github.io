@@ -1,7 +1,7 @@
 ---
 title: "Welcome to the Library"
 description: "The first chapter in the Securing the Realm blog – where cybersecurity, Azure, and AI meet adventure."
-pubDate: 2025-12-01
+pubDate: 2024-12-01
 tags: ["welcome", "meta"]
 draft: false
 ---
