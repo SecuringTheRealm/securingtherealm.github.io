@@ -1168,3 +1168,4 @@ web-bundles/
 .claude/commands/
 docs/architecture/
 docs/prd/
+.claude/settings.local.json

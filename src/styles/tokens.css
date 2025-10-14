@@ -13,6 +13,7 @@
   --colour-stone-dark: #6f6d67;
   --colour-parchment: #f3e9d2;
   --colour-parchment-light: #f9f4e7;
+  --colour-parchment-dark: #d4c4a8;
   --colour-ink: #1a1a1a;
   --colour-white: #ffffff;
   --colour-black: #000000;
@@ -40,6 +41,12 @@
   --colour-text-inverse: var(--colour-parchment);
   --colour-accent: var(--colour-gold);
   --colour-accent-hover: var(--colour-gold-light);
+
+  /* Status Colors */
+  --colour-success-bg: #2d5016;
+  --colour-success-border: #4a7c2a;
+  --colour-error-bg: #5d1a1a;
+  --colour-error-border: #d32f2f;
   
   /* Spacing Scale */
   --space-1: 4px;
@@ -92,6 +99,10 @@
   --line-height-relaxed: 1.625;
   --line-height-loose: 2;
   
+  /* Font Families */
+  --font-display: 'Press Start 2P', monospace;
+  --font-body: 'Georgia', 'Times New Roman', serif;
+
   /* Font Weights */
   --font-weight-normal: 400;
   --font-weight-medium: 500;
