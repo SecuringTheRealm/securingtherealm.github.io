@@ -1,7 +1,7 @@
 # Technical Architecture: Securing the Realm
 
-**Version:** 1.0
-**Last Updated:** 2025-01-15
+**Version:** 1.1
+**Last Updated:** 2025-01-22
 **Status:** Active
 **Owner:** Chris Lloyd-Jones & Josh McDonald
 
@@ -130,6 +130,27 @@ src/
 - Parsed with XML parser
 - No rate limiting concerns (RSS-based, not API)
 
+**Giscus Comments:**
+- Service: GitHub Discussions-based commenting system
+- Repository: `SecuringTheRealm/securing.quest`
+- Authentication: GitHub OAuth (managed by Giscus)
+- Integration: Lazy-loaded component on blog posts
+- Theme: Gruvbox Dark (matches site aesthetic)
+- Security: GitHub's OAuth 2.0, no credential storage
+- Privacy: No tracking cookies, explicit user consent required
+- No separate backend or database required
+- See ADR-0002 for decision rationale
+
+**Plausible Analytics:**
+- Service: Privacy-first web analytics (managed service)
+- Instance: plausible.io with custom endpoint
+- Script ID: `pa-EUZMXoBFB9OR9p1BrnWMh`
+- Privacy: No cookies, no personal data collection
+- GDPR/CCPA compliant by default (no consent banner needed)
+- Performance: <1KB async script, non-blocking load
+- Metrics: Page views, referrers, country, device type (all anonymized)
+- See ADR-0003 for decision rationale
+
 **GitHub Pages:**
 - Static file hosting
 - HTTPS enforced
@@ -175,10 +196,13 @@ src/
 - Whitelist trusted domains (YouTube, Google Fonts)
 
 **Privacy:**
-- No cookies set by site
-- No analytics tracking (can be added optionally)
-- YouTube embeds: click-to-load (no auto-tracking)
-- No personal data collection
+- **Minimal Data Collection:** Privacy-first by design
+- **Analytics:** Plausible (no cookies, no personal data, GDPR compliant)
+- **Comments:** Giscus (GitHub OAuth consent required, no tracking)
+- **YouTube Embeds:** Click-to-load (no auto-tracking until user interaction)
+- **No Third-Party Tracking:** No advertising pixels, no user profiling
+- **Data Ownership:** Analytics data owned by us, never sold or shared
+- **Transparency:** Open source analytics, auditable comment system
 
 ### Accessibility Architecture
 
@@ -665,20 +689,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 ## Future Technical Enhancements
 
-### Phase 2: Search (Q2 2025)
-- Client-side search with Fuse.js
-- Indexed content (blog posts, talks, projects)
-- No backend required
+### Phase 2: Search ✅ COMPLETED
+- ✅ Client-side search with Fuse.js
+- ✅ Indexed content (blog posts, talks, projects)
+- ✅ No backend required
 
-### Phase 3: Analytics (Q3 2025)
-- Privacy-focused analytics (Plausible or Fathom)
-- No cookies required
-- GDPR compliant
+### Phase 3: Analytics & Community ✅ COMPLETED (Early)
+- ✅ Privacy-focused analytics (Plausible)
+- ✅ No cookies required
+- ✅ GDPR/CCPA compliant by default
+- ✅ Comment system (Giscus - GitHub Discussions)
+- ✅ GitHub OAuth authentication
+- ✅ No separate backend infrastructure
 
-### Phase 4: Comments (Q4 2025)
-- GitHub Discussions integration
-- OAuth via GitHub
-- No separate comment system
+### Phase 4: Content Enhancements (Q2 2025)
+- Newsletter integration (ConvertKit/Mailchimp)
+- RSS feed enhancements
+- Content series/collections
+- Related posts recommendations
 
 ### Phase 5: i18n (2026)
 - Multi-language support

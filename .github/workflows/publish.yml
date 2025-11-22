@@ -6,11 +6,10 @@ on:
     branches:
       - main
     paths:
-      - 'src/content/**'
-      - 'src/pages/**'
-      - '.github/workflows/publish.yml'
+      - "src/**"
+      - ".github/workflows/publish.yml"
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 permissions:
   contents: read
@@ -18,7 +17,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: false
 
 jobs:
@@ -72,7 +71,7 @@ jobs:
           else
             # For push events, check what actually changed
             git fetch origin ${{ github.event.before }}
-            if git diff --quiet ${{ github.event.before }} HEAD -- src/content/ src/pages/; then
+            if git diff --quiet ${{ github.event.before }} HEAD -- src/; then
               echo "content_changed=false" >> "$GITHUB_OUTPUT"
             else
               echo "content_changed=true" >> "$GITHUB_OUTPUT"

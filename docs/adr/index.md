@@ -18,6 +18,8 @@ This directory contains Architecture Decision Records (ADRs) for the Agentic Adv
 | ------ | ------------------------- | -------- | ---------- | ----------------------------------- |
 | 0000   | [Using ADRs](template.md) | Accepted | 2025-06-10 | Template for architecture decisions |
 | 0001   | [Migration from Next.js to Astro](0001-migration-nextjs-to-astro.md) | Accepted | 2025-01-15 | Rebuild site with Astro for better performance and 8-bit castle theme |
+| 0002   | [Giscus Comments Integration](0002-giscus-comments-integration.md) | Accepted | 2025-01-22 | GitHub Discussions-based comments with OAuth authentication for privacy and security |
+| 0003   | [Plausible Analytics Integration](0003-plausible-analytics-integration.md) | Accepted | 2025-01-22 | Privacy-first web analytics with no cookies and GDPR/CCPA compliance |
 
 ## ADR Statuses
 

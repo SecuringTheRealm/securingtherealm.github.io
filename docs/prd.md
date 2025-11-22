@@ -1,7 +1,7 @@
 # Product Requirements Document: Securing the Realm
 
-**Version:** 1.0
-**Last Updated:** 2025-01-15
+**Version:** 1.1
+**Last Updated:** 2025-01-22
 **Status:** Active
 **Owner:** Chris Lloyd-Jones & Josh McDonald
 
@@ -587,13 +587,13 @@ z.object({
 
 **Traffic Metrics**
 - **Target:** 10,000 unique visitors/month by Q4 2025
-- **Measurement:** Google Analytics, GitHub Pages analytics
+- **Measurement:** Plausible Analytics (privacy-first), GitHub Pages analytics
 - **Baseline:** TBD (initial launch)
 
 **Engagement Metrics**
-- **Target:** 3-minute average session duration
-- **Measurement:** Google Analytics
-- **Target:** <40% bounce rate
+- **Target:** Average 3 pages viewed per visit
+- **Measurement:** Plausible Analytics
+- **Note:** Session duration and bounce rate not tracked (privacy-preserving)
 
 **Content Metrics**
 - **Target:** 1,000 YouTube subscribers by Q4 2025
@@ -611,12 +611,14 @@ z.object({
 
 ### Tracking & Analytics
 
-**Google Analytics 4:**
-- Page views by URL
-- Session duration
-- Bounce rate
-- Traffic sources
-- User demographics
+**Plausible Analytics (Privacy-First):**
+- Page views by URL (anonymized)
+- Traffic sources and referrers
+- Geographic regions (country-level only)
+- Device types (desktop, mobile, tablet)
+- Browser and OS (for compatibility)
+- **Privacy:** No cookies, no personal data, GDPR/CCPA compliant
+- **See:** ADR-0003 for decision rationale
 
 **GitHub Actions:**
 - Build success rate
@@ -730,10 +732,20 @@ npm run preview
 
 ### Data Collection
 
-**No Personal Data Collection:**
-- No cookies set by site
-- No analytics by default (can be added optionally)
-- No user accounts or authentication
+**Limited Personal Data Collection:**
+- **Plausible Analytics:** Anonymous page views only (no user tracking)
+  - No cookies, no personal data
+  - GDPR/CCPA compliant by default
+  - Country-level geography (anonymized IP addresses)
+  - See ADR-0003 for privacy approach
+- **Giscus Comments:** GitHub OAuth (explicit user consent required)
+  - User chooses to log in with GitHub account
+  - Comments stored in public GitHub Discussions
+  - Users can delete their own comments
+  - No tracking cookies or analytics
+  - See ADR-0002 for security/auth approach
+- **No Advertising Cookies:** No third-party tracking pixels or ad networks
+- **No User Profiling:** No behavioral tracking or cross-site tracking
 
 **YouTube Embeds:**
 - Click-to-load (no auto-load for privacy)
@@ -789,7 +801,7 @@ npm run preview
 
 ## Future Roadmap
 
-### Phase 1: MVP (Current)
+### Phase 1: MVP ✅ COMPLETED
 - ✅ YouTube video integration
 - ✅ Blog posts (Markdown)
 - ✅ Talks archive (JSON)
@@ -798,17 +810,18 @@ npm run preview
 - ✅ Responsive design
 - ✅ WCAG AA accessibility
 - ✅ GitHub Pages deployment
+- ✅ Search functionality (client-side with Fuse.js)
+- ✅ Privacy-first analytics (Plausible)
+- ✅ Comment system (Giscus - GitHub Discussions)
 
 ### Phase 2: Enhanced Discovery (Q2 2025)
-- [ ] Search functionality (client-side with Fuse.js)
 - [ ] Tag-based filtering (blog, talks, projects)
 - [ ] Related content recommendations
 - [ ] Series/playlists for video content
 - [ ] Interactive castle map navigation
 
-### Phase 3: Community Features (Q3 2025)
+### Phase 3: Community & Content (Q3 2025)
 - [ ] Newsletter integration (Mailchimp/ConvertKit)
-- [ ] Comment system (GitHub Discussions integration)
 - [ ] RSS feed enhancements (full content, enclosures)
 - [ ] Social sharing buttons (native, no tracking)
 
