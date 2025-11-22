@@ -50,7 +50,27 @@ const { Content } = await entry.render();
     <div style="line-height: var(--line-height-relaxed); font-size: var(--font-size-lg);">
       <Content />
     </div>
-    
+
+    <!-- Giscus Comments -->
+    <div style="margin-top: var(--space-12); padding-top: var(--space-8); border-top: 2px solid var(--colour-stone);">
+      <script is:inline src="https://giscus.app/client.js"
+              data-repo="SecuringTheRealm/securing.quest"
+              data-repo-id="R_kgDOOWRHnw"
+              data-category="General"
+              data-category-id="DIC_kwDOOWRHn84CyFP0"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="gruvbox_dark"
+              data-lang="en"
+              data-loading="lazy"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </div>
+
     <footer style="margin-top: var(--space-12); padding-top: var(--space-8); border-top: 2px solid var(--colour-gold);">
       <a href="/blog/" style="display: inline-block; padding: var(--space-3) var(--space-6); background: var(--colour-gold); color: var(--colour-ink); border-radius: var(--radius-outer); font-weight: var(--font-weight-bold);">
         ← Back to Library
