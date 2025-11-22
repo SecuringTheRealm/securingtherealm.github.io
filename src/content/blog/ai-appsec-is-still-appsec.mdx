@@ -1,0 +1,171 @@
+---
+title: "AI AppSec Is Still AppSec"
+description: "Why AI systems must inherit and grow, not work in parallel to traditional AppSec."
+pubDate: 2025-11-22
+tags: ["ai-security", "appsec", "devsecops", "mlops", "azure-ai-foundry", "prompt-injection", "model-security", "agent-security", "mcp-servers", "iso-27034", "supply-chain-security", "runtime-protection", "microsoft", "enterprise-ai", "ai-governance"]
+draft: false
+---
+
+import { Image } from 'astro:assets';
+import iso27034Overview from '../../assets/blog/ai-appsec-is-still-appsec/iso27034-overview.png';
+import toolsForDesignBuildRun from '../../assets/blog/ai-appsec-is-still-appsec/tools-for-design-build-run.png';
+
+# AI AppSec Is Still AppSec
+
+**Why AI systems must inherit and grow, not work in parallel to traditional AppSec.**
+
+While there are specific vulnerabilities and attacks related to applications built with AI - including language models both large (LLMs) and small (SLMs), as well as multi-modal models suitable for audio, video and images - the development of Agentic Systems and more traditional machine learning approaches demands we think of security for AI as additive, rather than security in a parallel universe. What has been done before should be reviewed, not removed.
+
+Machine-learning isn't new, and neither are the concepts surrounding AI systems. What is new is the significantly reduced barriers to implementing the latest AI technologies within the systems we are building today. If we think of security for AI as additive, have you already applied best practices to the systems you've deployed?
+
+For example, API management - is your MCP server gated? Without this, your identity and authentication may all be for naught whilst an adversary makes calls to your APIs without ever seeing your login page, potentially exfiltrating data and significantly increasing your cloud spend.
+
+All this said, AI Applications are still new applications. What's more, through both AI code generation and the demand for AI agents, there are more and more 'apps' than ever.
+
+The most secure AI applications will implement a multidisciplinary approach, as with many aspects of AI, particularly those more novel elements of a modern AI application. As noted by Microsoft and OpenAI ahead of the launch of GPT-5 family of models, the team was made up of not only AI and Security teams, but numerous lines of business, bringing the consumers of AI products closer to the notion of secure & responsible AI.
+
+## AI Applications as Applications
+
+AI - Artificial Intelligence - is generally used to refer to the ability for computers to take on tasks that previously only humans could do. Over time, other definitions have appeared, like "Artificial General Intelligence" or AGI, for computers to think like we do - or even in ways that are superior to us.
+
+The reality today is that AI systems are composite applications - complex webs of code that bring together data, automation, and business logic. Some forms of AI might be simple call and response tasks, and others might use goal-seeking logic to form agents, or webs of agents.
+
+Getting more specific, these composite applications can include open-source libraries, closed source logic, or calls out to managed services, including data ingestion pipelines, machine learning model training and storage, inference endpoints to run models, or feedback and retraining loops. On top of that, we still have traditional user interfaces including the web, desktop / mobile applications, or digital conversational channels like SMS or WhatsApp.
+
+If we can agree that AI (today, at least) is implemented as a composite application, then we can look at existing standards for application security. ISO/IEC 27034 describes three pillars of application security.
+
+<Image src={iso27034Overview} alt="A three-pillar diagram of ISO/IEC 27034 application security framework. The left pillar (blue) shows ONF - Organization Normative Framework, containing Application Security Control Library, ASLCRM Reference Model, Contexts, Levels of Trust Scale, and Roles & Responsibilities. The middle pillar (green) displays ASMP - Application Security Management Process with 5 steps: Specify Requirements & Context, Risk Assessment & Threat Modeling, Create Application Normative Framework, Implement & Deploy Application, and Audit & Continuous Verification, with a note about Continuous Process. The right pillar (purple) presents ANF - Application Normative Framework, including Application-Specific Instantiation, Risk-Driven Selection, Architecture Mapping, Verification Specifications, and Living Documentation." />
+
+## Translating AppSec Principles to AI
+
+If you have a set of baseline controls for your Secure Software Development Lifecycle, particularly if you've been using them for a while, you should absolutely start with that!
+
+What you may find is that the controls can broadly remain the same, but the focus will shift. Looking for a good place to start? You may see the **data and information protection** more heavily weighted than many apps, as well as your **logging, monitoring & auditing** controls, and **API management**.
+
+You'll find some scenarios where the control is the same, but the implementation is completely new. For example, Input Validation is hugely important to AI apps, for much the same reasons, but the way you implement it must change or in many cases expand. From writing regular expressions for a field, to creating prompt shields to filter content in a brave new fuzzy world and defining whether this takes place before a model has a chance to review the user input, or after.
+
+Let's explore the other controls you may be familiar with and what they translate into in your AI Application:
+
+| **Control**                     | **AI Translation**                                                                                                                 |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Access Control                  | As before, but also consider agent identity, access to both the app and the AI endpoint, and data authorization before inference   |
+| Code Integrity                  | Now should be inclusive of model weight integrity                                                                                  |
+| Secure by Design                | Incorporating multi-disciplinary AI red-teaming, including users and threat modelling, threat modelling, threat modelling!         |
+| Patch Management                | Is equally applicable to the model (your own or vendor) and how your app interacts with the model, as tested via model evaluations |
+| Logging, Monitoring, & Auditing | Now should consider tracking the risk of not only data drift, but model drift, and emphasise data lineage                          |
+
+Of course, all of this depends on the details of your solution, and who is consuming your solution.
+
+## The AI-Specific Amplifiers
+
+So, if AI is additive, once we have extended and applied traditional AppSec approaches, what are those AI-specific amplifiers we need to consider?
+
+New primitives are required for complex AI applications that weren't required in older application architectures - including agent identity, prompt inspection at runtime, and policy-driven tool access.
+
+This is because we have new risk dimensions. When you use a closed-source model, or an open model where only model weights are provided, you have a potential risk of data poisoning; has the model been trained to respond erratically to certain prompts, potentially allowing attackers to exfiltrate data, and other forms of adversarial manipulation.
+
+We also have to consider how our systems may inadvertently replicate or introduce bias or produce unfair outcomes; not just at development, but over time as data the system processes continues to increase.
+
+Importantly though, whilst these specific challenges are new, each can be mapped back to existing AppSec control categories, such as validation, confidentiality, integrity, and accountability.
+
+## How might we implement these controls to our AI Application - particularly when developing on Foundry?
+
+As Microsoft MVPs, we will focus our examples assuming you're developing on Microsoft Foundry, but these controls are applicable to all the major hyperscalers.
+
+<Image src={toolsForDesignBuildRun} alt="A three-column diagram showing AI security tools across the software development lifecycle. The Design column (yellow) includes Tool Selection with Model Catalog and Safety Scores, and GitHub MCP Server with Code Scanning and GitHub Advanced Security. The Build column (dark teal) features Data Validation with Foundry IQ, AI Search, and Bing API; Secure Storage with Key Vault and Azure Storage; Data Privacy & Integrity with Foundry Synthetic Data; AI Identity & Access with Entra ID, RBAC, and Agent Identity; Adversarial Testing with PyRIT and Red Teaming Agent; and Input Validation with Prompt Shields, Content Safety, and Spotlighting. The Run column (orange) shows Application & Service Monitoring with Defender for AI Services, DevOps, and Sentinel Integration; Data Protection with Purview DLP and DSPM for AI; and Continuous Evaluations with Azure DevOps and GitHub Actions. Footer shows 3 Lifecycle Phases, 11 Security Capabilities, and 20+ Microsoft Tools." />
+
+### Design
+
+**Foundry Models and Model Leaderboards** - Meet Secure by Design controls with up-to-date benchmarking from Microsoft. With the 'Safety' scoring, review attack success rates against each model.
+
+**GitHub MCP Server** - MCP Servers are usually associated with security risk, not mitigation, but the GitHub MCP Server is accessible from most development platforms, including Azure AI Foundry. Leverage GitHub Advanced Security features including examining security findings, review Dependabot alerts, analyse code patterns, and get codebase insights.
+
+### Build
+
+**Grounding** reduces hallucinations and improves response quality, impacting the data validation control. Ground models on enterprise data with Foundry IQ & Azure AI Search and for anything else, consider grounding with Bing Search to verify data on the web.
+
+**Secure Storage and Access** to enterprise storage data via Azure Key Vault with Azure Storage, and even synthetic data generation via Microsoft Foundry, helping control data poisoning and the inappropriate use of personal or confidential data.
+
+**Evaluations** across Agents, Models and Datasets on Microsoft Foundry, including AI Red Teaming agent & the open source PyRIT framework.
+
+**Implement Microsoft Foundry Guardrails** via both prompt & response filters for a variety of undesired content, such as direct/indirect prompt injection PII leakage, custom blocklists of prohibited phrases, and potential intellectual property violations.
+
+**Identity and Access Management** - Each Foundry project comes with a Managed Identity allowing for Entra ID integration natively. Need more depth? Govern at the agent level and create Entra Agent Identities and leverage integration with Agent 365. Just don't take a key-based AI application into production.
+
+### Run
+
+Integrate Foundry with the power of Microsoft Defender for AI Services, the wider Defender for Cloud family for AI app security posture management and workload protection, surfacing alerts and violations into Defender for Cloud & Sentinel. Integrate Microsoft Purview to implement wide-reaching Data Loss Prevention policies and govern AI access to documents and files. Integrate Microsoft Foundry Evaluations into CI/CD pipelines on Azure DevOps or GitHub Actions, to enable continuous evaluations each time you ship.
+
+## Operational Reality: Embedding in DevSecOps / MLOps
+
+You don't rebuild your pipeline - you augment it with AI-specific security controls at the appropriate stages. MLOps isn't a separate discipline - it's DevSecOps extended with model and data artefacts.
+
+### The "Extra Layer" Philosophy
+
+Focusing on this "Extra Layer" philosophy, traditional CI/CD gates (code quality, vulnerability scanning, dependency checks) remain mandatory. What's added is a new set of artefacts to be secured, across the stages of build and run.
+
+Most of the time, you'll likely be using an off the shelf model from a third party; sometimes you will be fine-tuning that model further for your use case. For this reason, we'll talk about Model Refinement - encompassing model selection & context engineering, custom training, and fine-tuning.
+
+### Pre-Model Refinement
+
+Add new AI artefacts to your pipeline, tracking either model versions used or model weights used; training datasets; prompt templates; and MCP Server configurations. Version control and signing apply equally to models as they do to container images. Just as you scan dependencies with Dependabot, you must verify model provenance and scan training data for injection attacks. For example, Microsoft partners with HiddenLayer to scan models deployed through Azure AI Foundry. CodeQL scans for vulnerabilities; Copilot Autofix suggests remediation.
+
+### Post-Model Refinement
+
+Security validation intensifies after model selection or fine-tuning - this is where theoretical vulnerabilities can become practical attack vectors. Three critical security checks define this stage: training data scanning, model signature verification, and MCP server validation.
+
+**Data scanning** - After selecting a model, or fine-tuning, it's important to review for prompt injection attacks beyond simple pattern matching. Modern injection techniques embed subtle manipulations within seemingly legitimate training examples - customer service datasets might contain hidden instructions to reveal sensitive data when triggered by specific phrases.
+
+**Model Verification** - At each stage, each model artefact requires a complete chain of custody. Verify that deployed weights match exactly what your training pipeline produced, confirm no backdoors were injected during storage or transfer, and validate behaviour aligns with previously tested specifications.
+
+**MCP Server Supply Chain** - You wouldn't upload your core systems of record to other random API endpoints, and an MCP server is no different. If you don't control the underlying system, then you don't ultimately know how the data you submit is being used. Consider swapping out PII for token substitutions, and re-inserting PII after processing. These servers bridge models to external tools and data, so use the same supply chain scrutiny you'd use for critical dependencies: verify server implementation authenticity, ask how vendors you might rely on manage their own software supply chain, and ensure configurations haven't been modified to redirect queries to malicious endpoints. A single compromised MCP server can cascade through your entire AI system. Regular audits must validate not just the servers but their communication patterns - confirming authorised connections only and preventing data leakage through side channels.
+
+### Pre-Deployment
+
+**Adversarial testing** must systematically attempt to break your AI system before real attackers can. Run red team exercises targeting prompt injections, jailbreak attempts, and context manipulation attacks. Validate that AI Content Safety policies work under pressure, not just ideal conditions. Stress test every endpoint with malformed inputs, oversized payloads, and extraction attempts.
+
+**Model Consistency** validates that updated models maintain predictable behaviour across versions. As models evolve, identical inputs can produce different outputs, breaking downstream dependencies. Implement automated validation comparing new versions against baseline responses. When drift exceeds thresholds, trigger automated rollback or flag for human intervention to adjust prompts and context. Track response quality metrics, semantic similarity scores, and edge case handling. Some providers deprecate older models, forcing prompt adjustment rather than rollback - your consistency framework must accommodate both scenarios.
+
+**API Gating** - Your API management layer must gate all model endpoints without exception - a single unprotected endpoint can compromise everything.
+
+Test the model. Validate behaviour. Secure the endpoints.
+
+### Deployment and Runtime
+
+**Prompt Protection** - Runtime protection requires active defence mechanisms that respond to threats as they occur. In Azure, Prompt Shield acts as your first line of defence, analysing incoming requests and blocking injection attempts before they reach your model. This real-time filtering catches both obvious attacks and sophisticated attempts that use encoding tricks or context manipulation.
+
+**Security as Code** - Apply the same infrastructure-as-code rigour you apply to cloud resources. Define your AI security configurations in version-controlled files, treating them like Terraform modules with full change tracking and approval workflows. When incidents occur, you can roll back problematic changes instantly. More importantly, you can replicate security configurations across environments, ensuring development, staging, and production maintain consistent protection levels.
+
+**Runtime Operations** - DevSecOps principles extend to runtime AI operations through three key mechanisms. First, *runtime-to-code traceability* connects production incidents directly to source code - when Prompt Shield detects injection attempts, tools like AI Foundry Control Plane trigger alerts in the GitHub repository containing the vulnerable template, enabling rapid fixes. Second, *agent identity* requires new security primitives, whether just-in-time access tokens or first-class identity systems like Microsoft Entra Agent ID. Third, *agent governance* demands centralised registries (using open-source indexes or Agent 365) to track every agent with API access, enforce unique identities, log all actions, and require human verification for destructive operations like deletions or significant data modifications. This prevents shadow AI agents just as you prevent shadow IT.
+
+### It's all DevSecOps
+
+AI-specific monitoring extends traditional approaches, and these techniques allow you to track model drift, prompt injection attempts, data exfiltration patterns, and unexpected tool usage.
+
+Measure AI-specific KPIs: prompt rejection rate, model version consistency, MCP server authentication failures, agent policy violations - but integrate telemetry into existing SIEM/SOAR platforms - don't create separate dashboards.
+
+## Convergence, Not Reinvention
+
+So, where can you take this from here? Our suggestion is to integrate AI controls into and extend your Application Security Posture Management (ASPM) to include the idiosyncrasies that the rapid development of new AI protocols and architectural patterns are introducing. **Your AI Security Roadmap starts on Monday!**
+
+> "The future of AI assurance isn't a new branch of security - it's the next version of AppSec, compiled for machine learning."
+
+For example, ASPM will need to include your upgrade approach for language models (LLMs or SLMs) that your organisation relies upon. Will upgrades to those models cause the same inputs to give the same expected outputs?
+
+How about your Model Context Protocol (MCP) servers? Do you know the underlying software supply chain for those MCPs? Are they hosted by actors that you trust now, and will continue to trust for the future? Can your MCPs exfiltrate confidential data, from API keys to financial reporting?
+
+Where does your data come from for your AI systems? Is the data both up to date, and is it free of potential prompt injections, or malicious/sloppy instructions that could cause a vulnerability or an outbound network connection?
+
+These are taking traditional areas of ASPM such as application data privacy and compliance, application misconfiguration management, or an inventory of applications - and extending them to be fit for purpose in today's world. We suggest you measure your maturity and then introduce new controls to account for this additional threat surface. Failing to adapt to AI isn't an option - not because the technology is magical, but because your employees will otherwise engage in using Shadow AI, such as ChatGPT or Claude on their own mobile phone. Work to enable people, and security will follow. Block, and the castle will fall.
+
+### How can you get started?
+
+Remember: Your existing security team already has 80% of the skills needed. The remaining 20% is understanding how AI changes the threat surface - not learning entirely new disciplines. **Start where you are, use what you have, do what you can.**
+
+Leverage your cloud provider's AI security tools; and inventory all AI touchpoints in your organisation - including shadow AI usage through personal accounts.
+
+Review your ISO27034 implementation as-is, and review where AI specific controls, such as those we've described, can be applied.
+
+**More information**
+
+[Here's a downloadable cheat sheet](./iso27034-application-security-for-ai-applications.pdf) you can use to review the latest ISO27034 controls you might want to apply on the Microsoft stack, and a [downloadable framework for implementing ISO27034 and OWASP Top10 LLM to your Microsoft AI Application](./iso27034-owasp-microsoft-ai-security.pdf).

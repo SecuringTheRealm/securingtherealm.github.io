@@ -12,7 +12,10 @@
       "WebSearch",
       "Bash(cat:*)",
       "WebFetch(domain:docs.github.com)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(tree:*)",
+      "WebFetch(domain:docs.astro.build)",
+      "WebFetch(domain:www.jotform.com)"
     ],
     "deny": [],
     "ask": []
