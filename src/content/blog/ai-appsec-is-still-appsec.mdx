@@ -10,8 +10,6 @@ import { Image } from 'astro:assets';
 import iso27034Overview from '../../assets/blog/ai-appsec-is-still-appsec/iso27034-overview.png';
 import toolsForDesignBuildRun from '../../assets/blog/ai-appsec-is-still-appsec/tools-for-design-build-run.png';
 
-# AI AppSec Is Still AppSec
-
 **Why AI systems must inherit and grow, not work in parallel to traditional AppSec.**
 
 While there are specific vulnerabilities and attacks related to applications built with AI - including language models both large (LLMs) and small (SLMs), as well as multi-modal models suitable for audio, video and images - the development of Agentic Systems and more traditional machine learning approaches demands we think of security for AI as additive, rather than security in a parallel universe. What has been done before should be reviewed, not removed.
@@ -34,7 +32,7 @@ Getting more specific, these composite applications can include open-source libr
 
 If we can agree that AI (today, at least) is implemented as a composite application, then we can look at existing standards for application security. ISO/IEC 27034 describes three pillars of application security.
 
-<Image src={iso27034Overview} alt="A three-pillar diagram of ISO/IEC 27034 application security framework. The left pillar (blue) shows ONF - Organization Normative Framework, containing Application Security Control Library, ASLCRM Reference Model, Contexts, Levels of Trust Scale, and Roles & Responsibilities. The middle pillar (green) displays ASMP - Application Security Management Process with 5 steps: Specify Requirements & Context, Risk Assessment & Threat Modeling, Create Application Normative Framework, Implement & Deploy Application, and Audit & Continuous Verification, with a note about Continuous Process. The right pillar (purple) presents ANF - Application Normative Framework, including Application-Specific Instantiation, Risk-Driven Selection, Architecture Mapping, Verification Specifications, and Living Documentation." />
+<Image src={iso27034Overview} alt="A three-pillar diagram of ISO/IEC 27034 application security framework. The left pillar (blue) shows ONF - Organization Normative Framework, containing Application Security Control Library, ASLCRM Reference Model, Contexts, Levels of Trust Scale, and Roles & Responsibilities. The middle pillar (green) displays ASMP - Application Security Management Process with 5 steps: Specify Requirements & Context, Risk Assessment & Threat Modeling, Create Application Normative Framework, Implement & Deploy Application, and Audit & Continuous Verification, with a note about Continuous Process. The right pillar (purple) presents ANF - Application Normative Framework, including Application-Specific Instantiation, Risk-Driven Selection, Architecture Mapping, Verification Specifications, and Living Documentation." style="max-width: 100%; height: auto; margin: 2rem auto; display: block;" />
 
 ## Translating AppSec Principles to AI
 
@@ -72,7 +70,7 @@ Importantly though, whilst these specific challenges are new, each can be mapped
 
 As Microsoft MVPs, we will focus our examples assuming you're developing on Microsoft Foundry, but these controls are applicable to all the major hyperscalers.
 
-<Image src={toolsForDesignBuildRun} alt="A three-column diagram showing AI security tools across the software development lifecycle. The Design column (yellow) includes Tool Selection with Model Catalog and Safety Scores, and GitHub MCP Server with Code Scanning and GitHub Advanced Security. The Build column (dark teal) features Data Validation with Foundry IQ, AI Search, and Bing API; Secure Storage with Key Vault and Azure Storage; Data Privacy & Integrity with Foundry Synthetic Data; AI Identity & Access with Entra ID, RBAC, and Agent Identity; Adversarial Testing with PyRIT and Red Teaming Agent; and Input Validation with Prompt Shields, Content Safety, and Spotlighting. The Run column (orange) shows Application & Service Monitoring with Defender for AI Services, DevOps, and Sentinel Integration; Data Protection with Purview DLP and DSPM for AI; and Continuous Evaluations with Azure DevOps and GitHub Actions. Footer shows 3 Lifecycle Phases, 11 Security Capabilities, and 20+ Microsoft Tools." />
+<Image src={toolsForDesignBuildRun} alt="A three-column diagram showing AI security tools across the software development lifecycle. The Design column (yellow) includes Tool Selection with Model Catalog and Safety Scores, and GitHub MCP Server with Code Scanning and GitHub Advanced Security. The Build column (dark teal) features Data Validation with Foundry IQ, AI Search, and Bing API; Secure Storage with Key Vault and Azure Storage; Data Privacy & Integrity with Foundry Synthetic Data; AI Identity & Access with Entra ID, RBAC, and Agent Identity; Adversarial Testing with PyRIT and Red Teaming Agent; and Input Validation with Prompt Shields, Content Safety, and Spotlighting. The Run column (orange) shows Application & Service Monitoring with Defender for AI Services, DevOps, and Sentinel Integration; Data Protection with Purview DLP and DSPM for AI; and Continuous Evaluations with Azure DevOps and GitHub Actions. Footer shows 3 Lifecycle Phases, 11 Security Capabilities, and 20+ Microsoft Tools." style="max-width: 100%; height: auto; margin: 2rem auto; display: block;" />
 
 ### Design
 
@@ -168,4 +166,4 @@ Review your ISO27034 implementation as-is, and review where AI specific controls
 
 **More information**
 
-[Here's a downloadable cheat sheet](./iso27034-application-security-for-ai-applications.pdf) you can use to review the latest ISO27034 controls you might want to apply on the Microsoft stack, and a [downloadable framework for implementing ISO27034 and OWASP Top10 LLM to your Microsoft AI Application](./iso27034-owasp-microsoft-ai-security.pdf).
+<a href="./iso27034-application-security-for-ai-applications.pdf" target="_blank" rel="noopener noreferrer">Here's a downloadable cheat sheet</a> you can use to review the latest ISO27034 controls you might want to apply on the Microsoft stack, and a <a href="./iso27034-owasp-microsoft-ai-security.pdf" target="_blank" rel="noopener noreferrer">downloadable framework for implementing ISO27034 and OWASP Top10 LLM to your Microsoft AI Application</a>.
