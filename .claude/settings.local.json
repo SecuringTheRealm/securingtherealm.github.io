@@ -8,7 +8,9 @@
       "Bash(npm run lint:*)",
       "Bash(npm run lint:fix:*)",
       "Bash(git checkout:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "WebSearch",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

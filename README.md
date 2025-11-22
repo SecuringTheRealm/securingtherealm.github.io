@@ -1,4 +1,4 @@
-# securingtherealm.github.io
+# securing.quest
 
 > Securing the Realm website - An 8-bit castle-themed journey through cybersecurity, Azure, and AI.
 
@@ -218,4 +218,3 @@ Content is released under [CC BY-SA 4.0](https://creativecommons.org/licenses/by
 - [Astro Documentation](https://docs.astro.build)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Content Collections](https://docs.astro.build/en/guides/content-collections/)
-

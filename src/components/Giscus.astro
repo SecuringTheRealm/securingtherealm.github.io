@@ -1,0 +1,63 @@
+---
+// Giscus Comments Component
+// Client-side loaded comments using GitHub Discussions
+---
+
+<div
+  id="giscus-container"
+  class="giscus-wrapper"
+  style="margin-top: var(--space-12); padding-top: var(--space-8); border-top: 2px solid var(--colour-stone);"
+>
+</div>
+
+<script>
+  // Client-side initialization for Giscus
+  function loadGiscus(): void {
+    const container = document.getElementById('giscus-container');
+
+    if (!container) {
+      console.error('Giscus container not found');
+      return;
+    }
+
+    // Check if Giscus is already loaded
+    if (container.querySelector('.giscus')) {
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', 'SecuringTheRealm/securing.quest');
+    script.setAttribute('data-repo-id', 'R_kgDOOWRHnw');
+    script.setAttribute('data-category', 'General');
+    script.setAttribute('data-category-id', 'DIC_kwDOOWRHn84CyFP0');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', 'gruvbox_dark');
+    script.setAttribute('data-lang', 'en');
+    script.setAttribute('data-loading', 'lazy');
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+
+    container.appendChild(script);
+  }
+
+  // Load on initial page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadGiscus);
+  } else {
+    loadGiscus();
+  }
+
+  // Reload on view transitions (if enabled)
+  document.addEventListener('astro:page-load', loadGiscus);
+</script>
+
+<style>
+  .giscus-wrapper {
+    width: 100%;
+  }
+</style>
