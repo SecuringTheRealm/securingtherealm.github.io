@@ -10,7 +10,9 @@
       "Bash(git checkout:*)",
       "Bash(npm install:*)",
       "WebSearch",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "WebFetch(domain:docs.github.com)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []
